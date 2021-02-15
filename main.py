@@ -1,30 +1,24 @@
-from fileIO import *
-
-# each website crawlled is a seperate project/folder
-
-# description:
-# create a queue of links to crawl
-def createCrawlQueue(name, baseUrl):
-    #file path to store the queue
-    queue = name + "/queue.txt"
-    #file path to store crawled
-    crawled = name + "/crawled.txt"
-
-    if not fileExist(queue):
-        writeNewFile(queue, baseUrl)
-    else:
-        appendFile(queue, baseUrl)
-    if not fileExist(crawled):
-        writeNewFile(crawled, "")
-
-
+import threading
+from queue import Queue
+from general import *
+from spider import Spider
+from domain import *
 
 # main
+#defines
+PROJECT_NAME = "twitter"
+HOMEPAGE = "https://google.com"
+DOMAIN_NAME = extractDomainName(HOMEPAGE)
+QUEUE_FILE = PROJECT_NAME + "/queue.txt"
+CRAWLED_FILE = PROJECT_NAME + "/crawled.txt"
+NUM_OF_THREADS = 8
+
+threadQueue = Queue()
+Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME)
+
+
 print("start of codes")
 
-createDir("test")
-createCrawlQueue("test", "test.com")
-deleteContents("test/queue.txt")
 
 print("end of codes")
 #end of main

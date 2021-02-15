@@ -52,7 +52,7 @@ def fileToSet(filename):
     results = set()
     with open(filename, 'rt') as f:
         for line in f:
-            results.add(line.replaced('\n', '')) # remove new line character
+            results.add(line.replace('\n', '')) # remove new line character
     return results
 
 # description:
