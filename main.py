@@ -1,52 +1,50 @@
-import os
+import threading
+from queue import Queue
+from spider import Spider
+from domain import *
+from general import *
 
-# each website crawlled is a seperate project/folder
-
-def fileExist(filename):
-    if not os.path.exists(filename):
-        return False
-    return True
-
-# function name: createDir
-# parameters: directory
-#               directory path
-# return value: 
-# description: if directory does not exist, create
-def createDir(directory):
-    #if directory does not exist, create
-    if not fileExist(directory):
-        print("Creating " + directory)
-        os.mkdir(directory)
-        
-def writeNewFile(filename, data):
-    f = open(filename, 'w') #open and write file
-    f.write(data)
-    f.close()
-
-def appendFile(filename, data):
-    with open(filename, 'a') as file: #open the file as a stream
-        file.write(data + "\n")
-
-def deleteContents(filename):
-    with open(filename, 'w'):
-        pass # write nothing into the file (therefore replaces contents)
-
-def createCrawlQueue(name, base_url):
-    #file path to store the queue
-    queue = name + "/queue.txt"
-    #file path to store crawled
-    crawled = name + "/crawled.txt"
-
-    if not fileExist(queue):
-        writeNewFile(queue, base_url)
-    if not fileExist(crawled):
-        writeNewFile(crawled, "")
+PROJECT_NAME = 'reddit'
+HOMEPAGE = 'https://www.reddit.com/'
+DOMAIN_NAME = get_domain_name(HOMEPAGE)
+QUEUE_FILE = PROJECT_NAME + '/queue.txt'
+CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
+NUMBER_OF_THREADS = 8
+queue = Queue()
+Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME)
 
 
-# main
-print("start of codes")
-createDir("test")
-createCrawlQueue("test", "test.com")
-deleteContents("test/queue.txt")
+# Create worker threads (will die when main exits)
+def create_workers():
+    for _ in range(NUMBER_OF_THREADS):
+        t = threading.Thread(target=work)
+        t.daemon = True
+        t.start()
 
-print("end of codes")
+
+# Do the next job in the queue
+def work():
+    while True:
+        url = queue.get()
+        Spider.crawl_page(threading.current_thread().name, url)
+        queue.task_done()
+
+
+# Each queued link is a new job
+def create_jobs():
+    for link in file_to_set(QUEUE_FILE):
+        queue.put(link)
+    queue.join()
+    crawl()
+
+
+# Check if there are items in the queue, if so crawl them
+def crawl():
+    queued_links = file_to_set(QUEUE_FILE)
+    if len(queued_links) > 0:
+        print(str(len(queued_links)) + ' links in the queue')
+        create_jobs()
+
+
+create_workers()
+crawl()
