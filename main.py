@@ -3,6 +3,7 @@ from queue import Queue
 from spider import Spider
 from domain import *
 from general import *
+from twitter import *
 
 PROJECT_NAME = 'reddit'
 HOMEPAGE = 'https://www.reddit.com/'
@@ -10,9 +11,6 @@ DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
 NUMBER_OF_THREADS = 8
-queue = Queue()
-Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME)
-
 
 # Create worker threads (will die when main exits)
 def create_workers():
@@ -47,5 +45,11 @@ def crawl():
         create_jobs()
 
 
+queue = Queue() #create queue for spider threads
+Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
 create_workers()
 crawl()
+
+#twitter test
+#t = Twitter()
+#t.printHomePage()
