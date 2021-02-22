@@ -1,4 +1,4 @@
-import tweepy #twitter api (https://docs.tweepy.org/)
+import tweepy #twitter api (https://docs.tweepy.org/) pip install tweepy
 import apikey #api keys are stored here
 
 class Twitter:
