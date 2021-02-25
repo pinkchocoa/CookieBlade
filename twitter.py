@@ -1,5 +1,6 @@
 import tweepy #twitter api (https://docs.tweepy.org/) pip install tweepy
 import apikey #api keys are stored here
+from datetime import datetime, timedelta
 
 class Twitter:
     CONSUMER_KEY = apikey.T_CONSUMER_KEY
@@ -11,7 +12,7 @@ class Twitter:
     def __init__(self):
         auth = tweepy.OAuthHandler(self.CONSUMER_KEY, self.CONSUMER_SECRET)
         auth.set_access_token(self.ACCESS_TOKEN, self.ACCESS_SECRET)
-        self.api = tweepy.API(auth)
+        self.api = tweepy.API(auth, wait_on_rate_limit=True)
 
         try:
             self.api.verify_credentials()
@@ -37,7 +38,35 @@ class Twitter:
         #         time.sleep(60)
         # return len(followers)
 
+    def recentFollows(self, username):
+        pass
+
+    def recentFriends(self, username):
+        pass
+
     def likeCount(self, username):
+        pass
+
+    def searchKeyword(self, keyword):
+
+        #recent tweets
+        recentTweets = []
+        for tweet in tweepy.Cursor(
+            self.api.search,
+            q=keyword + " -filter:retweets",
+            lang="en", wait_on_rate_limit=True,
+            tweet_mode="extended"
+        ).items(10):
+            recentTweets.append([tweet.user.screen_name, tweet.full_text])
+
+        return recentTweets
+
+
+
+    def searchLocation(self, location):
+        pass
+
+    def searchLocKeyword(self, location, keyword):
         pass
 
     
