@@ -45,11 +45,19 @@ def crawl():
         create_jobs()
 
 
-queue = Queue() #create queue for spider threads
-Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
-create_workers()
-crawl()
+#queue = Queue() #create queue for spider threads
+#Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
+#create_workers()
+#crawl()
 
-#twitter test
-#t = Twitter()
-#t.printHomePage()
+print("twitter test")
+t = Twitter()
+randomTweetID = 1363637688650375168
+#1365042500176654345
+#print(t.followCount("pinkchocoa"))
+#print(t.followCount("LilyPichu"))
+#print(t.searchKeyword("MAMAMOO"))
+#print(t.userFav("Cyarine"))
+print(t.tweetFavCount(randomTweetID))
+print(t.tweetRTCount(randomTweetID))
+print(t.tweetLoc(randomTweetID))
