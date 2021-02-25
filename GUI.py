@@ -1,40 +1,72 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtGui import QPixmap, QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow
 import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-class GUIWindow(QMainWindow):
-    def __init__(self):
-        super(GUIWindow,self).__init__()
-        self.setGeometry(0,0,500,500) #Set Window Location  & Size
-        self.setWindowTitle("Cookie Crawler") #Set Window Name
-        self.MainPage()
-        self.setWindowIcon(QIcon('CookieIcon.jpg'))
 
-    def MainPage(self):
-        self.Mainlabel = QtWidgets.QLabel(self)
-        self.Mainlabel.setText("Enter Channel Link")
-        self.Mainlabel.move(200,100)
-        self.Mainlabel.adjustSize()
-        self.PicLabel = QtWidgets.QLabel(self)
-        self.PicLabel.setText("")
-        self.PicLabel.setGeometry(0,0,250,100)
-        self.PicLabel.move(150,0)
-        self.PicLabel.setPixmap(QPixmap('YTLogo.jpg'))
-        self.PicLabel.setScaledContents(True)
-        self.SearchButton = QtWidgets.QPushButton(self) #Assign Button Widget to Variable and set to appear in Main Window
-        self.SearchButton.setText("Search") #Assign Text to Button Widget
-        self.SearchButton.clicked.connect(self.ButtonOutput) #Link Button Output to SearchButton, function is called on button click
-        self.SearchButton.move(200,300) #Set Location of Search Button
+class GUIWindow:
+    def __init__(self, Window):
+        Window.setObjectName("MainWindow")
+        Window.resize(800, 600)
+        icon = QtGui.QIcon()
+        icon.addPixmap(QtGui.QPixmap("CookieIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        Window.setWindowIcon(icon)
+        Window.setWindowTitle("Cookie Crawler")
+        self.centralwidget = QtWidgets.QWidget(Window)
+        Window.setCentralWidget(self.centralwidget)
+        self.setLabel(Window)
+        self.setLogo(Window)
+        self.setTextBox(Window)
+        self.setSearchButton(Window)
         
-    def ButtonOutput(self):
-        self.Mainlabel.setText("Best Youtube Video")
-        self.Mainlabel.adjustSize();
+    def setLabel(self, Window):
+        self.labelUID = QtWidgets.QLabel(self.centralwidget)
+        self.labelUID.setGeometry(QtCore.QRect(260, 200, 61, 31))
+        self.labelUID.setAlignment(QtCore.Qt.AlignCenter)
+        self.labelUID.setObjectName("labelUID")
+        self.labelUID.setText("Enter UID:")
+        self.labelPW = QtWidgets.QLabel(self.centralwidget)
+        self.labelPW.setGeometry(QtCore.QRect(230, 240, 91, 31))
+        self.labelPW.setAlignment(QtCore.Qt.AlignCenter)
+        self.labelPW.setText("Enter Password:")
+        self.labelURL = QtWidgets.QLabel(self.centralwidget)
+        self.labelURL.setGeometry(QtCore.QRect(60, 160, 61, 31))
+        self.labelURL.setAlignment(QtCore.Qt.AlignCenter)
+        self.labelURL.setText("Enter URL:")
 
-def window():
-    app = QApplication(sys.argv)
-    Mainwin = GUIWindow() #Assign Main Window to variable
-    Mainwin.show() #Make Window Appear
-    sys.exit(app.exec_())
+    def setLogo(self, Window):
+        self.logo = QtWidgets.QLabel(self.centralwidget)
+        self.logo.setGeometry(QtCore.QRect(230, 70, 331, 81))
+        self.logo.setText("")
+        self.logo.setPixmap(QtGui.QPixmap("GUIMainLogo.PNG"))
+        self.logo.setScaledContents(True)
+    
+    def setTextBox(self, Window):
+        self.urlbox = QtWidgets.QLineEdit(self.centralwidget)
+        self.urlbox.setGeometry(QtCore.QRect(120, 160, 591, 31))
+        self.urlbox.setPlaceholderText("Enter Youtube Channel URL")
+        self.uidbox = QtWidgets.QLineEdit(self.centralwidget)
+        self.uidbox.setGeometry(QtCore.QRect(320, 200, 181, 31))
+        self.uidbox.setPlaceholderText("Enter Twitter UID")
+        self.pwbox = QtWidgets.QLineEdit(self.centralwidget)
+        self.pwbox.setGeometry(QtCore.QRect(320, 240, 181, 31))
+        self.pwbox.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.pwbox.setPlaceholderText("Enter Twitter Password")
+    
+    def setSearchButton(self, Window):
+        self.SearchButton = QtWidgets.QPushButton(self.centralwidget)
+        self.SearchButton.setGeometry(QtCore.QRect(370, 280, 81, 41))
+        self.SearchButton.setText("Search")
+        self.SearchButton.clicked.connect(self.searchClicked)
+    
+    def searchClicked(self):
+        yturl = self.urlbox.text()
+        tuid = self.uidbox.text()
+        tpw = self.pwbox.text()
+        print(yturl)
+        print(tuid)
+        print(tpw)
 
-window()
+app = QtWidgets.QApplication(sys.argv)
+win = QtWidgets.QMainWindow()
+ui = GUIWindow(win)
+win.show()
+sys.exit(app.exec_())
