@@ -52,12 +52,13 @@ def crawl():
 
 print("twitter test")
 t = Twitter()
+tUser = TUser("LilyPichu")
 randomTweetID = 1363637688650375168
 #1365042500176654345
 #print(t.followCount("pinkchocoa"))
 #print(t.followCount("LilyPichu"))
 #print(t.searchKeyword("MAMAMOO"))
-#print(t.userFav("Cyarine"))
-print(t.tweetFavCount(randomTweetID))
-print(t.tweetRTCount(randomTweetID))
-print(t.tweetLoc(randomTweetID))
+print(tUser.userFav())
+#print(t.tweetFavCount(randomTweetID))
+#print(t.tweetRTCount(randomTweetID))
+#print(t.tweetLoc(randomTweetID))

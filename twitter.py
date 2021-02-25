@@ -21,42 +21,7 @@ class Twitter:
             raise e
             logger.info("API created")
 
-#USER FUNCTIONS
-    #gets user's current follow count
-    def followCount(self, username):
-        user = self.api.get_user(username)
-        return user.followers_count
 
-    #gets user's current tweet count
-    def tweetCount(self, username):
-        user = self.api.get_user(username)
-        return user.statuses_count
-
-    def userLoc(self, username):
-        user = self.api.get_user(username)
-        return user.location
-
-    #gets user's recent followers
-    def recentFollows(self, username):
-        pass
-
-    def recentFriends(self, username):
-        pass
-
-    #get user's favourite tweets
-    def userFav(self, username):
-        fav=[]
-        for tweet in tweepy.Cursor(self.api.favorites, id=username, 
-            lang="en", wait_on_rate_limit=True,
-            tweet_mode="extended").items(10):
-            images = []
-            if 'media' in tweet.entities:
-                for media in tweet.extended_entities['media']:
-                    files_location = str(media['media_url'])
-                    images.append(files_location)
-            fav.append([tweet.user.screen_name, tweet.full_text, images])
-
-        return fav
 
 #TWEET FUNCTIONS
     #gets the favourite count of a tweet
@@ -119,4 +84,46 @@ class Twitter:
 #get user most engaged topics
 
     
+class TUser(Twitter):
+
+    username = ""
+    user = ""
     
+    def __init__(self, username):
+        super().__init__()
+        self.username = username
+        user = self.api.get_user(self.username)
+
+#USER FUNCTIONS
+    #gets user's current follow count
+    def followCount(self):
+        return self.user.followers_count
+
+    #gets user's current tweet count
+    def tweetCount(self, username):
+        return self.user.statuses_count
+
+    def userLoc(self, username):
+        return self.user.location
+
+    #gets user's recent followers
+    def recentFollows(self, username):
+        pass
+
+    def recentFriends(self, username):
+        pass
+
+    #get user's favourite tweets
+    def userFav(self):
+        fav=[]
+        for tweet in tweepy.Cursor(self.api.favorites, id=self.username, 
+            lang="en", wait_on_rate_limit=True,
+            tweet_mode="extended").items(10):
+            images = []
+            if 'media' in tweet.entities:
+                for media in tweet.extended_entities['media']:
+                    files_location = str(media['media_url'])
+                    images.append(files_location)
+            fav.append([tweet.user.screen_name, tweet.full_text, images])
+
+        return fav
