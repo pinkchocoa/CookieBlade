@@ -32,6 +32,10 @@ class Twitter:
         user = self.api.get_user(username)
         return user.statuses_count
 
+    def userLoc(self, username):
+        user = self.api.get_user(username)
+        return user.location
+
     #gets user's recent followers
     def recentFollows(self, username):
         pass
@@ -58,7 +62,7 @@ class Twitter:
     #gets the favourite count of a tweet
     def tweetFavCount(self, tweetID):
         tweet = self.api.get_status(tweetID)
-        return tweet.favourite_count
+        return tweet.favorite_count
 
     #gets the RT count of a tweet
     def tweetRTCount(self, tweetID):
@@ -67,7 +71,8 @@ class Twitter:
 
     #get tweet location of a tweet
     def tweetLoc(self, tweetID):
-        return self.api.geo_id(tweetID)
+        tweet = self.api.get_status(tweetID)
+        return tweet.location
 
 #SEARCH FUNCTIONS
     def searchKeyword(self, keyword):
@@ -96,13 +101,22 @@ class Twitter:
 
         return recentTweets
 
-
-
     def searchLocation(self, location):
         pass
 
     def searchLocKeyword(self, location, keyword):
         pass
+
+#TREND FUNCTIONS
+#get trending topics
+#get trending topics by location
+
+#ENGAGEMENT FUNCTIONS
+#get user most fav tweet
+#get user most engaged tweet
+#get user most engaged friend
+#get user most engaged follower
+#get user most engaged topics
 
     
     
