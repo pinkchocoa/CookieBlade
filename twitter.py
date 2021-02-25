@@ -21,34 +21,56 @@ class Twitter:
             raise e
             logger.info("API created")
 
-    def printHomePage(self, username):
-        public_tweets = self.api.home_timeline(username)
-        for tweet in public_tweets:
-            print(tweet.text)
-
+#USER FUNCTIONS
+    #gets user's current follow count
     def followCount(self, username):
         user = self.api.get_user(username)
         return user.followers_count
-        # followers = []
-        # for page in tweepy.Cursor(self.api.followers, screen_name=username, wait_on_rate_limit=True,count=200).pages():
-        #     try:
-        #         followers.extend(page)
-        #     except tweepy.TweepError as e:
-        #         print("Going to sleep:", e)
-        #         time.sleep(60)
-        # return len(followers)
 
+    #gets user's current tweet count
+    def tweetCount(self, username):
+        user = self.api.get_user(username)
+        return user.statuses_count
+
+    #gets user's recent followers
     def recentFollows(self, username):
         pass
 
     def recentFriends(self, username):
         pass
 
-    def likeCount(self, username):
-        pass
+    #get user's favourite tweets
+    def userFav(self, username):
+        fav=[]
+        for tweet in tweepy.Cursor(self.api.favorites, id=username, 
+            lang="en", wait_on_rate_limit=True,
+            tweet_mode="extended").items(10):
+            images = []
+            if 'media' in tweet.entities:
+                for media in tweet.extended_entities['media']:
+                    files_location = str(media['media_url'])
+                    images.append(files_location)
+            fav.append([tweet.user.screen_name, tweet.full_text, images])
 
+        return fav
+
+#TWEET FUNCTIONS
+    #gets the favourite count of a tweet
+    def tweetFavCount(self, tweetID):
+        tweet = self.api.get_status(tweetID)
+        return tweet.favourite_count
+
+    #gets the RT count of a tweet
+    def tweetRTCount(self, tweetID):
+        tweet = self.api.get_status(tweetID)
+        return tweet.retweet_count
+
+    #get tweet location of a tweet
+    def tweetLoc(self, tweetID):
+        return self.api.geo_id(tweetID)
+
+#SEARCH FUNCTIONS
     def searchKeyword(self, keyword):
-
         #recent tweets
         recentTweets = []
         for tweet in tweepy.Cursor(
@@ -57,7 +79,20 @@ class Twitter:
             lang="en", wait_on_rate_limit=True,
             tweet_mode="extended"
         ).items(10):
-            recentTweets.append([tweet.user.screen_name, tweet.full_text])
+            images = []
+            if 'media' in tweet.entities:
+                for media in tweet.extended_entities['media']:
+                    files_location = str(media['media_url'])
+                    images.append(files_location)
+            recentTweets.append([tweet.user.screen_name, tweet.full_text, images])
+        
+        #other information
+        #tweet.user.screen_name
+        #tweet.full_text
+        #tweet.id
+        #tweet.created_at
+        #tweet.retweet_count
+        #tweet.favorite_count
 
         return recentTweets
 
