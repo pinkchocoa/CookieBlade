@@ -67,13 +67,11 @@ class Twitter:
 
     
 class TUser(Twitter):
-    username = ""
-    user = ""
 
     def __init__(self, username):
         super().__init__()
         self.username = username
-        user = self.api.get_user(self.username)
+        self.user = self.api.get_user(self.username)
 
     #gets user's current follow count
     def followCount(self):
@@ -110,13 +108,10 @@ class TUser(Twitter):
 
 class TTweet(Twitter):
 
-    tweetID = 0
-    tweet = ""
-
     def __init__(self, tweetID):
         super().__init__()
         self.tweetID = tweetID
-        tweet = self.api.get_status(self.tweetID)
+        self.tweet = self.api.get_status(self.tweetID)
 
     #gets the favourite count of a tweet
     def favCount(self):
