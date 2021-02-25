@@ -1,6 +1,6 @@
 import tweepy #twitter api (https://docs.tweepy.org/) pip install tweepy
 import apikey #api keys are stored here
-from datetime import datetime, timedelta
+from urllib.parse import urlparse
 
 class Twitter:
     CONSUMER_KEY = apikey.T_CONSUMER_KEY
@@ -65,13 +65,27 @@ class Twitter:
 #get user most engaged follower
 #get user most engaged topics
 
-    
+#https://twitter.com/ + username
+#able to parse url to grab the username behind for this class
+#accepts both URL and tweetID
 class TUser(Twitter):
 
     def __init__(self, username):
         super().__init__()
         self.username = username
         self.user = self.api.get_user(self.username)
+
+    @classmethod
+    def byID(cls, username):
+        return cls(username)
+    
+    @classmethod
+    def byURL(cls, URL):
+        urlpath = urlparse(URL).path
+        #path would be username/status/tweetid
+        res = urlpath.split('/')
+        username = res[1]
+        return cls(username)
 
     #gets user's current follow count
     def followCount(self):
@@ -106,12 +120,27 @@ class TUser(Twitter):
 
         return fav
 
+#https://twitter.com/twitter/statuses/ + tweetID
+#able to parse url to grab the ID behind for this class
+#accepts both URL and tweetID
 class TTweet(Twitter):
 
     def __init__(self, tweetID):
         super().__init__()
         self.tweetID = tweetID
         self.tweet = self.api.get_status(self.tweetID)
+
+    @classmethod
+    def byID(cls, tweetID):
+        return cls(tweetID)
+    
+    @classmethod
+    def byURL(cls, URL):
+        urlpath = urlparse(URL).path
+        #path would be username/status/tweetid
+        res = urlpath.split('/')
+        tweetID = res[-1]
+        return cls(tweetID)
 
     #gets the favourite count of a tweet
     def favCount(self):
@@ -124,3 +153,6 @@ class TTweet(Twitter):
     #get tweet location of a tweet
     def loc(self):
         return self.tweet.place
+
+    #get tweet author
+    #get what device is use to tweet this tweet
