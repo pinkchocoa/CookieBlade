@@ -72,7 +72,7 @@ class Twitter:
     #get tweet location of a tweet
     def tweetLoc(self, tweetID):
         tweet = self.api.get_status(tweetID)
-        return tweet.location
+        return tweet.place
 
 #SEARCH FUNCTIONS
     def searchKeyword(self, keyword):
