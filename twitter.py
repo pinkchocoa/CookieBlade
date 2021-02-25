@@ -80,17 +80,17 @@ class TUser(Twitter):
         return self.user.followers_count
 
     #gets user's current tweet count
-    def tweetCount(self, username):
+    def tweetCount(self):
         return self.user.statuses_count
 
-    def userLoc(self, username):
+    def userLoc(self):
         return self.user.location
 
     #gets user's recent followers
-    def recentFollows(self, username):
+    def recentFollows(self):
         pass
 
-    def recentFriends(self, username):
+    def recentFriends(self):
         pass
 
     #get user's favourite tweets
@@ -119,13 +119,13 @@ class TTweet(Twitter):
         tweet = self.api.get_status(self.tweetID)
 
     #gets the favourite count of a tweet
-    def tweetFavCount(self, tweetID):
+    def favCount(self):
         return self.tweet.favorite_count
 
     #gets the RT count of a tweet
-    def tweetRTCount(self, tweetID):
+    def RTCount(self):
         return self.tweet.retweet_count
 
     #get tweet location of a tweet
-    def tweetLoc(self, tweetID):
+    def loc(self):
         return self.tweet.place
