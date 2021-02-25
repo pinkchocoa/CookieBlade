@@ -50,15 +50,26 @@ def crawl():
 #create_workers()
 #crawl()
 
+#twitter test
+
+def testTweet():
+    #tTweet = TTweet(1360670340934815750)
+    tTweet = TTweet.byURL("https://twitter.com/twitter/statuses/1360670340934815750")
+    print(tTweet.favCount())
+    print(tTweet.RTCount())
+    print(tTweet.loc())
+
+def testUser():
+    #tUser = TUser("LilyPichu")
+    tUser = TUser.byURL("https://twitter.com/LilyPichu")
+    print(tUser.tweetCount())
+    print(tUser.followCount())
+
 print("twitter test")
-t = Twitter()
-tUser = TUser("LilyPichu")
-randomTweetID = 1363637688650375168
-#1365042500176654345
+#t = Twitter()
+#testTweet()
+testUser()
+
 #print(t.followCount("pinkchocoa"))
 #print(t.followCount("LilyPichu"))
 #print(t.searchKeyword("MAMAMOO"))
-print(tUser.userFav())
-#print(t.tweetFavCount(randomTweetID))
-#print(t.tweetRTCount(randomTweetID))
-#print(t.tweetLoc(randomTweetID))
