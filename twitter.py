@@ -13,3 +13,12 @@ class Twitter:
         public_tweets = self.api.home_timeline()
         for tweet in public_tweets:
             print(tweet.text)
+
+    def followCount(self, username):
+        pass
+
+    def likeCount(self, username):
+        pass
+
+    
+    
