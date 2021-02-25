@@ -58,9 +58,9 @@ class GUIWindow:
         self.SearchButton.clicked.connect(self.searchClicked)
     
     def searchClicked(self):
-        yturl = self.urlbox.text()
-        tuid = self.uidbox.text()
-        tpw = self.pwbox.text()
+        self.yturl = self.urlbox.text()
+        self.tuid = self.uidbox.text()
+        self.tpw = self.pwbox.text()
         print(yturl)
         print(tuid)
         print(tpw)
