@@ -21,24 +21,6 @@ class Twitter:
             raise e
             logger.info("API created")
 
-
-
-#TWEET FUNCTIONS
-    #gets the favourite count of a tweet
-    def tweetFavCount(self, tweetID):
-        tweet = self.api.get_status(tweetID)
-        return tweet.favorite_count
-
-    #gets the RT count of a tweet
-    def tweetRTCount(self, tweetID):
-        tweet = self.api.get_status(tweetID)
-        return tweet.retweet_count
-
-    #get tweet location of a tweet
-    def tweetLoc(self, tweetID):
-        tweet = self.api.get_status(tweetID)
-        return tweet.place
-
 #SEARCH FUNCTIONS
     def searchKeyword(self, keyword):
         #recent tweets
@@ -85,16 +67,14 @@ class Twitter:
 
     
 class TUser(Twitter):
-
     username = ""
     user = ""
-    
+
     def __init__(self, username):
         super().__init__()
         self.username = username
         user = self.api.get_user(self.username)
 
-#USER FUNCTIONS
     #gets user's current follow count
     def followCount(self):
         return self.user.followers_count
@@ -127,3 +107,25 @@ class TUser(Twitter):
             fav.append([tweet.user.screen_name, tweet.full_text, images])
 
         return fav
+
+class TTweet(Twitter):
+
+    tweetID = 0
+    tweet = ""
+
+    def __init__(self, tweetID):
+        super().__init__()
+        self.tweetID = tweetID
+        tweet = self.api.get_status(self.tweetID)
+
+    #gets the favourite count of a tweet
+    def tweetFavCount(self, tweetID):
+        return self.tweet.favorite_count
+
+    #gets the RT count of a tweet
+    def tweetRTCount(self, tweetID):
+        return self.tweet.retweet_count
+
+    #get tweet location of a tweet
+    def tweetLoc(self, tweetID):
+        return self.tweet.place
