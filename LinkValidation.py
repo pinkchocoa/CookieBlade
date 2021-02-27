@@ -1,18 +1,40 @@
+## @file LinkValidation.py
+#
+# @brief this file contains the LinkValidation Class
+#
+# @section libraries_main Libraries/Modules
+# - os standard library (https://docs.python.org/3/library/os.html)
+#   - access to os ping function command.
+# - urllib.request standard library (https://docs.python.org/3/library/urllib.request.html)
+#   - access to urlopen function
+# - UrlExtraction (local)
+#   - access to UrlExtraction class
+
+# Imports
 import os
-import subprocess
 import urllib.request
 from UrlExtraction import UrlExtraction
 
-#Link validation
-
+## Documentation for a LinkValidation Class
+# LinkValidation class checks if given link is supported
+# also check if host system is online.
 class LinkValidation(UrlExtraction):
 
-    #do i even need this?
+    # __init__ is the constructor name for all classes
     def __init__(self):
-        self.Sitelist = ["facebook", "youtube", "twitter", "reddit", "instagram"] #list needs to appended to add support to sites.
+        """! LinkValidation class initializer
+        @return an instance of the LinkValidation Class with the initialized list below.
+        """
+
+        #List of supported sites.
+        self.Sitelist = ["youtube", "twitter"]
     
-    #Check if URL is valid
+    #Check if URL is valid and site is supported
     def UrlValidation(self, UserUrl):
+        """! Check if Url is valid and site is supported.
+        @return True or False
+        """
+
         sitename = self.getSiteName(UserUrl)
         if sitename in self.Sitelist: #check if site is supported
             try: #if URL can be opened than is valid
@@ -24,10 +46,13 @@ class LinkValidation(UrlExtraction):
                 return False
         else:
             return False
-    #ENDOFMETHOD
 
-    #Check if system is online #might get rid if this?
+    #Check if system is online
     def InternetVaild(self):
+        """! Check if system is online
+        @return pingstatus
+        """
+
         response = os.system("ping google.com")
         if response == 0:
             pingstatus = True
@@ -36,4 +61,3 @@ class LinkValidation(UrlExtraction):
             pingstatus = False
             print("Network is down,Please check your internet connection")
             return pingstatus
-    #ENDOFMETHOD
