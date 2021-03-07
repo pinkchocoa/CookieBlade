@@ -27,6 +27,12 @@ class Twitter:
     # mixed : include both popular and real time results in the response
     # recent : return only the most recent results in the response
     # popular : return only the most popular results in the response
+
+    #return format: [ ['username', 'content', 'images if any'], [...] ]
+    #e.g. 
+    # ['RBW_MAMAMOO', '[#마마무]\n\n[Special] 2021 MAMAMOO\nFAN MEETING VCR Hidden Clip\n\n🔗 
+    # https://t.co/FUfUnGE0K8\n\n#MAMAMOO #무무 #무무투어 https://t.co/psEmDli6nx', ['http://pbs.twimg.com/media/EveC0FwVoAQQSkf.jpg']]
+    # https://twitter.com/RBW_MAMAMOO/status/1366704850671525890?s=20
     def searchKeyword(self, keyword, rType = "recent", getLoc = False, lat=1.3521, lng=103.8198):
         #recent tweets
         recentTweets = []
@@ -69,6 +75,10 @@ class Twitter:
 
     #true for worldwide, otherwise false and give own location (lat and lng)
     #leave location blank for singapore
+
+    #return format
+    #{'#DontCallMe4thWin': 32031, 'JUNGKOOK': 1039162, ... }
+    #{'topic that is trending': tweet volume, ...}
     def trendingTopics(self, worldWide, lat=1.3521, lng=103.8198):
         topics = {} #create a dictionary to store name and tweet volume
 
@@ -132,6 +142,7 @@ class TUser(Twitter):
     def tweetCount(self):
         return self.user.statuses_count
 
+    #returns city, state
     def userLoc(self):
         return self.user.location
 
@@ -143,6 +154,11 @@ class TUser(Twitter):
         pass
 
     #get user's favourite tweets
+    #return format: [ ['username', 'content', 'images if any'], [...] ]
+    #e.g. 
+    # ['RBW_MAMAMOO', '[#마마무]\n\n[Special] 2021 MAMAMOO\nFAN MEETING VCR Hidden Clip\n\n🔗 
+    # https://t.co/FUfUnGE0K8\n\n#MAMAMOO #무무 #무무투어 https://t.co/psEmDli6nx', ['http://pbs.twimg.com/media/EveC0FwVoAQQSkf.jpg']]
+    # https://twitter.com/RBW_MAMAMOO/status/1366704850671525890?s=20
     def userFav(self):
         fav=[]
         for tweet in tweepy.Cursor(self.api.favorites, id=self.username, 
