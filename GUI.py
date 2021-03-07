@@ -7,21 +7,9 @@ from newWindow import Ui_newWindow
 
 class GUIWindow:
     def __init__(self, Window):
-        self.setLabel(Window)
         self.setLogo(Window)
         self.setTextBox(Window)
         self.setSearchButton(Window)
-        
-    def setLabel(self, Window):
-        self.labelUID = QLabel(Window)
-        self.labelUID.setGeometry(QtCore.QRect(260, 200, 61, 31))
-        self.labelUID.setAlignment(QtCore.Qt.AlignCenter)
-        self.labelUID.setObjectName("labelUID")
-        self.labelUID.setText("Enter UID:")
-        self.labelURL = QLabel(Window)
-        self.labelURL.setGeometry(QtCore.QRect(60, 160, 61, 31))
-        self.labelURL.setAlignment(QtCore.Qt.AlignCenter)
-        self.labelURL.setText("Enter URL:")
 
     def setLogo(self, Window):
         self.logo = QLabel(Window)
@@ -70,6 +58,10 @@ class GUIWindow:
 App = StartApp()
 MainWindow = NewWindow("Cookie Crawler", 800, 600)
 MainWindow.setWindowIcon("CookieIcon.png")
+URLLabel = NewLabel(MainWindow.QWin,60, 160, 61, 31)
+URLLabel.setText("Enter URL:")
+UIDLabel = NewLabel(MainWindow.QWin,260, 200, 61, 31)
+UIDLabel.setText("Enter UID:")
 ui = GUIWindow(MainWindow.QWin)
 MainWindow.QWin.show()
 sys.exit(App.QApp.exec_())
