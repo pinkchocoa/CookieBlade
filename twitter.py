@@ -248,18 +248,34 @@ class TUser(Twitter):
 #able to parse url to grab the ID behind for this class
 #accepts both URL and tweetID
 class TTweet(Twitter):
+    """! TTweet Class
+    This class inherits the base Twitter class for API access.
+    This class contains methods specifically related to a tweet
+    """
 
     def __init__(self, tweetID):
+        """! TTweet class initializer
+        @param tweetID tweet ID of the tweet to fetch data of
+        @return an instance of TTweet class
+        """
         super().__init__()
         self.tweetID = tweetID
         self.tweet = self.api.get_status(self.tweetID)
 
     @classmethod
     def byID(cls, tweetID):
+        """! class method that creates a TTweet instance with username
+        @param tweetID tweet ID of the tweet to fetch data of
+        @return an instance of TTweet class
+        """
         return cls(tweetID)
     
     @classmethod
     def byURL(cls, URL):
+        """! class method that creates a TTweet instance with a tweet url
+        @param url tweet url of the tweet to fetch data of
+        @return an instance of TTweet class
+        """
         urlpath = urlparse(URL).path
         #path would be username/status/tweetid
         res = urlpath.split('/')
@@ -268,14 +284,26 @@ class TTweet(Twitter):
 
     #gets the favourite count of a tweet
     def favCount(self):
+        """! gets the favourite count of a tweet
+        @param self instance of the object that we are calling from
+        @return favourite count of a tweet (integer)
+        """
         return self.tweet.favorite_count
 
     #gets the RT count of a tweet
     def RTCount(self):
+        """! gets the RT count of a tweet
+        @param self instance of the object that we are calling from
+        @return RT count of a tweet (integer)
+        """
         return self.tweet.retweet_count
 
     #get tweet location of a tweet
     def loc(self):
+        """! get tweet location of a tweet (if available)
+        @param self instance of the object that we are calling from
+        @return tweet location of a tweet, in the format of "city, state" (should be a string)
+        """
         return self.tweet.place
 
     #get tweet author
