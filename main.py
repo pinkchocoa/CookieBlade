@@ -78,6 +78,4 @@ def testUser():
     print(tUser.userLoc())
     print(tUser.userFav())
 
-print("twitter test")
-
-testUser()
+#print("twitter test")
