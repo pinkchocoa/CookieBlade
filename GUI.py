@@ -1,14 +1,13 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PyQt5.QtWidgets import QMessageBox
+from newWindow import Ui_newWindow
 
 class GUIWindow:
     def __init__(self, Window):
         Window.setObjectName("MainWindow")
         Window.resize(800, 600)
-        icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("CookieIcon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        Window.setWindowIcon(icon)
+        Window.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
         Window.setWindowTitle("Cookie Crawler")
         self.centralwidget = QtWidgets.QWidget(Window)
         Window.setCentralWidget(self.centralwidget)
@@ -61,9 +60,28 @@ class GUIWindow:
         self.yturl = self.urlbox.text()
         self.tuid = self.uidbox.text()
         self.tpw = self.pwbox.text()
-        print(yturl)
-        print(tuid)
-        print(tpw)
+        if (self.yturl == "" or self.tuid == "" or self.tpw == ""):
+            showerror = self.errorMsgBox()
+        else:
+            self.newwin = QtWidgets.QMainWindow()
+            self.newui = Ui_newWindow()
+            self.newui.setupUi(self.newwin)
+            self.newui.label_2 .setText(self.yturl)
+            self.newui.label_2.adjustSize()
+            self.newui.label_3.setText(self.tuid)
+            self.newui.label_3.adjustSize()
+            self.newui.label_4.setText(self.tpw)
+            self.newui.label_4.adjustSize()
+            self.newwin.show()
+
+
+    def errorMsgBox(self):
+        msgBox = QMessageBox()
+        msgBox.setWindowTitle("Error!")
+        msgBox.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
+        msgBox.setIcon(QMessageBox.Critical)
+        msgBox.setText("Error! Missing Input!")
+        error = msgBox.exec_()
 
 app = QtWidgets.QApplication(sys.argv)
 win = QtWidgets.QMainWindow()
