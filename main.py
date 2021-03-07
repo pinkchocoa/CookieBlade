@@ -57,8 +57,10 @@ def defaultTwt():
     #tTest.trendingTopics() 
     latSG = 1.3521
     lngSG = 103.8198
-    print(tTest.trendingTopics(True))
-    print(tTest.trendingTopics(False, latSG, lngSG))
+    #print(tTest.trendingTopics(True))
+    #print(tTest.trendingTopics(False, latSG, lngSG))
+    print(tTest.searchKeyword("MAMAMOO", True))
+    print(tTest.searchKeyword("MAMAMOO"))
     
 
 def testTweet():

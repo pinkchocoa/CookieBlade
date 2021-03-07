@@ -23,13 +23,25 @@ class Twitter:
             logger.info("API created")
 
 #SEARCH FUNCTIONS
-    def searchKeyword(self, keyword):
+    # by default it will search worldwide
+    def searchKeyword(self, keyword, getLoc = False, lat=1.3521, lng=103.8198):
         #recent tweets
         recentTweets = []
+        if getLoc:
+            loc =  self.api.trends_closest(lat, lng)
+            place = loc[0]['name']
+            #200km radius of specified location
+            loc = str(lat) + "," + str(lng) + ",200km"
+            #print("test", loc)
+        else:
+            loc = ""
+            place = "World Wide"
+
         for tweet in tweepy.Cursor(
             self.api.search,
             q=keyword + " -filter:retweets",
-            lang="en", wait_on_rate_limit=True,
+            geocode = loc, lang="en",
+            wait_on_rate_limit=True,
             tweet_mode="extended"
         ).items(10):
             images = []
@@ -39,6 +51,8 @@ class Twitter:
                     images.append(files_location)
             recentTweets.append([tweet.user.screen_name, tweet.full_text, images])
         
+        print("returning trends for", place)
+
         #other information
         #tweet.user.screen_name
         #tweet.full_text
@@ -53,13 +67,17 @@ class Twitter:
     #leave location blank for singapore
     def trendingTopics(self, worldWide, lat=1.3521, lng=103.8198):
         topics = {} #create a dictionary to store name and tweet volume
-        if not worldWide:
+
+        if worldWide:
             loc =  self.api.trends_closest(lat, lng)
-            allTrends = self.api.trends_place(loc[0]['woeid'])
-            print("returning trends for", loc[0]['name'])
+            place = loc[0]['name']
+            loc = loc[0]['woeid']
         else:
-            allTrends = self.api.trends_place(id = 1)
-            print("returning worldwide trends..")
+            loc = 1
+            place = "World Wide"
+
+        allTrends = self.api.trends_place(loc)
+        print("returning trends for", place)
         
         trends = json.loads(json.dumps(allTrends, indent=1))
         for x in trends[0]["trends"]:
@@ -72,11 +90,6 @@ class Twitter:
         # {'trends': [{'name': '#UFC259', 'url': 'http://twitter.com/search?q=%23UFC259', 
         # 'promoted_content': None, 'query': '%23UFC259', 'tweet_volume': 408621}, {...} ]}
         # probably just want the name and tweet volume
-
-
-
-    def searchLocation(self, location):
-        pass
 
     def searchLocKeyword(self, location, keyword):
         pass
