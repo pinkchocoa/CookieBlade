@@ -7,16 +7,7 @@ from newWindow import Ui_newWindow
 
 class GUIWindow:
     def __init__(self, Window):
-        self.setTextBox(Window)
         self.setSearchButton(Window)
-    
-    def setTextBox(self, Window):
-        self.urlbox = QLineEdit(Window)
-        self.urlbox.setGeometry(QtCore.QRect(120, 160, 591, 31))
-        self.urlbox.setPlaceholderText("Enter Youtube Channel URL")
-        self.uidbox = QLineEdit(Window)
-        self.uidbox.setGeometry(QtCore.QRect(320, 200, 181, 31))
-        self.uidbox.setPlaceholderText("Enter Twitter UID")
     
     def setSearchButton(self, Window):
         self.SearchButton = QPushButton(Window)
@@ -57,6 +48,10 @@ URLLabel = NewLabel(MainWindow.QWin,60, 160, 61, 31)
 URLLabel.setText("Enter URL:")
 UIDLabel = NewLabel(MainWindow.QWin,260, 200, 61, 31)
 UIDLabel.setText("Enter UID:")
+URLBox = NewTextBox(MainWindow.QWin, 120, 160, 591, 31)
+URLBox.setPlaceHolderText("Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>")
+TUIDBox = NewTextBox(MainWindow.QWin, 120, 200, 591, 31)
+TUIDBox.setPlaceHolderText("Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
 ui = GUIWindow(MainWindow.QWin)
 MainWindow.QWin.show()
 sys.exit(App.QApp.exec_())
