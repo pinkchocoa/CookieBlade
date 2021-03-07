@@ -7,16 +7,8 @@ from newWindow import Ui_newWindow
 
 class GUIWindow:
     def __init__(self, Window):
-        self.setLogo(Window)
         self.setTextBox(Window)
         self.setSearchButton(Window)
-
-    def setLogo(self, Window):
-        self.logo = QLabel(Window)
-        self.logo.setGeometry(QtCore.QRect(230, 70, 331, 81))
-        self.logo.setText("")
-        self.logo.setPixmap(QtGui.QPixmap("GUIMainLogo.PNG"))
-        self.logo.setScaledContents(True)
     
     def setTextBox(self, Window):
         self.urlbox = QLineEdit(Window)
@@ -58,6 +50,9 @@ class GUIWindow:
 App = StartApp()
 MainWindow = NewWindow("Cookie Crawler", 800, 600)
 MainWindow.setWindowIcon("CookieIcon.png")
+WindowLogo = NewLabel(MainWindow.QWin, 230, 70, 331, 81)
+WindowLogo.setText("")
+WindowLogo.setImage("GUIMainLogo.PNG")
 URLLabel = NewLabel(MainWindow.QWin,60, 160, 61, 31)
 URLLabel.setText("Enter URL:")
 UIDLabel = NewLabel(MainWindow.QWin,260, 200, 61, 31)
