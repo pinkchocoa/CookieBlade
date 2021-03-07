@@ -95,13 +95,6 @@ class Twitter:
         # 'promoted_content': None, 'query': '%23UFC259', 'tweet_volume': 408621}, {...} ]}
         # probably just want the name and tweet volume
 
-    def searchLocKeyword(self, location, keyword):
-        pass
-
-#TREND FUNCTIONS
-#get trending topics
-#get trending topics by location
-
 #ENGAGEMENT FUNCTIONS
 #get user most fav tweet
 #get user most engaged tweet
