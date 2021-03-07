@@ -1,6 +1,7 @@
 import tweepy #twitter api (https://docs.tweepy.org/) pip install tweepy
 import apikey #api keys are stored here
 from urllib.parse import urlparse
+import json
 
 class Twitter:
     CONSUMER_KEY = apikey.T_CONSUMER_KEY
@@ -47,6 +48,28 @@ class Twitter:
         #tweet.favorite_count
 
         return recentTweets
+
+    def trendingTopics(self):
+        print(self.api.trends_available())
+
+    def locTopics(self):
+        topics = {} #create a dictionary to store name and tweet volume
+        latSG = 1.3521
+        lngSG = 103.8198
+        loc =  self.api.trends_closest(latSG, lngSG)
+        allTrends = self.api.trends_place(loc[0]['woeid'])
+        trends = json.loads(json.dumps(allTrends, indent=1))
+        for x in trends[0]["trends"]:
+            topics[x["name"]] = x["tweet_volume"]
+
+        return topics
+        #need to parse...
+        #return format of a single trend
+        # {'trends': [{'name': '#UFC259', 'url': 'http://twitter.com/search?q=%23UFC259', 
+        # 'promoted_content': None, 'query': '%23UFC259', 'tweet_volume': 408621}, {...} ]}
+        # probably just want the name and tweet volume
+
+
 
     def searchLocation(self, location):
         pass

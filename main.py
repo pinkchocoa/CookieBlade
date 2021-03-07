@@ -52,6 +52,11 @@ def crawl():
 
 #twitter test
 
+def defaultTwt():
+    tTest = Twitter()
+    #tTest.trendingTopics() 
+    print(tTest.locTopics())
+
 def testTweet():
     #tTweet = TTweet(1360670340934815750)
     tTweet = TTweet.byURL("https://twitter.com/twitter/statuses/1360670340934815750")
@@ -68,7 +73,8 @@ def testUser():
 print("twitter test")
 #t = Twitter()
 #testTweet()
-testUser()
+#testUser()
+defaultTwt()
 
 #print(t.followCount("pinkchocoa"))
 #print(t.followCount("LilyPichu"))
