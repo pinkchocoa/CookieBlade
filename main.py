@@ -45,11 +45,43 @@ def crawl():
         create_jobs()
 
 
-queue = Queue() #create queue for spider threads
-Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
-create_workers()
-crawl()
+#queue = Queue() #create queue for spider threads
+#Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
+#create_workers()
+#crawl()
 
 #twitter test
+
+def defaultTwt():
+    tTest = Twitter()
+    #tTest.trendingTopics() 
+    latSG = 1.3521
+    lngSG = 103.8198
+    #print(tTest.trendingTopics(True))
+    #print(tTest.trendingTopics(False, latSG, lngSG))
+    print(tTest.searchKeyword("MAMAMOO", "recent", True))
+    print(tTest.searchKeyword("MAMAMOO", "popular"))
+    
+
+def testTweet():
+    #tTweet = TTweet(1360670340934815750)
+    tTweet = TTweet.byURL("https://twitter.com/twitter/statuses/1360670340934815750")
+    print(tTweet.favCount())
+    print(tTweet.RTCount())
+    print(tTweet.loc())
+
+def testUser():
+    #tUser = TUser("LilyPichu")
+    tUser = TUser.byURL("https://twitter.com/LilyPichu")
+    print(tUser.tweetCount())
+    print(tUser.followCount())
+
+print("twitter test")
 #t = Twitter()
-#t.printHomePage()
+#testTweet()
+#testUser()
+defaultTwt()
+
+#print(t.followCount("pinkchocoa"))
+#print(t.followCount("LilyPichu"))
+#print(t.searchKeyword("MAMAMOO"))
