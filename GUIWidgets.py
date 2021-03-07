@@ -11,13 +11,13 @@ class StartApp:
 
 #Class to create a new Window
 class NewWindow:
-    def __init__(self, name, xlen, ylen):
-        #Initialize new instance of window ui
+    def __init__(self, name, lenx, leny):
+        #Initialize new instance of Window UI
         self.QWin = QMainWindow()
         #Set Window Title
         self.QWin.setWindowTitle(name)
         #Set Window Size
-        self.QWin.resize(xlen,ylen)
+        self.QWin.resize(lenx,leny)
 
     #Method to set Window icon image
     def setWindowIcon(self,image):
@@ -25,11 +25,11 @@ class NewWindow:
 
 #Class to create a new Label
 class NewLabel:
-    def __init__(self, Window, posx, posy, xlen, ylen):
-        #Window parameter to control which window it appears on
+    def __init__(self, Window, posx, posy, lenx, leny):
+        #Initialize new instance of Label UI
         self.label = QLabel(Window)
         #Set window x & y position and window size
-        self.label.setGeometry(QtCore.QRect(posx,posy,xlen,ylen))
+        self.label.setGeometry(QtCore.QRect(posx,posy,lenx,leny))
         #Set alignment of Label text to align center
         self.label.setAlignment(QtCore.Qt.AlignCenter)
 
@@ -43,3 +43,15 @@ class NewLabel:
         self.label.setPixmap(QtGui.QPixmap(image))
         #Enable image scaling to fit Label size
         self.label.setScaledContents(True)
+
+#Class to create new TextBox
+class NewTextBox:
+    def __init__(self, Window, posx, posy, lenx, leny):
+        #Initialize new instance of TextBox UI
+        self.textbox = QLineEdit(Window)
+        #Set window x & y position and window size
+        self.textbox.setGeometry(QtCore.QRect(posx, posy, lenx, leny))
+
+    #Method to set palceholder text
+    def setPlaceHolderText(self, text):
+        self.textbox.setPlaceholderText(text)
