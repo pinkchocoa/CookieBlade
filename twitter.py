@@ -118,7 +118,7 @@ class Twitter:
     #{'topic that is trending': tweet volume, ...}
     def trendingTopics(self, worldWide = True, lat=1.3521, lng=103.8198):
         """! searches through twitter for trending topics
-        @param self
+        @param self instance of the object that we are calling from
         @param worldWide True to search worldwide, False to search by location
         @param lat lattitude, default value set to singapore's. not in use for worldwide results
         @param lng longtitude, default value set to singapore's. not in use for worldwide results
@@ -155,18 +155,34 @@ class Twitter:
 #able to parse url to grab the username behind for this class
 #accepts both URL and tweetID
 class TUser(Twitter):
+    """! TUser class
+    This class inherits the base Twitter class for API access.
+    This class contains methods specifically related to a twitter user
+    """
 
     def __init__(self, username):
+        """! TUser class initializer
+        @param username username of the twitter account to fetch data of
+        @return an instance of TUser class
+        """
         super().__init__()
         self.username = username
         self.user = self.api.get_user(self.username)
 
     @classmethod
     def byID(cls, username):
+        """! class method that creates a TUser instance with username
+        @param username username of the twitter account to fetch data of
+        @return an instance of TUser class
+        """
         return cls(username)
     
     @classmethod
     def byURL(cls, URL):
+        """! class method that creates a TUser instance with a profile url
+        @param url profile url of the twitter account to fetch data of
+        @return an instance of TUser class
+        """
         urlpath = urlparse(URL).path
         #path would be username/status/tweetid
         res = urlpath.split('/')
@@ -175,14 +191,26 @@ class TUser(Twitter):
 
     #gets user's current follow count
     def followCount(self):
+        """! gets user's current follow count
+        @param self instance of the object that we are calling from
+        @return user's follow count (integer)
+        """
         return self.user.followers_count
 
     #gets user's current tweet count
     def tweetCount(self):
+        """! gets user's current tweet count
+        @param self instance of the object that we are calling from
+        @return user's tweet count (integer)
+        """
         return self.user.statuses_count
 
     #returns city, state
     def userLoc(self):
+        """! gets user's location (that is set on their profile)
+        @param self instance of the object that we are calling from
+        @return user's location, in the format of "city, state" (should be a string)
+        """
         return self.user.location
 
     #gets user's recent followers
@@ -199,6 +227,10 @@ class TUser(Twitter):
     # https://t.co/FUfUnGE0K8\n\n#MAMAMOO #무무 #무무투어 https://t.co/psEmDli6nx', ['http://pbs.twimg.com/media/EveC0FwVoAQQSkf.jpg']]
     # https://twitter.com/RBW_MAMAMOO/status/1366704850671525890?s=20
     def userFav(self):
+        """! get user's favourite tweets
+        @param self instance of the object that we are calling from
+        @return returns a list of tweets that the user have favourite/liked in the format of [ ['username', 'content', 'images if any'], [...] ]
+        """
         fav=[]
         for tweet in tweepy.Cursor(self.api.favorites, id=self.username, 
             lang="en", wait_on_rate_limit=True,
