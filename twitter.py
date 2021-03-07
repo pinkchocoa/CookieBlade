@@ -24,14 +24,17 @@ class Twitter:
 
 #SEARCH FUNCTIONS
     # by default it will search worldwide
-    def searchKeyword(self, keyword, getLoc = False, lat=1.3521, lng=103.8198):
+    # mixed : include both popular and real time results in the response
+    # recent : return only the most recent results in the response
+    # popular : return only the most popular results in the response
+    def searchKeyword(self, keyword, rType = "recent", getLoc = False, lat=1.3521, lng=103.8198):
         #recent tweets
         recentTweets = []
         if getLoc:
             loc =  self.api.trends_closest(lat, lng)
             place = loc[0]['name']
             #200km radius of specified location
-            loc = str(lat) + "," + str(lng) + ",200km"
+            loc = str(lat) + "," + str(lng) + ",700km"
             #print("test", loc)
         else:
             loc = ""
@@ -41,6 +44,7 @@ class Twitter:
             self.api.search,
             q=keyword + " -filter:retweets",
             geocode = loc, lang="en",
+            result_type = rType,
             wait_on_rate_limit=True,
             tweet_mode="extended"
         ).items(10):
