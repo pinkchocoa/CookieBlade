@@ -11,7 +11,7 @@ class StartApp:
 
 #Class to create a new Window
 class NewWindow:
-    def __init__(self,name,xlen,ylen):
+    def __init__(self, name, xlen, ylen):
         #Initialize new instance of window ui
         self.QWin = QMainWindow()
         #Set Window Title
@@ -25,7 +25,7 @@ class NewWindow:
 
 #Class to create a new Label
 class NewLabel:
-    def __init__(self, Window,posx,posy,xlen,ylen):
+    def __init__(self, Window, posx, posy, xlen, ylen):
         #Window parameter to control which window it appears on
         self.label = QLabel(Window)
         #Set window x & y position and window size
@@ -34,5 +34,12 @@ class NewLabel:
         self.label.setAlignment(QtCore.Qt.AlignCenter)
 
     #Method to set Label Text
-    def setText(self,text):
+    def setText(self, text):
         self.label.setText(text)
+    
+    #Method to display image in Label
+    def setImage(self, image):
+        #Set display image in parameter in Label
+        self.label.setPixmap(QtGui.QPixmap(image))
+        #Enable image scaling to fit Label size
+        self.label.setScaledContents(True)
