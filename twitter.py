@@ -49,19 +49,23 @@ class Twitter:
 
         return recentTweets
 
-    def trendingTopics(self):
-        print(self.api.trends_available())
-
-    def locTopics(self):
+    #true for worldwide, otherwise false and give own location (lat and lng)
+    #leave location blank for singapore
+    def trendingTopics(self, worldWide, lat=1.3521, lng=103.8198):
         topics = {} #create a dictionary to store name and tweet volume
-        latSG = 1.3521
-        lngSG = 103.8198
-        loc =  self.api.trends_closest(latSG, lngSG)
-        allTrends = self.api.trends_place(loc[0]['woeid'])
+        if not worldWide:
+            loc =  self.api.trends_closest(lat, lng)
+            allTrends = self.api.trends_place(loc[0]['woeid'])
+            print("returning trends for", loc[0]['name'])
+        else:
+            allTrends = self.api.trends_place(id = 1)
+            print("returning worldwide trends..")
+        
         trends = json.loads(json.dumps(allTrends, indent=1))
         for x in trends[0]["trends"]:
+            #might wanna remove the #?
             topics[x["name"]] = x["tweet_volume"]
-
+        
         return topics
         #need to parse...
         #return format of a single trend

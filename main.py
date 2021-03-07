@@ -55,7 +55,11 @@ def crawl():
 def defaultTwt():
     tTest = Twitter()
     #tTest.trendingTopics() 
-    print(tTest.locTopics())
+    latSG = 1.3521
+    lngSG = 103.8198
+    print(tTest.trendingTopics(True))
+    print(tTest.trendingTopics(False, latSG, lngSG))
+    
 
 def testTweet():
     #tTweet = TTweet(1360670340934815750)
