@@ -5,14 +5,13 @@ from domain import *
 from general import *
 from twitter import *
 
+NUMBER_OF_THREADS = 8
+NUMBER_OF_RESULTS = 5
 PROJECT_NAME = 'reddit'
-HOMEPAGE = 'https://www.reddit.com/r/mamamoo/'
-DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
 RESULT_FILE = PROJECT_NAME + '/result.txt'
-NUMBER_OF_THREADS = 8
-NUMBER_OF_RESULTS = 5
+queue = Queue() #create queue for spider threads
 
 # Create worker threads (will die when main exits)
 def create_workers():
@@ -52,12 +51,27 @@ def crawl():
         print(str(len(queued_links)) + ' links in the queue')
         create_jobs()
 
+def createSpider(filterList, subDomain, topic=""):
+    #HOMEPAGE = 'https://news.google.com/search?q='
+    HOMEPAGE = 'https://www.reddit.com/r/mamamoo/'
+    DOMAIN_NAME = get_domain_name(HOMEPAGE)
 
-filterList = ['solar','r/mamamoo']
-queue = Queue() #create queue for spider threads
-Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, 'r/mamamoo', filterList) #create first spider
-create_workers()
-crawl()
+    for word in topic.split():
+        HOMEPAGE += word
+        HOMEPAGE += "+"
+        print (HOMEPAGE)
+    
+    Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, subDomain, filterList) #create first spider
+    create_workers()
+    crawl()
+
+
+#topic = "covid test"
+filterList = ['solar']
+#filterList = ['articles']
+#subDomain = ""
+subDomain = "r/mamamoo"
+createSpider(filterList, subDomain)
 
 #twitter test
 
