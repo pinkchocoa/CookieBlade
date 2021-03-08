@@ -6,11 +6,13 @@ from general import *
 from twitter import *
 
 PROJECT_NAME = 'reddit'
-HOMEPAGE = 'https://www.reddit.com/r/pokemon/'
+HOMEPAGE = 'https://www.reddit.com/r/mamamoo/'
 DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
+RESULT_FILE = PROJECT_NAME + '/result.txt'
 NUMBER_OF_THREADS = 8
+NUMBER_OF_RESULTS = 5
 
 # Create worker threads (will die when main exits)
 def create_workers():
@@ -38,6 +40,12 @@ def create_jobs():
 
 # Check if there are items in the queue, if so crawl them
 def crawl():
+    result_links = file_to_set(RESULT_FILE)
+
+    if len(result_links) >= NUMBER_OF_RESULTS:
+        print("enough results")
+        return
+
     queued_links = file_to_set(QUEUE_FILE)
 
     if len(queued_links) > 0:
@@ -45,8 +53,9 @@ def crawl():
         create_jobs()
 
 
+filterList = ['solar','r/mamamoo']
 queue = Queue() #create queue for spider threads
-Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, 'art') #create first spider
+Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, 'r/mamamoo', filterList) #create first spider
 create_workers()
 crawl()
 

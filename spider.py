@@ -31,6 +31,7 @@ class Spider:
     projectName = ''
     baseUrl = ''
     domainName = ''
+    subDomain = ''
     queueFile = ''
     crawledFile = ''
     resultFile = ''
@@ -40,7 +41,7 @@ class Spider:
     word = ''
 
     # __init__ is the constructor name for all classes
-    def __init__(self, projectName, baseUrl, domainName, word=''):
+    def __init__(self, projectName, baseUrl, domainName, subDomain = '', word=[]):
         """! Spider class initializer
         @param projectName name of the project, used for directory
         @param baseUrl url of the homepage to be crawled
@@ -51,6 +52,7 @@ class Spider:
         Spider.projectName = projectName
         Spider.baseUrl = baseUrl
         Spider.domainName = domainName
+        Spider.subDomain = subDomain
         Spider.queueFile = Spider.projectName + '/queue.txt'
         Spider.crawledFile = Spider.projectName + '/crawled.txt'
         Spider.resultFile = Spider.projectName + '/result.txt'
@@ -72,7 +74,13 @@ class Spider:
     @staticmethod
     def filter(pageUrl):
         print("filter")
-        if Spider.word in pageUrl:
+        test = 0
+        for x in Spider.word:
+            if x in pageUrl:
+                continue
+            else:
+                test = 1
+        if test == 0:
             Spider.result.add(pageUrl)
 
     # Updates user display, fills queue and updates files
@@ -128,6 +136,8 @@ class Spider:
                 continue
             # only crawl if url is in the same domain
             if Spider.domainName != get_domain_name(url):
+                continue
+            if Spider.subDomain not in url:
                 continue
             Spider.queue.add(url)
 
