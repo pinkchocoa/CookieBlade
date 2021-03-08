@@ -6,7 +6,7 @@ from general import *
 from twitter import *
 
 PROJECT_NAME = 'reddit'
-HOMEPAGE = 'https://www.reddit.com/'
+HOMEPAGE = 'https://www.reddit.com/r/pokemon/'
 DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
@@ -45,10 +45,10 @@ def crawl():
         create_jobs()
 
 
-#queue = Queue() #create queue for spider threads
-#Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
-#create_workers()
-#crawl()
+queue = Queue() #create queue for spider threads
+Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, 'art') #create first spider
+create_workers()
+crawl()
 
 #twitter test
 
@@ -79,3 +79,5 @@ def testUser():
     print(tUser.userFav())
 
 #print("twitter test")
+
+#testUser()

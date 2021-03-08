@@ -33,11 +33,14 @@ class Spider:
     domainName = ''
     queueFile = ''
     crawledFile = ''
+    resultFile = ''
     queue = set()
     crawled = set()
+    result = set()
+    word = ''
 
     # __init__ is the constructor name for all classes
-    def __init__(self, projectName, baseUrl, domainName):
+    def __init__(self, projectName, baseUrl, domainName, word=''):
         """! Spider class initializer
         @param projectName name of the project, used for directory
         @param baseUrl url of the homepage to be crawled
@@ -50,6 +53,8 @@ class Spider:
         Spider.domainName = domainName
         Spider.queueFile = Spider.projectName + '/queue.txt'
         Spider.crawledFile = Spider.projectName + '/crawled.txt'
+        Spider.resultFile = Spider.projectName + '/result.txt'
+        Spider.word = word
         self.boot()
         self.crawl_page('First spider', Spider.baseUrl)
 
@@ -62,6 +67,13 @@ class Spider:
         create_data_files(Spider.projectName, Spider.baseUrl)
         Spider.queue = file_to_set(Spider.queueFile)
         Spider.crawled = file_to_set(Spider.crawledFile)
+        Spider.result = file_to_set(Spider.resultFile)
+
+    @staticmethod
+    def filter(pageUrl):
+        print("filter")
+        if Spider.word in pageUrl:
+            Spider.result.add(pageUrl)
 
     # Updates user display, fills queue and updates files
     @staticmethod
@@ -70,6 +82,7 @@ class Spider:
         @param threadName name of the thread 
         @param pageUrl url link
         """
+        print("crawl_page")
         # check that it has not already been crawled 
         if pageUrl not in Spider.crawled:
             # print what you are crawling
@@ -78,6 +91,7 @@ class Spider:
             Spider.add_links_to_queue(Spider.gather_links(pageUrl))
             Spider.queue.remove(pageUrl) #done crawling, remove from set
             Spider.crawled.add(pageUrl) #move to crawled
+            Spider.filter(pageUrl)
             Spider.update_files()
 
     # Converts raw response data into readable information and checks for proper html formatting
@@ -87,6 +101,7 @@ class Spider:
         @param pageUrl url link
         @return a set of links 
         """
+        print("gather_links")
         html_string = ''
         try:
             response = urlopen(pageUrl)
@@ -107,6 +122,7 @@ class Spider:
         """! Saves queue data to project files
         @param links
         """
+        print("add_links_to_queue")
         for url in links:
             if (url in Spider.queue) or (url in Spider.crawled):
                 continue
@@ -119,5 +135,8 @@ class Spider:
     def update_files():
         """! update sets to files, saves queued and crawled url into a txt file
         """
+        print("update_files")
         set_to_file(Spider.queue, Spider.queueFile)
         set_to_file(Spider.crawled, Spider.crawledFile)
+        set_to_file(Spider.result, Spider.resultFile)
+        
