@@ -80,7 +80,7 @@ def vidInfo(video):
     except Exception as e:
         video.likeCount = 0
     try:
-        video.dislikeCount = reply["items"][0]["statistics"]["viewCount"]
+        video.dislikeCount = reply["items"][0]["statistics"]["dislikeCount"]
     except Exception as e:
         video.dislikeCount = 0
     return video
