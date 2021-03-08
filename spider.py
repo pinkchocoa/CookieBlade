@@ -70,6 +70,7 @@ class Spider:
         Spider.queue = file_to_set(Spider.queueFile)
         Spider.crawled = file_to_set(Spider.crawledFile)
         Spider.result = file_to_set(Spider.resultFile)
+        Spider.add_links_to_queue([Spider.baseUrl])
 
     @staticmethod
     def filter(pageUrl):
