@@ -9,12 +9,14 @@
 #   - access to PyQt5 GUI functions
 # - PyQt5.QtWidgets external library
 #   - access to PyQt5 UI Widgets
+# - pyqtgraph external library (pip install pyqtgraph)
+#   - access to graph functions
 
 #Imports
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
-from pyqtgraph import PlotWidget, plot
+from pyqtgraph import PlotWidget, plot, exporters
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -168,7 +170,7 @@ class NewGraph:
         @param color used to determine the line color of graph
         @param points used to determine symbol used to mark points
         """
-        self.Graph.plot(axisX, axisY, pen = color, symbol = points)
+        self.exporter = self.Graph.plot(axisX, axisY, pen = color, symbol = points)
     
     def setBackGroundColor(self, color):
         """! setBackGroundColor method
@@ -202,4 +204,9 @@ class NewGraph:
         storeAxis = self.Graph.getAxis(axisLabel)
         getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
         storeAxis.setTicks([getValues, []])
+    
+    def exportGraph(self):
+        exporter = exporters.ImageExporter(self.Graph.plotItem)
+        exporter.parameters()['width'] = 800
+        exporter.export("Graph.png")
     
