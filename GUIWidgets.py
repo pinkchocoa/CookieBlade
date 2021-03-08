@@ -5,7 +5,7 @@
 # @section libraries_main Libraries/Modules
 # - sys standard library (https://docs.python.org/3/library/sys.html)
 #   - access to sys.argv and sys.exit functions
-# - PyQt5 external library
+# - PyQt5 external library (pip install pyqt5)
 #   - access to PyQt5 GUI functions
 # - PyQt5.QtWidgets external library
 #   - access to PyQt5 UI Widgets
@@ -14,6 +14,7 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
+from pyqtgraph import PlotWidget, plot
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -141,3 +142,22 @@ class NewPushButton:
         @param text used to set the text to be displayed by the label
         """
         self.PushButton.setText(text)
+    
+class NewGraph:
+    def __init__(self, window, posX, posY, lenX, lenY):
+        self.Graph = PlotWidget(window)
+        self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+
+    def plotGraph(self, axisX, axisY, color, points):
+        self.Graph.plot(axisX, axisY, pen = color, symbol = points)
+    
+    def setBackGroundColor(self, color):
+        self.Graph.setBackground(color)
+    
+    def setGraphTitle(self, title, titleColor, titleSize):
+        self.Graph.setTitle(title, color = titleColor, size = titleSize)
+
+    def setAxisLabel(self,position, label, labelColor, LabelSize):
+        fontstyle = {"color":labelColor, "font-size":LabelSize}
+        self.Graph.setLabel(position, label, **fontstyle)
+    

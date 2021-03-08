@@ -1,4 +1,5 @@
 from GUIWidgets import *
+from graphwindow import GraphWindow
 
 def searchClicked():
     YTURL = URLBox.textbox.text()
@@ -7,6 +8,7 @@ def searchClicked():
         print("Error!")
     else:
         print(YTURL,TURL)
+        GraphWindow.QWin.show()
 
 App = StartApp()
 MainWindow = NewWindow("Cookie Crawler", 800, 600)
