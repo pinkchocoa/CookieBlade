@@ -40,9 +40,13 @@ class spiderWorker:
         url = self.queue.get()
         Spider.crawl_page("1", url)
 
-delete_file_contents(QUEUE_FILE)
-delete_file_contents(CRAWLED_FILE)
-delete_file_contents(RESULT_FILE)
-while len(Spider.result) < NUMBER_OF_RESULTS:
-    spiderWorker(['articles'], "covid test")
+def spidey(filterList="", topic=""):
+    delete_file_contents(QUEUE_FILE)
+    delete_file_contents(CRAWLED_FILE)
+    delete_file_contents(RESULT_FILE)
+    while len(Spider.result) < NUMBER_OF_RESULTS:
+        spiderWorker(filterList,topic)
+
+spidey(['articles'],"covid test")
+
 print("test")
