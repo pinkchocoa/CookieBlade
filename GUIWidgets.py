@@ -14,6 +14,7 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -78,6 +79,9 @@ class NewLabel:
         @param text used to set the text to be displayed by the label
         """
         self.label.setText(text)
+
+    def setFont(self, fontStyle, fontSize):
+        self.label.setFont(QFont(fontStyle, fontSize))
     
     #Method to display image in Label
     def setImage(self, image):

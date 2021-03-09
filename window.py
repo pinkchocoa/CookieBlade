@@ -2,6 +2,8 @@ from windowGen import *
 wWidth = 1080
 wHeight = 720
 
+bWidth = 150
+bHeight = 80
 
 
 def snsMenu():
