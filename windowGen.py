@@ -4,27 +4,31 @@ def emptyFn():
     pass
 
 class windowGen(NewWindow):
-    totalNLabel = 1
-    totalNText = 1
-    totalNPush = 1
+    totalNLabel = 0
+    totalNText = 0
+    totalNPush = 0
+    totalNGraph = 0
 
     labelList = []
     textList = []
     pushList = []
+    graphList = []
 
 
-    def __init__(self, name, width, height, nLabel,nText,nPush):
+    def __init__(self, name, width, height, nLabel=0,nText=0,nPush=0, nGraph=0):
         super().__init__(name, width, height)
 
         #to keep track of what i've set, all widgets unset are at 0,0,0,0
         self.nLabel = 0
         self.nText = 0
         self.nPush = 0
+        self.nGraph = 0
 
         #total number of widgets that this window owns
         self.totalNLabel = nLabel
         self.totalNText = nText
         self.totalNPush = nPush
+        self.totalNGraph = nGraph
         
         for x in range(nLabel):
             self.labelList.append(NewLabel(self.QWin,0,0,0,0))
@@ -32,6 +36,31 @@ class windowGen(NewWindow):
             self.textList.append(NewTextBox(self.QWin,0,0,0,0))
         for x in range(nPush):
             self.pushList.append(NewPushButton(self.QWin,0,0,0,0,emptyFn))
+        for x in range(nGraph):
+            self.graphList.append(NewGraph(self.QWin, 0, 0, 800, 800))
+
+    def addNewGraph(self):
+        self.graphList.append(NewGraph(self.QWin, 0, 0, 800, 800))
+        self.totalNGraph+=1
+
+    def setGraph(self,posX, posY, lenX, lenY,
+    axisX, axisY, lineColor, points,
+    bgColor,
+    title, titleColor, titleSize,
+    position, label, labelColor, labelSize,
+    axisLabel="left", axis=[]):
+        if self.nGraph >= self.totalNGraph:
+            self.addNewGraph()
+        Graph = self.graphList[self.nGraph].Graph
+        Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        #Enables graph to show grid
+        Graph.showGrid(x = True, y = True)
+        Graph.plotGraph(axisX, axisY, lineColor, points)
+        Graph.setBackGroundColor(bgColor)
+        Graph.setGraphTitle(title, titleColor, titleSize)
+        Graph.setAxisLabel(position, label, labelColor, labelSize)
+        if axis:
+            Graph.setAxisIntervalTo1(axisLabel, axis)
 
     def addNewLabel(self):
         self.labelList.append(NewLabel(self.QWin,0,0,0,0))
