@@ -48,19 +48,23 @@ class windowGen(NewWindow):
     bgColor,
     title, titleColor, titleSize,
     position, label, labelColor, labelSize,
+    position2, label2, labelColor2, labelSize2,
     axisLabel="left", axis=[]):
         if self.nGraph >= self.totalNGraph:
             self.addNewGraph()
-        Graph = self.graphList[self.nGraph].Graph
-        Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        Graph = self.graphList[self.nGraph]
+        Graph.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         #Enables graph to show grid
-        Graph.showGrid(x = True, y = True)
+        Graph.Graph.showGrid(x = True, y = True)
+        #Graph.plot(axisX, axisY, pen = lineColor, symbol = points)
         Graph.plotGraph(axisX, axisY, lineColor, points)
         Graph.setBackGroundColor(bgColor)
         Graph.setGraphTitle(title, titleColor, titleSize)
         Graph.setAxisLabel(position, label, labelColor, labelSize)
+        Graph.setAxisLabel(position2, label2, labelColor2, labelSize2)
         if axis:
             Graph.setAxisIntervalTo1(axisLabel, axis)
+        self.nGraph+=1
 
     def addNewLabel(self):
         self.labelList.append(NewLabel(self.QWin,0,0,0,0))

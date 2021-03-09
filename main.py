@@ -18,7 +18,10 @@ def createMainWindow():
     nLabel = 1
     nText = 2
     nPush = 1
-    w = windowGen("Cookie Crawler", wWidth, wHeight, nLabel, nText, nPush)
+    nGraph = 1
+    day = [0,1,2,3,4,5,6,7,8,9,10]
+    views = [0,30,32,34,32,33,31,29,32,35,45]
+    w = windowGen("Cookie Crawler", wWidth, wHeight, nLabel, nText, nPush, nGraph)
     w.setWindowIcon("CookieIcon.png")
     w.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
     w.setLabel(60, 160, 61, 31,"Enter URL:")
@@ -26,6 +29,13 @@ def createMainWindow():
     w.setTextbox(120, 200, 591, 31,"Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
     w.setPush(370, 250, 81, 41, startCrawl,"Crawl Link!")
     w.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
+    w.setGraph(0, 0, 800, 600, 
+    day, views, "b", "o",
+    "w",
+    "View Count Graph", "r", "30pt",
+    "left", "Views", "red", "20pt",
+    "bottom", "Day", "red", "20pt",
+    "left", views)
     w.show()
     return w
 
@@ -42,11 +52,13 @@ def secondWindow():
     return y
 
 
-
+def testChangeWindow():
+    w.hide()
+    y.show()
 
 
 App = StartApp() #init
-w = wind.mainMenu()
+w = createMainWindow()
 w.show()
 y= secondWindow()
 sys.exit(App.QApp.exec_()) #System X
