@@ -20,9 +20,16 @@ from mkFolder import mkFolder
 # table can be inserted with data for storage
 # table can also be retrieve for data of user
 class database(mkFolder):
+    """! database class
+    This class inherits the mkFolder class for directory creation.
+    This class contains methods specifically related to the database.
+    """
 
     #init
     def __init__(self, UserUrl):
+        """! database class initializer
+        @param UserUrl
+        """
         self.UserUrl = UserUrl
         self.arg = self.__createDB(UserUrl)
         self.uid = self.getUniqueID(UserUrl)        
@@ -88,7 +95,7 @@ class database(mkFolder):
         """! retrieve data from database based on UserID and site.
         @param argCol E.g., '<C# or Date>'
         @param argWhere E.g., 'WHERE <C# or Date> = <#>
-        @return data in python list format
+        @return data in python 2d list format
         """
         templist = []
         connect = sqlite3.connect(self.arg)
@@ -105,8 +112,15 @@ class database(mkFolder):
 
     #def parse format (col, filter) where col = C1 or C2 default *. where argWhere = 'WHERE C1 = 198'
     def __setTableArg(self, argCol='*', argWhere = ''):
+        """! set table arugment to be pass.
+        @param argCol, default: '*' or 'C#'
+        @param argWhere default: '' or 'WHERE <C# or Date> = <#>'
+        @return tableArg string arugment to be executed.
+        """
         tableArg = 'SELECT ' + argCol + ' FROM ' + self.uid + ' ' + argWhere
         return tableArg
+
+
 
 #Testing
 # tuser = database("https://twitter.com/johnnywharris")
