@@ -1,20 +1,18 @@
 from urllib.parse import urlparse
 
-#this file is to get the domain name of the url
 
-def extractDomainName(url):
+# Get domain name (example.com)
+def get_domain_name(url):
     try:
-        # split by period
-        # e.g. www.google.com
-        result = extractSubDomainName(url).split('.')
-        # return google + . + com
-        return result[-2] + '.' + result[-1]
+        results = get_sub_domain_name(url).split('.')
+        return results[-2] + '.' + results[-1]
     except:
-        return ""
+        return ''
 
 
-def extractSubDomainName(url):
+# Get sub domain name (name.example.com)
+def get_sub_domain_name(url):
     try:
-        return urlparse(url).netloc # network location
+        return urlparse(url).netloc
     except:
-        return "" # failed
+        return ''
