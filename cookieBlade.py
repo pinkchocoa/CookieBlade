@@ -9,44 +9,44 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox #red underline can be ignored. for now..
 
 #persistant data
-ytURL = "" #https://www.youtube.com/channel/UCmGSJVG3mCRXVOP4yZrU1Dw #Johnny Harris
-twURL = "" #https://twitter.com/johnnywharris #Johnny harris
-ytUser = ""
-twUser = ""
+youtubeURL = "" #https://www.youtube.com/channel/UCmGSJVG3mCRXVOP4yZrU1Dw #Johnny Harris
+twitterURL = "" #https://twitter.com/johnnywharris #Johnny harris
+youtubeUsername = ""
+twitterUsername = ""
 
 #Link Validation and input correctness checks before crawling
 def startCrawl():
 
-    global ytURL, twURL, twUser
-    ytURL = ytBox.textbox.text()
-    twURL = twBox.textbox.text()
-    UID = UrlExtraction()
-    twUser = UID.getUniqueID(twURL)
+    global youtubeURL, twitterURL, youtubeUsername, twitterUsername
+    youtubeURL = ytBox.textbox.text()
+    twitterURL = twBox.textbox.text()
+    userID = UrlExtraction()
+    twitterUsername = userID.getUniqueID(twitterURL)
  
     linkCheck()
-    twCrawl()
+    #twitterCrawl()
+    resultWindow()
 
-
-#Check Link and Entry Fields
+#User input exception handling
 def linkCheck():
-    global twURL,ytURL
+    global twitterURL,youtubeURL
 
     #Check if Box is empthy
-    if (ytURL == "" or twURL == ""):
+    if (youtubeURL == "" or twitterURL == ""): #check if text box is empty
         msgBox = QMessageBox()
         msgBox.setWindowTitle("Error!")
         msgBox.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
         msgBox.setIcon(QMessageBox.Critical)
         msgBox.setText("Error! Missing URLs!")
         msgBox.exec_()
-    elif("twitter" in ytURL):
+    elif("twitter" in youtubeURL): #check if twitter link is placed in youtube box.
         msgBox = QMessageBox()
         msgBox.setWindowTitle("Error!")
         msgBox.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
         msgBox.setIcon(QMessageBox.Critical)
         msgBox.setText("Error! Twitter URL in wrong box.")
         msgBox.exec_()
-    elif("youtube" in twURL):
+    elif("youtube" in twitterURL): #check if youtube link is placed in twitter box.
         msgBox = QMessageBox()
         msgBox.setWindowTitle("Error!")
         msgBox.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
@@ -55,19 +55,19 @@ def linkCheck():
         msgBox.exec_()
     #check if URL is valid
     else:
-        ytCheck = LinkValidation()
-        twCheck = LinkValidation()
-        ytStatus = ytCheck.UrlValidation(ytURL)
-        twStatus = twCheck.UrlValidation(twURL)
+        youtubeCheck = LinkValidation()
+        twitterCheck = LinkValidation()
+        youtubeStatus = youtubeCheck.UrlValidation(youtubeURL)
+        twitterStatus = twitterCheck.UrlValidation(twitterURL)
 
-        if (ytStatus == False):
+        if (youtubeStatus == False):
             msgBox = QMessageBox()
             msgBox.setWindowTitle("Error!")
             msgBox.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
             msgBox.setIcon(QMessageBox.Critical)
             msgBox.setText("Invalid Youtube URL")
             msgBox.exec_()
-        elif(twStatus == False):
+        elif(twitterStatus == False):
             msgBox = QMessageBox()
             msgBox.setWindowTitle("Error!")
             msgBox.setWindowIcon(QtGui.QIcon("CookieIcon.png"))
@@ -79,35 +79,40 @@ def linkCheck():
 
 #start twitter crawling
 #crawl and save to database
-def twCrawl():
+def twitterCrawl():
     
-    global twURL,twUser
+    global twitterURL,twitterUsername
 
-    data = [] #max 10 items.
+    crawledData = [] #max 10 items.
     #Pad data list with None
     for i in range(10):
-        data.append(None)
+        crawledData.append(None)
 
     #begin crawling and adding to list
-    twitterCrawl = TUser(twUser)
+    twitterCrawl = TUser(twitterUsername)
     temp = twitterCrawl.followCount()
-    data[0] = str(temp)
+    crawledData[0] = str(temp)
     temp = twitterCrawl.tweetCount()
-    data[1] = str(temp)
+    crawledData[1] = str(temp)
 
     #store to database
     store = database()
-    store.insertTableDB(twURL,data)
+    store.insertTableDB(twitterURL,crawledData)
 
- 
 #start youtube crawling
 #crawl and save to database
-def ytCrawl():
+def youtubeCrawl():
+    global youtubeURL,youtubeUsername
     pass
 
 #show results
 def resultWindow():
-    pass
+    global twitterURL,youtubeURL
+    retrive = database()
+    twitterData = retrive.getTableDB(twitterURL)
+    print(twitterData)
+
+
 
 
 
