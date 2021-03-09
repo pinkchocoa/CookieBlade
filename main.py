@@ -8,6 +8,7 @@ from GUIWidgets import StartApp #contain class from GUI.py and GUIwidgets.py.
 from GUIWidgets import messageBox
 from cookieBlade import *
 import sys
+#need to clean the imports up later btw
 
 
 def createMainWindow():
