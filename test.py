@@ -41,6 +41,7 @@ class spiderWorker:
         print("work")
         url = self.queue.get()
         Spider.crawl_page("1", url)
-    
-spiderWorker(['articles'], "covid test")
+
+while len(Spider.result) <= spiderWorker.NUMBER_OF_RESULTS:
+    spiderWorker(['articles'], "covid test")
 print("test")
