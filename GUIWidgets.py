@@ -191,8 +191,8 @@ class NewGraph:
         @param color used to determine the line color of graph
         @param points used to determine symbol used to mark points
         """
-        self.exporter = self.Graph.plot(axisX, axisY, pen = color, symbol = points)
-
+        self.Graph.plot(axisX, axisY, pen = color, symbol = points)
+        
     def setBackGroundColor(self, color):
         """! setBackGroundColor method
         @param color used to set the background color of graph
