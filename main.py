@@ -1,81 +1,52 @@
-import threading
-from queue import Queue
-from spider import Spider
-from domain import *
-from general import *
-from twitter import *
-
-PROJECT_NAME = 'reddit'
-HOMEPAGE = 'https://www.reddit.com/'
-DOMAIN_NAME = get_domain_name(HOMEPAGE)
-QUEUE_FILE = PROJECT_NAME + '/queue.txt'
-CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
-NUMBER_OF_THREADS = 8
-
-# Create worker threads (will die when main exits)
-def create_workers():
-    for _ in range(NUMBER_OF_THREADS):
-        t = threading.Thread(target=work)
-        t.daemon = True
-        t.start()
+from twitter import Twitter, TUser, TTweet #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
+from youtube import * #contain class: youtubeVid() #youtube crawler. #issue with youtube crawler class.
+from database import database #contain class: database()
+from LinkValidation import LinkValidation #contain class: LinkValidation
+from UrlExtraction import UrlExtraction
+from windowGen import windowGen
+from GUIWidgets import StartApp #contain class from GUI.py and GUIwidgets.py.
+from GUIWidgets import messageBox
+from cookieBlade import *
+import sys
+#need to clean the imports up later btw
 
 
-# Do the next job in the queue
-def work():
-    while True:
-        url = queue.get()
-        Spider.crawl_page(threading.current_thread().name, url)
-        queue.task_done()
+def createMainWindow():
+    wWidth = 800
+    wHeight = 600
+    nLabel = 1
+    nText = 2
+    nPush = 1
+    w = windowGen("Cookie Crawler", wWidth, wHeight, nLabel, nText, nPush)
+    w.setWindowIcon("CookieIcon.png")
+    w.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
+    w.setLabel(60, 160, 61, 31,"Enter URL:")
+    w.setTextbox(120, 160, 591, 31,"Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>")
+    w.setTextbox(120, 200, 591, 31,"Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
+    w.setPush(370, 250, 81, 41, startCrawl,"Crawl Link!")
+    w.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
+    w.show()
+    return w
+
+def secondWindow():
+    wWidth = 800
+    wHeight = 600
+    nLabel = 1
+    nText = 2
+    nPush = 1
+    y = windowGen("aaaaaaaaaaaa", wWidth, wHeight, nLabel, nText, nPush)
+    y.setWindowIcon("CookieIcon.png")
+    y.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
+    y.setLabel(60, 160, 61, 31,"AaAAAA")
+    return y
+
+def testChangeWindow():
+    w.hide()
+    y.show()
 
 
-# Each queued link is a new job
-def create_jobs():
-    for link in file_to_set(QUEUE_FILE):
-        queue.put(link)
-    queue.join()
-    crawl()
 
-
-# Check if there are items in the queue, if so crawl them
-def crawl():
-    queued_links = file_to_set(QUEUE_FILE)
-
-    if len(queued_links) > 0:
-        print(str(len(queued_links)) + ' links in the queue')
-        create_jobs()
-
-
-#queue = Queue() #create queue for spider threads
-#Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME) #create first spider
-#create_workers()
-#crawl()
-
-#twitter test
-
-def defaultTwt():
-    tTest = Twitter()
-    #tTest.trendingTopics() 
-    latSG = 1.3521
-    lngSG = 103.8198
-    print(tTest.trendingTopics(True))
-    #print(tTest.trendingTopics(False, latSG, lngSG))
-    #print(tTest.searchKeyword("MAMAMOO", "recent", True))
-    #print(tTest.searchKeyword("MAMAMOO", "popular"))
-    
-
-def testTweet():
-    #tTweet = TTweet(1360670340934815750)
-    tTweet = TTweet.byURL("https://twitter.com/twitter/statuses/1360670340934815750")
-    print(tTweet.favCount())
-    print(tTweet.RTCount())
-    print(tTweet.loc())
-
-def testUser():
-    #tUser = TUser("LilyPichu")
-    tUser = TUser.byURL("https://twitter.com/LilyPichu")
-    print(tUser.tweetCount())
-    print(tUser.followCount())
-    print(tUser.userLoc())
-    print(tUser.userFav())
-
-#print("twitter test")
+App = StartApp() #init
+w= createMainWindow()
+y= secondWindow()
+sys.exit(App.QApp.exec_()) #System X

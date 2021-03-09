@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .vscode/settings.json
+reddit/crawled.txt
+reddit/queue.txt
+reddit/result.txt
