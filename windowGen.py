@@ -37,7 +37,7 @@ class windowGen(NewWindow):
         self.labelList.append(NewLabel(self.QWin,0,0,0,0))
         self.totalNLabel+=1
 
-    def setLabel(self, posX, posY, lenX, lenY, text="", image=""):
+    def setLabel(self, posX, posY, lenX, lenY, text="", fontStyle="", fontSize="", image=""):
         if self.nLabel >= self.totalNLabel:
             self.addNewLabel()
         label = self.labelList[self.nLabel].label
@@ -52,6 +52,9 @@ class windowGen(NewWindow):
             label.setPixmap(QtGui.QPixmap(image))
             #Enable image scaling to fit Label size
             label.setScaledContents(True)
+        if fontStyle and fontSize:
+            label.setFont(QFont(fontStyle, fontSize))
+
         self.nLabel+=1
 
     def addNewTextbox(self):
