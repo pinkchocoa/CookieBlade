@@ -6,7 +6,7 @@ from LinkValidation import LinkValidation #contain class: LinkValidation
 from UrlExtraction import UrlExtraction
 from windowGen import windowGen
 from GUIWidgets import StartApp #contain class from GUI.py and GUIwidgets.py.
-
+import sys
 
 #persistant data
 youtubeURL = "" #https://www.youtube.com/channel/UCmGSJVG3mCRXVOP4yZrU1Dw #Johnny Harris
