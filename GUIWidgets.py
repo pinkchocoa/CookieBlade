@@ -141,3 +141,22 @@ class NewPushButton:
         @param text used to set the text to be displayed by the label
         """
         self.PushButton.setText(text)
+
+class messageBox:
+    def __init__(self, winTitle="", text="", winIcon="" ,show=True,icon="Critical"):
+        self.msgBox = QMessageBox()
+        msgBox = self.msgBox
+        if winTitle:
+            msgBox.setWindowTitle(winTitle)
+        if winIcon:
+            msgBox.setWindowIcon(QtGui.QIcon(winIcon))
+        if text:
+            msgBox.setText(text)
+        if icon is "Critical":
+            msgBox.setIcon(QMessageBox.Critical)
+        if show:
+            self.show()
+
+    def show(self):
+        msgBox = self.msgBox
+        msgBox.exec_()
