@@ -90,12 +90,18 @@ class database(mkFolder):
         @param argWhere E.g., 'WHERE <C# or Date> = <#>
         @return data in python list format
         """
+        templist = []
         connect = sqlite3.connect(self.arg)
+        #connect.row_factory = sqlite3.Row
         db = connect.cursor()
         #String Argurment to retrieve data from database.
         tableArg = self.__setTableArg(argCol, argWhere)
         db.execute(tableArg)     
-        return db.fetchall() #return data in a list.
+        #return db.fetchone() #return data in a list.
+        rows = db.fetchall()
+        for row in rows:
+            templist.append(list(row))
+        return templist
 
     #def parse format (col, filter) where col = C1 or C2 default *. where argWhere = 'WHERE C1 = 198'
     def __setTableArg(self, argCol='*', argWhere = ''):
@@ -104,5 +110,5 @@ class database(mkFolder):
 
 #Testing
 # tuser = database("https://twitter.com/johnnywharris")
-# data = tuser.getTableDB('*','WHERE C2 = 917')
-# print(data)
+# templist = tuser.getTableDB()
+# print(templist[0][1])
