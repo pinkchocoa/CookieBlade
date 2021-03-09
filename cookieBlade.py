@@ -92,21 +92,3 @@ def resultWindow():
     twitterData = retrive.getTableDB(twitterURL)
     print(twitterData)
 
-#main
-App = StartApp() #init
-
-wWidth = 800
-wHeight = 600
-nLabel = 1
-nText = 2
-nPush = 1
-w = windowGen("Cookie Crawler", wWidth, wHeight, nLabel, nText, nPush)
-w.setWindowIcon("CookieIcon.png")
-w.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
-w.setLabel(60, 160, 61, 31,"Enter URL:")
-w.setTextbox(120, 160, 591, 31,"Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>")
-w.setTextbox(120, 200, 591, 31,"Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
-w.setPush(370, 250, 81, 41, startCrawl,"Crawl Link!")
-w.showWindow()
-
-sys.exit(App.QApp.exec_()) #System X
