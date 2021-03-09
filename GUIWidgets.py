@@ -15,6 +15,7 @@
 #Imports
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtGui import QFont
 from PyQt5.QtWidgets import *
 from pyqtgraph import PlotWidget, plot, exporters
 
@@ -90,7 +91,11 @@ class NewLabel:
         #Set display image in parameter in Label
         self.label.setPixmap(QtGui.QPixmap(image))
         #Enable image scaling to fit Label size
-        self.label.setScaledContents(True)
+        self.label.setScaledContents(True)  
+    
+    def setFont(self, fontStyle, fontSize):
+        #Set font style and font size
+        self.label.setFont(QFont(fontStyle, fontSize))
 
 #Class to create new TextBox
 class NewTextBox:
@@ -170,7 +175,7 @@ class NewGraph:
         @param color used to determine the line color of graph
         @param points used to determine symbol used to mark points
         """
-        self.exporter = self.Graph.plot(axisX, axisY, pen = color, symbol = points)
+        self.Graph.plot(axisX, axisY, pen = color, symbol = points)
     
     def setBackGroundColor(self, color):
         """! setBackGroundColor method
@@ -205,8 +210,5 @@ class NewGraph:
         getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
         storeAxis.setTicks([getValues, []])
     
-    def exportGraph(self):
-        exporter = exporters.ImageExporter(self.Graph.plotItem)
-        exporter.parameters()['width'] = 800
-        exporter.export("Graph.png")
+
     
