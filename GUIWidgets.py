@@ -15,6 +15,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from pyqtgraph import PlotWidget, plot, exporters #pip install pyqtgraph
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -156,7 +157,7 @@ class messageBox:
             msgBox.setWindowIcon(QtGui.QIcon(winIcon))
         if text:
             msgBox.setText(text)
-        if icon is "Critical":
+        if icon == "Critical":
             msgBox.setIcon(QMessageBox.Critical)
         if show:
             self.show()
@@ -164,3 +165,68 @@ class messageBox:
     def show(self):
         msgBox = self.msgBox
         msgBox.exec_()
+
+#Class to create new Graph
+class NewGraph:
+    """! NewGraph class
+    Defines the Graph object to take in input and display graph
+    """
+    def __init__(self, window, posX, posY, lenX, lenY):
+        """! NewGraph class initializer
+        @param window used to determine which window for the graph to appear on
+        @param posX used to set the X coordinate of where the label will appear
+        @param posY used to set the Y coordinate of where the label will appear
+        @param lenX used to set the horizontal length of the label
+        @param lenY used to set the vertical height of the label
+        """
+        self.Graph = PlotWidget(window)
+        self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        #Enables graph to show grid
+        self.Graph.showGrid(x = True, y = True)
+
+    def plotGraph(self, axisX, axisY, color, points):
+        """! plotGraph method
+        @param axisX takes in list to plot the X axis of graph
+        @param axisY takes in list to plot the Y axis of graph
+        @param color used to determine the line color of graph
+        @param points used to determine symbol used to mark points
+        """
+        self.exporter = self.Graph.plot(axisX, axisY, pen = color, symbol = points)
+
+    def setBackGroundColor(self, color):
+        """! setBackGroundColor method
+        @param color used to set the background color of graph
+        """
+        self.Graph.setBackground(color)
+    
+    def setGraphTitle(self, title, titleColor, titleSize):
+        """! setGraphTitle method
+        @param title used to set the graph title label
+        @param titleColor used to set the graph title color
+        @param titleSize used to set the font size of graph title
+        """
+        self.Graph.setTitle(title, color = titleColor, size = titleSize)
+
+    def setAxisLabel(self, position, label, labelColor, labelSize):
+        """! setAxisLabel method
+        @param position used to determine the position of axis
+        @param label used to determine what to display for axis
+        @param labelcolor used to determine the color for axis
+        @param labelSize used to determine the font size of axis
+        """
+        fontstyle = {"color":labelColor, "font-size":labelSize}
+        self.Graph.setLabel(position, label, **fontstyle)
+    
+    def setAxisIntervalTo1(self, axisLabel, axis):
+        """! setAxisIntervalTo1 method
+        @param axisLabel used to determine which axis label to re-set interval
+        @param axis used to determine the range of values to set for axis
+        """
+        storeAxis = self.Graph.getAxis(axisLabel)
+        getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
+        storeAxis.setTicks([getValues, []])
+
+    def exportGraph(self):
+        exporter = exporters.ImageExporter(self.Graph.plotItem)
+        exporter.parameters()['width'] = 800
+        exporter.export("Graph.png")
