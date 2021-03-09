@@ -8,6 +8,7 @@ from GUIWidgets import StartApp #contain class from GUI.py and GUIwidgets.py.
 from GUIWidgets import messageBox
 from cookieBlade import *
 import sys
+import window as wind
 #need to clean the imports up later btw
 
 
@@ -40,13 +41,12 @@ def secondWindow():
     y.setLabel(60, 160, 61, 31,"AaAAAA")
     return y
 
-def testChangeWindow():
-    w.hide()
-    y.show()
+
 
 
 
 App = StartApp() #init
-w= createMainWindow()
+w = wind.mainMenu()
+w.show()
 y= secondWindow()
 sys.exit(App.QApp.exec_()) #System X
