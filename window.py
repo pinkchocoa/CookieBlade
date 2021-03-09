@@ -17,8 +17,14 @@ tHeight = 31
 lWidth = 61
 lHeight = 31
 
-xSpace = 100
-ySpace = 100
+buttonXSpace = 300
+buttonYSpace = 100
+
+textXSpace = 0
+textYSpace = 45
+
+labelXSpace = 70
+labelYSpace = 50
 
 
 
@@ -49,12 +55,29 @@ def snsMenu():
     def backClicked():
         pass
 
+    nLabel = 3
+    nText = 2
+    nPush = 2
+    buttonX = 275
+    buttonY = 250
+    buttonX = 310
+    buttonY = 250
+    textBoxX = 150
+    textBoxY = 160
+    textBoxWidth = 800
+    textBoxHeight = 40
+    labelX = 70
+    labelY = 160
+    fontSize = 10
+
     App = StartApp()
-    testUserwindow = windowGen("User Crawler", width, wHeight, 3, 2, 2)
-    testUserwindow.setLabel(0, 50, 800, 81, "Leave fields empty for random crawl", "Ariel", 20)
-    testUserwindow.setTextbox(120, 160, 591, 31, "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>")
-    testUserwindow.setTextbox(120, 200, 591, 31, "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
-    testUserwindow.setPush(275, 250, 95, 41, crawlClicked, "Crawl!")
-    testUserwindow.setPush(450, 250, 81, 41, backClicked, "Back")
-    testUserwindow.showWindow()
+    testUserwindow = windowGen("User Crawler", wWidth, wHeight, nLabel, nText, nPush)
+    testUserwindow.setLabel(labelX+50, labelY-110, 800, 81, "Leave fields empty for random crawl", "", "Ariel", 2*fontSize)
+    testUserwindow.setTextbox(textBoxX, textBoxY, textBoxWidth, textBoxHeight, "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>", "Ariel", 10)
+    testUserwindow.setTextbox(textBoxX, textBoxY + textYSpace, textBoxWidth, textBoxHeight, "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>", "Ariel", 10)
+    testUserwindow.setPush(buttonX, buttonY, 150, 80, crawlClicked, "Crawl!", "Ariel", fontSize)
+    testUserwindow.setPush(buttonX + buttonXSpace, buttonY, 150, 80, backClicked, "Back", "Ariel", fontSize)
+    testUserwindow.setLabel(labelX, labelY, 75, 31, "Enter link:", "", "Ariel", 10)
+    testUserwindow.setLabel(labelX, labelY + labelYSpace, 75, 31, "Enter link:", "", "Ariel", fontSize)
+    testUserwindow.show()
     sys.exit(App.QApp.exec_())
