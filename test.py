@@ -3,14 +3,13 @@ from spider import Spider
 from domain import *
 from general import *
 
+NUMBER_OF_RESULTS = 3
+PROJECT_NAME = 'googleNews'
+QUEUE_FILE = PROJECT_NAME + '/queue.txt'
+CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
+RESULT_FILE = PROJECT_NAME + '/result.txt'
 
 class spiderWorker:
-    NUMBER_OF_THREADS = 1
-    NUMBER_OF_RESULTS = 3
-    PROJECT_NAME = 'googleNews'
-    QUEUE_FILE = PROJECT_NAME + '/queue.txt'
-    CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
-    RESULT_FILE = PROJECT_NAME + '/result.txt'
     queue = Queue() #create queue for spider threads
     alive = True
     def __init__(self, filterList, topic=""):
@@ -22,8 +21,7 @@ class spiderWorker:
             HOMEPAGE += word
             HOMEPAGE += "+"
             print (HOMEPAGE)
-        
-        Spider(self.PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, SUB_DOMAIN, filterList) #create first spider
+        Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, SUB_DOMAIN, filterList) #create first spider
         self.create_workers()
         print("end init")
 
@@ -34,7 +32,7 @@ class spiderWorker:
     # Each queued link is a new job
     def create_jobs(self):
         print("create_jobs")
-        for link in file_to_set(self.QUEUE_FILE):
+        for link in file_to_set(QUEUE_FILE):
             self.queue.put(link)
 
     def work(self):
@@ -42,6 +40,9 @@ class spiderWorker:
         url = self.queue.get()
         Spider.crawl_page("1", url)
 
-while len(Spider.result) <= spiderWorker.NUMBER_OF_RESULTS:
+delete_file_contents(QUEUE_FILE)
+delete_file_contents(CRAWLED_FILE)
+delete_file_contents(RESULT_FILE)
+while len(Spider.result) < NUMBER_OF_RESULTS:
     spiderWorker(['articles'], "covid test")
 print("test")
