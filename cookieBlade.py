@@ -92,6 +92,10 @@ def resultWindow():
     twitterData = retrive.getTableDB(twitterURL)
     print(twitterData)
 
+def testChangeWindow():
+    w.hide()
+    y.show()
+
 #main
 App = StartApp() #init
 
@@ -100,6 +104,11 @@ wHeight = 600
 nLabel = 1
 nText = 2
 nPush = 1
+y = windowGen("aaaaaaaaaaaa", wWidth, wHeight, nLabel, nText, nPush)
+y.setWindowIcon("CookieIcon.png")
+y.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
+y.setLabel(60, 160, 61, 31,"AaAAAA")
+
 w = windowGen("Cookie Crawler", wWidth, wHeight, nLabel, nText, nPush)
 w.setWindowIcon("CookieIcon.png")
 w.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
@@ -107,6 +116,7 @@ w.setLabel(60, 160, 61, 31,"Enter URL:")
 w.setTextbox(120, 160, 591, 31,"Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>")
 w.setTextbox(120, 200, 591, 31,"Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
 w.setPush(370, 250, 81, 41, startCrawl,"Crawl Link!")
-w.showWindow()
+w.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
+w.show()
 
 sys.exit(App.QApp.exec_()) #System X

@@ -88,5 +88,8 @@ class windowGen(NewWindow):
             PushButton.setText(text)
         self.nPush+=1
 
-    def showWindow(self):
+    def show(self):
         self.QWin.show()
+
+    def hide(self):
+        self.QWin.hide()
