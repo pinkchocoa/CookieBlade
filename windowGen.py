@@ -37,7 +37,7 @@ class windowGen(NewWindow):
         self.labelList.append(NewLabel(self.QWin,0,0,0,0))
         self.totalNLabel+=1
 
-    def setLabel(self, posX, posY, lenX, lenY, text="", fontStyle="", fontSize="", image=""):
+    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize=""):
         if self.nLabel >= self.totalNLabel:
             self.addNewLabel()
         label = self.labelList[self.nLabel].label
