@@ -37,7 +37,7 @@ class windowGen(NewWindow):
         self.labelList.append(NewLabel(self.QWin,0,0,0,0))
         self.totalNLabel+=1
 
-    def setLabel(self, posX, posY, lenX, lenY, text="", fontStyle="", fontSize="", image=""):
+    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize=""):
         if self.nLabel >= self.totalNLabel:
             self.addNewLabel()
         label = self.labelList[self.nLabel].label
@@ -61,7 +61,7 @@ class windowGen(NewWindow):
         self.textList.append(NewTextBox(self.QWin,0,0,0,0))
         self.totalNText+=1
 
-    def setTextbox(self, posX, posY, lenX, lenY, text=""):
+    def setTextbox(self, posX, posY, lenX, lenY, text="", fontStyle="", fontSize=""):
         if self.nText >= self.totalNText:
             self.addNewTextbox()
         textbox = self.textList[self.nText].textbox
@@ -71,24 +71,28 @@ class windowGen(NewWindow):
         textbox.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         if text:
             textbox.setPlaceholderText(text)
+        if fontStyle and fontSize:
+            textbox.setFont(QFont(fontStyle,int(fontSize)))
         self.nText+=1
 
     def addNewPush(self):
         self.pushList.append(NewPushButton(self.QWin,0,0,0,0,emptyFn))
         self.totalNPush+=1
 
-    def setPush(self, posX, posY, lenX, lenY, functionName, text=""):
+    def setPush(self, posX, posY, lenX, lenY, functionName, text="", fontStyle="", fontSize=""):
         if self.nPush >= self.totalNPush:
             self.addNewPush()
-        PushButton = self.pushList[self.nPush].PushButton
+        pushButton = self.pushList[self.nPush].PushButton
         #Initialize new instance of PushButton UI
-        PushButton = QPushButton(self.QWin)
+        pushButton = QPushButton(self.QWin)
         #Set PushButton x & y position and size
-        PushButton.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        pushButton.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         #Calls function when PushButton is clicked
-        PushButton.clicked.connect(functionName)
+        pushButton.clicked.connect(functionName)
         if text:
-            PushButton.setText(text)
+            pushButton.setText(text)
+        if fontStyle and fontSize:
+            pushButton.setFont(QFont(fontStyle,int(fontSize)))
         self.nPush+=1
 
     def show(self):
