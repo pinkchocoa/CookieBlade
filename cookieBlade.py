@@ -1,9 +1,9 @@
 # import sys
 from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
-from twitter import * #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
+from twitter import Twitter, TUser, TTweet #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
 from youtube import * #contain class: youtubeVid() #youtube crawler. #issue with youtube crawler class.
-from database import * #contain class: database(), mkFolder(), UrlExtraction() #database and link validation.
-from LinkValidation import LinkValidation #this contain UrlExtraction as well().
+from database import database #contain class: database()
+from LinkValidation import LinkValidation #contain class: LinkValidation
 from UrlExtraction import UrlExtraction
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMessageBox #red underline can be ignored. for now..
@@ -13,19 +13,23 @@ youtubeURL = "" #https://www.youtube.com/channel/UCmGSJVG3mCRXVOP4yZrU1Dw #Johnn
 twitterURL = "" #https://twitter.com/johnnywharris #Johnny harris
 youtubeUsername = ""
 twitterUsername = ""
+status = False
 
 #Link Validation and input correctness checks before crawling
 def startCrawl():
 
-    global youtubeURL, twitterURL, youtubeUsername, twitterUsername
-    youtubeURL = ytBox.textbox.text()
-    twitterURL = twBox.textbox.text()
+    global youtubeURL, twitterURL, youtubeUsername, twitterUsername,status
+    youtubeURL = "https://www.youtube.com/channel/UCmGSJVG3mCRXVOP4yZrU1Dw" #ytBox.textbox.text()
+    twitterURL = "https://twitter.com/johnnywharris" #twBox.textbox.text()
     userID = UrlExtraction()
     twitterUsername = userID.getUniqueID(twitterURL)
  
-    linkCheck()
-    #twitterCrawl()
-    resultWindow()
+    if linkCheck() == True:
+        #twitterCrawl()
+        resultWindow()
+        status = True #Set after complition of crawl.
+        if status == True:
+            mainWindow.QWin.close() #auto close window if crawl is done
 
 #User input exception handling
 def linkCheck():
@@ -112,30 +116,8 @@ def resultWindow():
     twitterData = retrive.getTableDB(twitterURL)
     print(twitterData)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#mainStart
-App = StartApp()
+#main
+App = StartApp() #init
 mainWindow = NewWindow("Cookie Crawler", 800, 600)
 mainWindow.setWindowIcon("CookieIcon.png")
 windowLogo = NewLabel(mainWindow.QWin, 230, 70, 331, 81)
@@ -159,4 +141,5 @@ searchPushButton = NewPushButton(mainWindow.QWin, 370, 250, 81, 41, startCrawl)
 searchPushButton.setText("Crawl Link!")
 
 mainWindow.QWin.show()
-sys.exit(App.QApp.exec_())
+
+sys.exit(App.QApp.exec_()) #System X

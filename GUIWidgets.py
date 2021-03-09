@@ -5,7 +5,7 @@
 # @section libraries_main Libraries/Modules
 # - sys standard library (https://docs.python.org/3/library/sys.html)
 #   - access to sys.argv and sys.exit functions
-# - PyQt5 external library
+# - PyQt5 external library (pip install PyQt5)
 #   - access to PyQt5 GUI functions
 # - PyQt5.QtWidgets external library
 #   - access to PyQt5 UI Widgets
