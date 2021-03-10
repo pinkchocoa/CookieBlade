@@ -13,9 +13,10 @@ class windowGen(NewWindow):
     textList = []
     pushList = []
     graphList = []
+    browserList = []
 
 
-    def __init__(self, name, width, height, nLabel=0,nText=0,nPush=0, nGraph=0):
+    def __init__(self, name, width, height, nLabel=0,nText=0,nPush=0, nGraph=0, nBrowser=0):
         super().__init__(name, width, height)
 
         #to keep track of what i've set, all widgets unset are at 0,0,0,0
@@ -23,12 +24,14 @@ class windowGen(NewWindow):
         self.nText = 0
         self.nPush = 0
         self.nGraph = 0
+        self.nBrowser = 0
 
         #total number of widgets that this window owns
         self.totalNLabel = nLabel
         self.totalNText = nText
         self.totalNPush = nPush
         self.totalNGraph = nGraph
+        self.totalNBrowser = nBrowser
         
         for x in range(nLabel):
             self.labelList.append(NewLabel(self.QWin,0,0,0,0))
@@ -38,6 +41,8 @@ class windowGen(NewWindow):
             self.pushList.append(NewPushButton(self.QWin,0,0,0,0,emptyFn))
         for x in range(nGraph):
             self.graphList.append(NewGraph(self.QWin, 0, 0, 800, 800))
+        for x in range(nBrowser):
+            self.browserList.append(newWebBrowser(self.Qwin, 0, 0))
 
     def addNewGraph(self):
         self.graphList.append(NewGraph(self.QWin, 0, 0, 800, 800))
@@ -127,6 +132,21 @@ class windowGen(NewWindow):
         if fontStyle and fontSize:
             pushButton.setFont(QFont(fontStyle,int(fontSize)))
         self.nPush+=1
+    
+    def addNewBrowser(self):
+        self.browserList.append(newWebBrowser(0, 0,))
+        self.totalNBrowser+=1
+
+    def setBrowser(self, lenX, lenY, link):
+        if self.nBrowser >= self.totalNBrowser:
+            self.addNewBrowser()
+        webBrowser = self.browserList[self.nBrowser].webEngine
+        webBrowser = QWebEngineView(self.QWin)
+        webBrowser.resize(lenX,lenY)
+        webBrowser.setWindowTitle(link)
+        webBrowser.load(QtCore.QUrl(link))
+        webBrowser.show()
+        self.nBrowser+=1
 
     def show(self):
         self.QWin.show()

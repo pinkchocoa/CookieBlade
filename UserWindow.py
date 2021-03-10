@@ -1,7 +1,8 @@
 from windowGen import *
 
 def crawlClicked():
-    pass
+    testUserwindow.setBrowser(1080, 720, "https://www.google.com/")
+
 
 def backClicked():
     pass

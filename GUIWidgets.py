@@ -15,6 +15,7 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
+from PyQt5.QtWebEngineWidgets import *
 from pyqtgraph import PlotWidget, plot, exporters #pip install pyqtgraph
 
 ## Documentation for GUIWidgets.py
@@ -225,8 +226,15 @@ class NewGraph:
         storeAxis = self.Graph.getAxis(axisLabel)
         getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
         storeAxis.setTicks([getValues, []])
-
-    def exportGraph(self):
-        exporter = exporters.ImageExporter(self.Graph.plotItem)
-        exporter.parameters()['width'] = 800
-        exporter.export("Graph.png")
+    
+class newWebBrowser():
+    def __init__(self, lenX, lenY):
+        self.webEngine = QWebEngineView()
+        self.webEngine.resize(lenX, lenY)
+    
+    def openURL(self, link):
+        self.webEngine.setWindowTitle(link)
+        self.webEngine.load(QtCore.QUrl(link))
+    
+    def showWeb(self):
+        self.webEngine.show()
