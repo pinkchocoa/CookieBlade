@@ -9,6 +9,8 @@
 #   - access to PyQt5 GUI functions
 # - PyQt5.QtWidgets external library
 #   - access to PyQt5 UI Widgets
+# - PyQt5.QtWebEngineWidgets external library (pip install PyQtWebEngine)
+#   - access to PyQt5 web browser functions
 
 #Imports
 import sys
@@ -175,10 +177,10 @@ class NewGraph:
     def __init__(self, window, posX, posY, lenX, lenY):
         """! NewGraph class initializer
         @param window used to determine which window for the graph to appear on
-        @param posX used to set the X coordinate of where the label will appear
-        @param posY used to set the Y coordinate of where the label will appear
-        @param lenX used to set the horizontal length of the label
-        @param lenY used to set the vertical height of the label
+        @param posX used to set the X coordinate of where the graph will appear
+        @param posY used to set the Y coordinate of where the graph will appear
+        @param lenX used to set the horizontal length of the graph
+        @param lenY used to set the vertical height of the graph
         """
         self.Graph = PlotWidget(window)
         self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
@@ -226,15 +228,29 @@ class NewGraph:
         storeAxis = self.Graph.getAxis(axisLabel)
         getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
         storeAxis.setTicks([getValues, []])
-    
+
+#Class to create new bowser
 class newWebBrowser():
+    """! newWebBrowser class
+    Defines the web browser object to display webpage
+    """
     def __init__(self, lenX, lenY):
+        """! newWebBrowser class initializer
+        @param lenX used to set the horizontal length of the browser
+        @param lenY used to set the vertical height of the browser
+        """
         self.webEngine = QWebEngineView()
         self.webEngine.resize(lenX, lenY)
     
     def openURL(self, link):
+        """! openURL method
+        @param link used to determine which webpage to display/set as window name
+        """
         self.webEngine.setWindowTitle(link)
         self.webEngine.load(QtCore.QUrl(link))
     
     def showWeb(self):
+        """! showWeb method
+        Used to show browser
+        """
         self.webEngine.show()
