@@ -8,7 +8,7 @@
 # - datetime standard library (https://docs.python.org/3/library/datetime.html)
 #   - access to datetime function
 # - mkFolder (local)
-#   - access to mkFolder and UrlExtraction function.
+#   - access to mkFolder function
 
 # Imports
 import sqlite3
@@ -26,14 +26,13 @@ class database(mkFolder):
     """
 
     #init
-    def __init__(self, UserUrl):
+    def __init__(self, dataBaseName):
         """! database class initializer
-        @param UserUrl
+        @param dataBaseName; any name you want it to be.
         """
-        self.UserUrl = UserUrl
-        self.arg = self.__createDB(UserUrl)
-        self.uid = self.getUniqueID(UserUrl)        
-
+        self.dataBaseName = dataBaseName
+        self.arg = self.__createDB() #Create Database on init.
+       
     #Get current data Format: Year/Month/Day
     def __getDate(self):
         """! get current date from system.
@@ -43,86 +42,98 @@ class database(mkFolder):
         date = datetime.date.today()
         return str(date)
 
-    #create DB based on Social media sites. double underscore indicates private method.
-    def __createDB(self, UserUrl):
+    #create DB based on given data base name #double underscore indicates private method. 
+    def __createDB(self):
         """! create database based on social media sites.
-        @param UserUrl Url link provided by user.
         @return String argument used to create the database.
         """
 
-        sitename = self.getSiteName(UserUrl)
         self.createDirectory() #create data folder if not exist.
         #String Argurment to create database based on site.
-        arg = './data/' + sitename + '.db'
+        arg = './data/' + self.dataBaseName + '.db'
         #create database if not exist else connect to database.
         db = sqlite3.connect(arg)
         db.close() #close database
         return arg #return database location
 
-    #create Table for database. double underscore indicates private method.
-    def __createTableDB(self):
-        """! create table based on user ID and sites database.
+    #create custom table with min arg: tablename, primary key col and atleast 1 col. #Max 2000 col #data stored at text. #11/3/21
+    def createTable(self, *argument):
+        """! Create custom table based on *argument
+        @param *argument; where ('tablename', 'primary key', '1 col name') MUST BE PROVIDED. 
         """
 
+        #connect to DB
         connect = sqlite3.connect(self.arg)
         db = connect.cursor()
-        #String Argurment for Table based on User ID with support for up to 10 Data in text.
-        tableArg = 'CREATE TABLE ' + 'IF NOT EXISTS ' + self.uid + '(' + 'Date text PRIMARY KEY, ' + 'C1 text, ' + 'C2 text, ' + 'C3 text, ' + 'C4 text, ' + 'C5 text, ' + 'C6 text, ' + 'C7 text, ' + 'C8 text, ' + 'C9 text, ' + 'C10 text' + ')'
+
+        #Custom Argument string phrase and execute
+        tableArg = 'CREATE TABLE IF NOT EXISTS ' + argument[0] + '(' + argument[1] + ' text PRIMARY KEY, ' #argument[0] = tablename, argument[1] = primary key
+        last = len(argument)
+        for i in range(2, len(argument)-1):
+            tableArg = tableArg + argument[i] + ' text, ' #append till 2nd last argument.
+        tableArg = tableArg + argument[last-1] + ' text)' #add last argument.
         db.execute(tableArg)
+
         #Create Unqiue index for replace function of SQLite3
-        tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' + self.uid + '_Date ON ' + self.uid +' (Date)'
+        tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' + argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
         db.execute(tableArg)
         connect.commit() #save database
         db.close() #close database
 
-    #insert data into table in database
-    def insertTableDB(self, data):
+    #insert data into table in database #12/3/21
+    def insertTable(self, data, *argument):
         """! insert data into table based on userid and site.
-        @param data data in list to be stored in database table
+        @param data; data list to be stored in db
+        @param *argument;  where ('tablename', 'primary key', '1 col name') MUST BE PROVIDED.
         """
-        self.__createTableDB() #Ensure table for user ID exist else create it.
         connect = sqlite3.connect(self.arg)
         db = connect.cursor()
-        #String Argurment for data insertion into table with variable data.
-        tableArg = 'REPLACE INTO ' + self.uid + ' (Date, C1, C2, C3, C4, C5, C6, C7, C8, C9, C10) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+
+        #Append tableArg according to *argument
+        last = len(argument)
+        tableArg = 'REPLACE INTO ' + argument[0] + ' ('
+        for i in range(1,len(argument)-1):
+            tableArg = tableArg  + argument[i] + ', '
+        tableArg = tableArg + argument[last-1] + ') VALUES ('
+        for i in range(1,len(argument)-1):
+            tableArg = tableArg + '?, '
+        tableArg = tableArg + '?)'
         #Pass string argurment with data to insert into database.
-        db.execute(tableArg,(self.__getDate(), data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9]))
+        db.execute(tableArg,(data))
         connect.commit() #save database
         db.close    #close database
 
-    #retrieve user data from database. #convert to SQL retrival method with Argmuent as paramenters
-    def getTableDB(self, argCol='*', argWhere = ''):
+    #retrieve user data from database. #good but user need remember the table style inforamtion. #11/3/21
+    def getTableDB(self, tableName, argCol='*', argWhere = ''):
         """! retrieve data from database based on UserID and site.
-        @param argCol E.g., '<C# or Date>'
-        @param argWhere E.g., 'WHERE <C# or Date> = <#>
-        @return data in python 2d list format
+        @param tableName; E.g., 'tableName'
+        @param argCol; E.g., '<Col_name or PRIMARY KEY>' default '*'
+        @param argWhere; E.g., 'WHERE <Col_name or PRIMARY KEY> = <#>' param argCol must be entered if using this parameter.
+        @return templist; where data is in python 2d list format.
         """
         templist = []
         connect = sqlite3.connect(self.arg)
         #connect.row_factory = sqlite3.Row
         db = connect.cursor()
         #String Argurment to retrieve data from database.
-        tableArg = self.__setTableArg(argCol, argWhere)
+        #tableArg = self.__setTableArg(argCol, argWhere)
+        tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + argWhere
         db.execute(tableArg)     
         #return db.fetchone() #return data in a list.
         rows = db.fetchall()
         for row in rows:
             templist.append(list(row))
         return templist
-
-    #def parse format (col, filter) where col = C1 or C2 default *. where argWhere = 'WHERE C1 = 198'
-    def __setTableArg(self, argCol='*', argWhere = ''):
-        """! set table arugment to be pass.
-        @param argCol, default: '*' or 'C#'
-        @param argWhere default: '' or 'WHERE <C# or Date> = <#>'
-        @return tableArg string arugment to be executed.
-        """
-        tableArg = 'SELECT ' + argCol + ' FROM ' + self.uid + ' ' + argWhere
-        return tableArg
+        
 
 
 
-#Testing
-# tuser = database("https://twitter.com/johnnywharris")
-# templist = tuser.getTableDB()
-# print(templist[0][1])
+# #Testing
+# tuser = database('testDB') #DB name must be given to start.
+# tuser.createTable('test2','key','C1') #Tablename, key name, col name.
+# data = ['Key1','1'] #data be same amount as col.
+# tuser.insertTable(data,'test2','key','C1')
+# data = ['Key2','2']
+# tuser.insertTable(data,'test2','key','C1')
+# templist = tuser.getTableDB('test2')
+# print(templist[0][0]) #print(templist[r][c]) for specific row and col.
