@@ -85,6 +85,7 @@ class windowGen(NewWindow):
         label.setAlignment(QtCore.Qt.AlignCenter)
         if text:
             label.setText(text)
+            label.update()
         if image:
             #Set display image in parameter in Label
             label.setPixmap(QtGui.QPixmap(image))

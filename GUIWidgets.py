@@ -18,6 +18,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
+from PyQt5.QtChart import *
 from pyqtgraph import PlotWidget, plot, exporters #pip install pyqtgraph
 
 ## Documentation for GUIWidgets.py
@@ -83,6 +84,8 @@ class NewLabel:
         @param text used to set the text to be displayed by the label
         """
         self.label.setText(text)
+        #Automatically update the length of label to fit text
+        self.label.update()
 
     def setFont(self, fontStyle, fontSize):
         self.label.setFont(QFont(fontStyle, fontSize))
@@ -254,3 +257,21 @@ class newWebBrowser():
         Used to show browser
         """
         self.webEngine.show()
+    
+class newPieChart():
+    def __init__(self):
+        self.chart = QChart()
+        self.chart.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart.setTitle("Pie Chart Test")
+
+    def setSeries(self, series):
+        self.chart.addSeries(series)
+
+    def addData(self, data, dataNum):
+        self.series = QPieSeries()
+        self.series.append(data, dataNum)
+    
+    def viewChart(self, window):
+        self.chartview = QChartView(self.chart)
+        self.chartview.setRenderHint(QPainter.Antialiasing)
+        window.setCentralWidget(self.chartview)

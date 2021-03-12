@@ -5,7 +5,10 @@ def crawlClicked():
 
 
 def backClicked():
-    pass
+    piechart = newPieChart()
+    piechart.addData("Python", 100)
+    piechart.setSeries(piechart.series)
+    piechart.viewChart(testUserwindow.QWin)
 
 buttonX = 310
 buttonY = 250
