@@ -104,7 +104,7 @@ class database(mkFolder):
         db.close    #close database
 
     #retrieve user data from database. #good but user need remember the table style inforamtion. #11/3/21
-    def getTableDB(self, tableName, argCol='*', argWhere = ''):
+    def getTableData(self, tableName, argCol='*', argWhere = ''):
         """! retrieve data from database based on UserID and site.
         @param tableName; E.g., 'tableName'
         @param argCol; E.g., '<Col_name or PRIMARY KEY>' default '*'
@@ -135,5 +135,5 @@ class database(mkFolder):
 # tuser.insertTable(data,'test2','key','C1')
 # data = ['Key2','2']
 # tuser.insertTable(data,'test2','key','C1')
-# templist = tuser.getTableDB('test2')
+# templist = tuser.getTableData('test2')
 # print(templist[0][0]) #print(templist[r][c]) for specific row and col.
