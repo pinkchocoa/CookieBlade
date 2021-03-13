@@ -5,10 +5,10 @@ def crawlClicked():
 
 
 def backClicked():
-    piechart = newPieChart()
-    piechart.addData("Python", 100)
-    piechart.setSeries(piechart.series)
-    piechart.viewChart(testUserwindow.QWin)
+    pass
+
+def labelClicked(event):
+    testUserwindow.setBrowser(1080, 720, "https://www.google.com/")
 
 buttonX = 310
 buttonY = 250
@@ -41,8 +41,15 @@ labelXSpace = 70
 labelYSpace = 50
 
 App = StartApp()
-testUserwindow = windowGen("User Crawler", 1080, 720, 3, 2, 2)
+testUserwindow = windowGen("User Crawler", 1080, 720, 4, 2, 2)
+# piechart = newPieChart()
+# piechart.addData("Python", 100)
+# piechart.addData("C++", 100)
+# piechart.addData("Dog", 100)
+# piechart.setSeries(piechart.series)
+# piechart.viewChart(testUserwindow.QWin)
 testUserwindow.setLabel(labelX+50, 50, 800, 81, "Leave fields empty for random crawl", "", "Ariel", 20)
+testUserwindow.setLabel(labelX+50, 450, 800, 81, "www.google.com", "", "Ariel", 20, labelClicked)
 testUserwindow.setTextbox(textX, textY, 800, 40, "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>", "Ariel", 10)
 testUserwindow.setTextbox(textX, textY + textYSpace, 800, 40, "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>", "Ariel", 10)
 testUserwindow.setPush(buttonX, buttonY, 150, 80, crawlClicked, "Crawl!", "Ariel", 10)

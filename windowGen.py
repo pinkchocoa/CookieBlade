@@ -75,7 +75,7 @@ class windowGen(NewWindow):
         self.labelList.append(NewLabel(self.QWin,0,0,0,0))
         self.totalNLabel+=1
 
-    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize=""):
+    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize="", functionName=""):
         if self.nLabel >= self.totalNLabel:
             self.addNewLabel()
         label = self.labelList[self.nLabel].label
@@ -93,6 +93,8 @@ class windowGen(NewWindow):
             label.setScaledContents(True)
         if fontStyle and fontSize:
             label.setFont(QFont(fontStyle, fontSize))
+        if functionName:
+            label.mousePressEvent = functionName
 
         self.nLabel+=1
 

@@ -262,13 +262,20 @@ class newPieChart():
     def __init__(self):
         self.chart = QChart()
         self.chart.setAnimationOptions(QChart.SeriesAnimations)
-        self.chart.setTitle("Pie Chart Test")
+        self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
+        #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
+        #self.chart.mapToPosition(QtCore.QPointF(500,500))
+        self.chart.setBackgroundVisible(False)
+        self.series = QPieSeries()
+        self.series.setPieSize(0.3)
+        self.series.setHorizontalPosition(0.12)
+        self.series.setVerticalPosition(0.8)
+        #self.chart.setTitle("Pie Chart Test")
 
     def setSeries(self, series):
         self.chart.addSeries(series)
 
     def addData(self, data, dataNum):
-        self.series = QPieSeries()
         self.series.append(data, dataNum)
     
     def viewChart(self, window):
