@@ -14,10 +14,10 @@
 
 #Imports
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtCore, QtGui, QtWidgets #pip install PyQt5
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtWebEngineWidgets import *
+from PyQt5.QtWebEngineWidgets import * #pip install PyQtWebEngine
 from PyQt5.QtChart import *
 from pyqtgraph import PlotWidget, plot, exporters #pip install pyqtgraph
 

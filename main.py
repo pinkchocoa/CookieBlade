@@ -29,7 +29,7 @@ def createMainWindow():
     w.setTextbox(120, 200, 591, 31,"Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
     w.setPush(370, 250, 81, 41, startCrawl,"Crawl Link!")
     w.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
-    w.setGraph(0, 0, 800, 600, 
+    w.setLineGraph(0, 0, 800, 600, 
     day, views, "b", "o",
     "w",
     "View Count Graph", "r", "30pt",
