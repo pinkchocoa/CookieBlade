@@ -29,83 +29,47 @@ def twitterGraph(amount,URL_or_Username = ""):
 
     if URL_or_Username == "":
         return 'Empty URL/UserName'
-    
-    #By URL
     elif "twitter" in URL_or_Username:
-        
-        #Put most recent tweet date in date list.
         tUser = TUser.byURL(URL_or_Username)
-        tweets = tUser.userTweets(1)
-        tTweet = TTweet(tweets[0])
-        date = str(tTweet.getDate())
-        date = date.split(" ",1)[0] #split date and time.
-        datelist.append(date)
-
-        tweets = tUser.userTweets(amount)
-        for x in tweets:
-                tTweet = TTweet(x)
-                date = str(tTweet.getDate())
-                date = date.split(" ",1)[0] #split date and time.
-                if date in datelist:
-                    RTcount = RTcount + tTweet.RTCount()
-                    Likes = Likes + tTweet.favCount()
-                    if counter == amount:
-                        nestlist.append(RTcount)
-                        nestlist.append(Likes)
-                        mainlist.append(nestlist)
-                        nestlist = []
-                        return mainlist, datelist
-                    counter = counter + 1
-
-                else:
-                    datelist.append(date)
-                    nestlist.append(RTcount)
-                    nestlist.append(Likes)
-                    mainlist.append(nestlist)
-                    nestlist = []
-                    RTcount = tTweet.RTCount()
-                    Likes = tTweet.favCount()
-                    counter = counter + 1
-        return mainlist, datelist
-
-    #By User ID
-    else:  
-        #Put most recent tweet date in date list.
+    else:
         tUser = TUser.byID(URL_or_Username)
-        tweets = tUser.userTweets(1)
-        tTweet = TTweet(tweets[0])
-        date = str(tTweet.getDate())
-        date = date.split(" ",1)[0] #split date and time.
-        datelist.append(date)
 
-        tweets = tUser.userTweets(amount)
-        for x in tweets:
-                tTweet = TTweet(x)
-                date = str(tTweet.getDate())
-                date = date.split(" ",1)[0] #split date and time.
-                if date in datelist:
-                    RTcount = RTcount + tTweet.RTCount()
-                    Likes = Likes + tTweet.favCount()
-                    if counter == amount:
-                        nestlist.append(RTcount)
-                        nestlist.append(Likes)
-                        mainlist.append(nestlist)
-                        nestlist = []
-                        return mainlist, datelist
-                    counter = counter + 1
 
-                else:
-                    datelist.append(date)
+    tweets = tUser.userTweets(1)
+    tTweet = TTweet(tweets[0])
+    date = str(tTweet.getDate())
+    date = date.split(" ",1)[0] #split date and time.
+    datelist.append(date)
+
+    tweets = tUser.userTweets(amount)
+    for x in tweets:
+            tTweet = TTweet(x)
+            date = str(tTweet.getDate())
+            date = date.split(" ",1)[0] #split date and time.
+            if date in datelist:
+                RTcount = RTcount + tTweet.RTCount()
+                Likes = Likes + tTweet.favCount()
+                if counter == amount:
                     nestlist.append(RTcount)
                     nestlist.append(Likes)
                     mainlist.append(nestlist)
                     nestlist = []
-                    RTcount = tTweet.RTCount()
-                    Likes = tTweet.favCount()
-                    counter = counter + 1
-        return mainlist, datelist
+                    return mainlist, datelist
+                counter = counter + 1
+
+            else:
+                datelist.append(date)
+                nestlist.append(RTcount)
+                nestlist.append(Likes)
+                mainlist.append(nestlist)
+                nestlist = []
+                RTcount = tTweet.RTCount()
+                Likes = tTweet.favCount()
+                counter = counter + 1
+    return mainlist, datelist
+
 
 #Example:      
-# data1,data2= twitterGraph(10,"BarackObama")
-# print(data1)
-# print(data2)
+data1,data2= twitterGraph(10,"BarackObama")
+print(data1)
+print(data2)
