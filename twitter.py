@@ -116,7 +116,7 @@ class Twitter:
     #return format
     #{'#DontCallMe4thWin': 32031, 'JUNGKOOK': 1039162, ... }
     #{'topic that is trending': tweet volume, ...}
-    def trendingTopics(self, worldWide = True, lat=1.3521, lng=103.8198):
+    def trendingTopics(self, worldWide = True, lat=1.3521, lng=103.8198, limit=5):
         """! searches through twitter for trending topics
         @param self instance of the object that we are calling from
         @param worldWide True to search worldwide, False to search by location
@@ -126,7 +126,7 @@ class Twitter:
         """
         topics = {} #create a dictionary to store name and tweet volume
 
-        if worldWide:
+        if not worldWide:
             loc =  self.api.trends_closest(lat, lng)
             place = loc[0]['name']
             loc = loc[0]['woeid']
@@ -138,9 +138,12 @@ class Twitter:
         print("returning trends for", place)
         
         trends = json.loads(json.dumps(allTrends, indent=1))
-        for x in trends[0]["trends"]:
+        for idx, x in enumerate(trends[0]["trends"]):
             #might wanna remove the #?
-            topics[x["name"]] = x["tweet_volume"]
+            if x["tweet_volume"]:
+                topics[x["name"]] = x["tweet_volume"]
+            if idx == limit:
+                break
         
         return topics
 

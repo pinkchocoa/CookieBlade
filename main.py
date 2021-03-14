@@ -44,7 +44,9 @@ def secondWindow():
     y.setLabel(60, 160, 61, 31,"AaAAAA")
     y.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
     
-    data = {"a":20,"b":25,"c":20, "d":25}
+    #t = Twitter()
+    #data = t.trendingTopics()
+    data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
     y.setPieChart(data, "tesT", 2)
 
     a = ["a",1,42,13,64]
@@ -54,7 +56,7 @@ def secondWindow():
     e = ["e",19,24,35,42]
     dataList = [a,b,c,d]
     category = ["jan", "feb", "mar", "apr"]
-    y.setBarChart(dataList, category, "barChartTEst")
+    #y.setBarChart(dataList, category, "barChartTEst")
     return y
 
 
@@ -79,10 +81,13 @@ def testUser():
     print(tTweet.tweetID)
     print(tTweet.getDate())
 
-testUser()
+#testUser()
+
+
 
 App = StartApp() #init
 w = createMainWindow()
 y = secondWindow()
 w.show()
 sys.exit(App.QApp.exec_()) #System X
+
