@@ -8,14 +8,16 @@ class windowGen(NewWindow):
     totalNText = 0
     totalNPush = 0
     totalnLGraph = 0
-    totalPieChart = 0
+    totalNPieChart = 0
     totalNBrowser = 0
+    totalNBarChart = 0
 
     labelList = []
     textList = []
     pushList = []
     lineGraphList = []
     pieChartList = []
+    barChartList = []
     browserList = []
 
 
@@ -29,6 +31,7 @@ class windowGen(NewWindow):
         self.nLGraph = 0
         self.nBrowser = 0
         self.nPieChart = 0
+        self.nBarChart = 0
 
     def addNewLineGraph(self):
         self.lineGraphList.append(NewGraph(self.QWin, 0, 0, 800, 800))
@@ -140,13 +143,13 @@ class windowGen(NewWindow):
 
     def addNewPieChart(self):
         self.pieChartList.append(newPieChart())
-        self.totalPieChart+=1
+        self.totalNPieChart+=1
 
     #data is a dictionary
     def setPieChart(self, data, title="", size=1):
         #missing set x, y
         #  posX, posY
-        if self.nPieChart >= self.totalPieChart:
+        if self.nPieChart >= self.totalNPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
         pieChart.addData(data)
@@ -156,6 +159,24 @@ class windowGen(NewWindow):
         pieChart.setTitle(title)
         pieChart.explodeSlice(0)
         self.nPieChart+=1
+
+    def addNewBarChart(self):
+        self.barChartList.append(newBarChart())
+        self.totalNBarChart+=1
+
+    #data is a list of list
+    #categories is a list
+    def setBarChart(self, data, categories, title=""):
+        #missing set x, y
+        #  posX, posY
+        if self.nBarChart >= self.totalNBarChart:
+            self.addNewBarChart()
+        barChart = self.barChartList[self.nBarChart]
+        barChart.addData(data, categories)
+        barChart.setSeries(barChart.series)
+        barChart.viewChart(self.QWin)
+        barChart.setTitle(title)
+        self.nBarChart+=1
 
     def show(self):
         self.QWin.show()

@@ -46,6 +46,15 @@ def secondWindow():
     
     data = {"a":20,"b":25,"c":20, "d":25}
     y.setPieChart(data, "tesT", 2)
+
+    a = ["a",1,42,13,64]
+    b = ["b",12,2,33,14]
+    c = ["c",15,23,31,14]
+    d = ["d",11,12,32,42]
+    e = ["e",19,24,35,42]
+    dataList = [a,b,c,d]
+    category = ["jan", "feb", "mar", "apr"]
+    y.setBarChart(dataList, category, "barChartTEst")
     return y
 
 

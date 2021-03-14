@@ -295,3 +295,44 @@ class newPieChart():
         a.setExploded(True)
         a.setLabelVisible(True)
         a.setPen(QPen(2))
+
+
+class newBarChart():
+    def __init__(self):
+        self.chart = QChart()
+        self.chart.setAnimationOptions(QChart.SeriesAnimations)
+        
+        #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
+        #self.chart.mapToPosition(QtCore.QPointF(500,500))
+        self.chart.setBackgroundVisible(False)
+        self.series = QPercentBarSeries()
+        
+        self.chart.legend().setVisible(True)
+        self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
+
+
+    def setTitle(self, title):
+        self.chart.setTitle(title)
+
+    def setSeries(self, series):
+        self.chart.addSeries(series)
+
+    #data is a list of list
+    def addData(self, data, categories):
+        for a in data:
+            tempset = QBarSet(a[0])
+            for idx, x in enumerate(a):
+                if idx == 0:
+                    continue
+                tempset << x
+            self.series.append(tempset) 
+
+        axis = QBarCategoryAxis()
+        axis.append(categories)
+        self.chart.createDefaultAxes()
+        self.chart.setAxisX(axis, self.series)
+    
+    def viewChart(self, window):
+        self.chartview = QChartView(self.chart)
+        self.chartview.setRenderHint(QPainter.Antialiasing)
+        window.setCentralWidget(self.chartview)
