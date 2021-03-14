@@ -8,11 +8,13 @@ class windowGen(NewWindow):
     totalNText = 0
     totalNPush = 0
     totalnLGraph = 0
+    totalPieChart = 0
 
     labelList = []
     textList = []
     pushList = []
     lineGraphList = []
+    pieChartList = []
     browserList = []
 
 
@@ -25,6 +27,7 @@ class windowGen(NewWindow):
         self.nPush = 0
         self.nLGraph = 0
         self.nBrowser = 0
+        self.nPieChart = 0
 
         #total number of widgets that this window owns
         self.totalNLabel = nLabel
@@ -156,3 +159,6 @@ class windowGen(NewWindow):
 
     def hide(self):
         self.QWin.hide()
+
+    def isVisible(self):
+        return self.QWin.isVisible()
