@@ -273,6 +273,9 @@ class newPieChart():
         self.chart.legend().setVisible(True)
         self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
 
+    def setPos(self, posX, posY, lenX, lenY):
+        self.chart.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+
     def setSize(self, size):
         self.series.setPieSize(size)
 
@@ -295,6 +298,7 @@ class newPieChart():
             slice_.setLabelColor(Qt.white)
             slice_.setLabelPosition(QPieSlice.LabelInsideTangential)
             slice_.hovered[bool].connect(functools.partial(self.explodeSlice, slice_=slice_))
+            slice_.doubleClicked.connect(functools.partial(self.doubleClickSlice, slice_=slice_))
             donut.append(slice_)
             donut.setHoleSize(minSize)
             donut.setPieSize(minSize + (1) * (maxSize - minSize) )
@@ -314,6 +318,8 @@ class newPieChart():
             self.chart.setToolTip("")
         slice_.setExploded(exploded)
 
+    def doubleClickSlice(self, slice_):
+        print("test")
 
 
 class newBarChart():
