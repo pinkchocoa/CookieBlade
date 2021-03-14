@@ -308,7 +308,10 @@ class newPieChart():
         window.setCentralWidget(self.chartview)
 
     def explodeSlice(self, exploded, slice_):
-        self.chart.setToolTip(str(slice_.value()))
+        if exploded:
+            self.chart.setToolTip(str(int(slice_.value())))
+        else:
+            self.chart.setToolTip("")
         slice_.setExploded(exploded)
 
 
