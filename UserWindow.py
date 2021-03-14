@@ -41,7 +41,7 @@ labelXSpace = 70
 labelYSpace = 50
 
 App = StartApp()
-testUserwindow = windowGen("User Crawler", 1080, 720, 4, 2, 2)
+testUserwindow = windowGen("User Crawler", 1080, 720)
 # piechart = newPieChart()
 # piechart.addData("Python", 100)
 # piechart.addData("C++", 100)

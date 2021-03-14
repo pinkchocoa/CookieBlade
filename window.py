@@ -29,15 +29,12 @@ labelYSpace = 50
 
 
 def mainMenu():
-    nLabel = 1
-    nText = 2
-    nPush = 1
     textboxX = 120
     textboxY = 150
     buttonX = 370
     buttonY = 250
 
-    w = windowGen("Cookie Crawler", wWidth, wHeight, nLabel, nText, nPush)
+    w = windowGen("Cookie Crawler", wWidth, wHeight)
     w.setWindowIcon("CookieIcon.png")
     w.setLabel(wWidth/2, wHeight/2, 331, 81, "","GUIMainLogo.PNG")
     w.setLabel(textboxX-xSpace, textboxY+ySpace, lWidth, lHeight,"Enter URL:")
@@ -71,7 +68,7 @@ def snsMenu():
     fontSize = 10
 
     App = StartApp()
-    testUserwindow = windowGen("User Crawler", wWidth, wHeight, nLabel, nText, nPush)
+    testUserwindow = windowGen("User Crawler", wWidth, wHeight)
     testUserwindow.setLabel(labelX+50, labelY-110, 800, 81, "Leave fields empty for random crawl", "", "Ariel", 2*fontSize)
     testUserwindow.setTextbox(textBoxX, textBoxY, textBoxWidth, textBoxHeight, "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>", "Ariel", 10)
     testUserwindow.setTextbox(textBoxX, textBoxY + textYSpace, textBoxWidth, textBoxHeight, "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>", "Ariel", 10)
