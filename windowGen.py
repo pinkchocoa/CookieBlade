@@ -152,12 +152,9 @@ class windowGen(NewWindow):
         if self.nPieChart >= self.totalNPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
-        pieChart.addData(data)
-        pieChart.setSeries(pieChart.series)
         pieChart.viewChart(self.QWin)
-        pieChart.setSize(size)
+        pieChart.addData(data)
         pieChart.setTitle(title)
-        pieChart.explodeSlice(0)
         self.nPieChart+=1
 
     def addNewBarChart(self):

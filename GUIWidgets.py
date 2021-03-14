@@ -15,11 +15,13 @@
 #Imports
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets #pip3 install pyqt5
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import * #pip3 install PyQtWebEngine
 from PyQt5.QtChart import * #pip3 install PyQtChart
 from pyqtgraph import PlotWidget, plot, exporters #pip3 install pyqtgraph
+import functools
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -261,11 +263,11 @@ class newWebBrowser():
 class newPieChart():
     def __init__(self):
         self.chart = QChart()
-        self.chart.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart.setAnimationOptions(QChart.AllAnimations)
         
         #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
         #self.chart.mapToPosition(QtCore.QPointF(500,500))
-        self.chart.setBackgroundVisible(False)
+        #self.chart.setBackgroundVisible(False)
         self.series = QPieSeries()
         
         self.chart.legend().setVisible(True)
@@ -282,19 +284,31 @@ class newPieChart():
 
     #data is a dictionary
     def addData(self, data):
-        for x, y in data.items():
-            self.series.append(x,y)
+        minSize = 0.1
+        maxSize = 0.9
+        donut = QPieSeries()
+        sliceCount = len(data)
+        j=0
+        for x,y in data.items():
+            slice_ = QPieSlice(str(y),y)
+            slice_.setLabelVisible(True)
+            slice_.setLabelColor(Qt.white)
+            slice_.setLabelPosition(QPieSlice.LabelInsideTangential)
+            slice_.hovered[bool].connect(functools.partial(self.explodeSlice, slice_=slice_))
+            donut.append(slice_)
+            donut.setHoleSize(minSize)
+            donut.setPieSize(minSize + (1) * (maxSize - minSize) )
+            j+=1
+
+        self.setSeries(donut)
     
     def viewChart(self, window):
         self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         window.setCentralWidget(self.chartview)
 
-    def explodeSlice(self, index):
-        a = self.series.slices()[index]
-        a.setExploded(True)
-        a.setLabelVisible(True)
-        a.setPen(QPen(2))
+    def explodeSlice(self, exploded, slice_):
+        slice_.setExploded(exploded)
 
 
 class newBarChart():
@@ -336,3 +350,4 @@ class newBarChart():
         self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         window.setCentralWidget(self.chartview)
+
