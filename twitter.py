@@ -324,5 +324,8 @@ class TTweet(Twitter):
         """
         return self.tweet.place
 
+    def getDate(self):
+        return self.tweet.created_at
+
     #get tweet author
     #get what device is use to tweet this tweet

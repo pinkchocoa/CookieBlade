@@ -75,8 +75,9 @@ def testUser():
     tweets = tUser.userTweets()
     for x in tweets:
         tTweet = TTweet(x)
-        print(tTweet.favCount())
-        print(tTweet.RTCount())
+        break
+    print(tTweet.tweetID)
+    print(tTweet.getDate())
 
 testUser()
 
