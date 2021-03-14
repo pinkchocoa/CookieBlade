@@ -290,7 +290,7 @@ class newPieChart():
         sliceCount = len(data)
         j=0
         for x,y in data.items():
-            slice_ = QPieSlice(str(y),y)
+            slice_ = QPieSlice(x,y)
             slice_.setLabelVisible(True)
             slice_.setLabelColor(Qt.white)
             slice_.setLabelPosition(QPieSlice.LabelInsideTangential)
@@ -308,7 +308,9 @@ class newPieChart():
         window.setCentralWidget(self.chartview)
 
     def explodeSlice(self, exploded, slice_):
+        self.chart.setToolTip(str(slice_.value()))
         slice_.setExploded(exploded)
+
 
 
 class newBarChart():
