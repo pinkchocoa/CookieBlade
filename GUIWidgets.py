@@ -14,12 +14,12 @@
 
 #Imports
 import sys
-from PyQt5 import QtCore, QtGui, QtWidgets #pip install PyQt5
+from PyQt5 import QtCore, QtGui, QtWidgets #pip3 install pyqt5
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
-from PyQt5.QtWebEngineWidgets import * #pip install PyQtWebEngine
-from PyQt5.QtChart import *
-from pyqtgraph import PlotWidget, plot, exporters #pip install pyqtgraph
+from PyQt5.QtWebEngineWidgets import * #pip3 install PyQtWebEngine
+from PyQt5.QtChart import * #pip3 install PyQtChart
+from pyqtgraph import PlotWidget, plot, exporters #pip3 install pyqtgraph
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
