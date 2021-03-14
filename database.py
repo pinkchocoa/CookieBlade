@@ -124,16 +124,3 @@ class database(mkFolder):
         for row in rows:
             templist.append(list(row))
         return templist
-        
-
-
-
-# #Testing
-# tuser = database('testDB') #DB name must be given to start.
-# tuser.createTable('test2','key','C1') #Tablename, key name, col name.
-# data = ['Key1','1'] #data be same amount as col.
-# tuser.insertTable(data,'test2','key','C1')
-# data = ['Key2','2']
-# tuser.insertTable(data,'test2','key','C1')
-# templist = tuser.getTableData('test2')
-# print(templist[0][0]) #print(templist[r][c]) for specific row and col.
