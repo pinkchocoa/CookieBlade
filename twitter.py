@@ -244,6 +244,24 @@ class TUser(Twitter):
 
         return fav
 
+    def userTweets(self):
+        """! get user's tweets
+        @param self instance of the object that we are calling from
+        @return returns a list of tweets that the user have tweeted [ ['username', 'content', 'images if any'], [...] ]
+        """
+        tweets=[]
+        for tweet in tweepy.Cursor(self.api.user_timeline, id=self.username, 
+            lang="en", wait_on_rate_limit=True,
+            tweet_mode="extended").items(100):
+            images = []
+            if 'media' in tweet.entities:
+                for media in tweet.extended_entities['media']:
+                    files_location = str(media['media_url'])
+                    images.append(files_location)
+            tweets.append(tweet.id)
+
+        return tweets
+
 #https://twitter.com/twitter/statuses/ + tweetID
 #able to parse url to grab the ID behind for this class
 #accepts both URL and tweetID

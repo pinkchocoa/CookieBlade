@@ -66,6 +66,20 @@ def testChangeWindow():
         y.hide()
         w.show()
 
+
+def testUser():
+    #tUser = TUser("LilyPichu")
+    tUser = TUser.byURL("https://twitter.com/LilyPichu")
+    print(tUser.tweetCount())
+    print(tUser.followCount())
+    tweets = tUser.userTweets()
+    for x in tweets:
+        tTweet = TTweet(x)
+        print(tTweet.favCount())
+        print(tTweet.RTCount())
+
+testUser()
+
 App = StartApp() #init
 w = createMainWindow()
 y = secondWindow()
