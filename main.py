@@ -43,6 +43,9 @@ def secondWindow():
     y.setLabel(230, 70, 331, 81, "","GUIMainLogo.PNG")
     y.setLabel(60, 160, 61, 31,"AaAAAA")
     y.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
+    
+    data = {"a":20,"b":25,"c":20, "d":25}
+    y.setPieChart(data)
     return y
 
 

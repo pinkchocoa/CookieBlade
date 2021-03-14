@@ -275,8 +275,10 @@ class newPieChart():
     def setSeries(self, series):
         self.chart.addSeries(series)
 
-    def addData(self, data, dataNum):
-        self.series.append(data, dataNum)
+    #data is a dictionary
+    def addData(self, data):
+        for x, y in data.items():
+            self.series.append(x,y)
     
     def viewChart(self, window):
         self.chartview = QChartView(self.chart)

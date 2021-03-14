@@ -9,6 +9,7 @@ class windowGen(NewWindow):
     totalNPush = 0
     totalnLGraph = 0
     totalPieChart = 0
+    totalNBrowser = 0
 
     labelList = []
     textList = []
@@ -135,6 +136,23 @@ class windowGen(NewWindow):
         webBrowser.load(QtCore.QUrl(link))
         webBrowser.show()
         self.nBrowser+=1
+
+
+    def addNewPieChart(self):
+        self.pieChartList.append(newPieChart())
+        self.totalPieChart+=1
+
+    #data is a dictionary
+    def setPieChart(self, data):
+        #missing set x, y and scale function
+        #  posX, posY, lenX, lenY,
+        if self.nPieChart >= self.totalPieChart:
+            self.addNewPieChart()
+        pieChart = self.pieChartList[self.nPieChart]
+        pieChart.addData(data)
+        pieChart.setSeries(pieChart.series)
+        pieChart.viewChart(self.QWin)
+        self.nPieChart+=1
 
     def show(self):
         self.QWin.show()
