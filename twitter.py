@@ -244,7 +244,7 @@ class TUser(Twitter):
 
         return fav
 
-    def userTweets(self):
+    def userTweets(self, num=100):
         """! get user's tweets
         @param self instance of the object that we are calling from
         @return returns a list of tweets that the user have tweeted [ ['username', 'content', 'images if any'], [...] ]
@@ -252,7 +252,7 @@ class TUser(Twitter):
         tweets=[]
         for tweet in tweepy.Cursor(self.api.user_timeline, id=self.username, 
             lang="en", wait_on_rate_limit=True,
-            tweet_mode="extended").items(100):
+            tweet_mode="extended").items(num):
             images = []
             if 'media' in tweet.entities:
                 for media in tweet.extended_entities['media']:
