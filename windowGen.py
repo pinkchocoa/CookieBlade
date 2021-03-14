@@ -143,15 +143,18 @@ class windowGen(NewWindow):
         self.totalPieChart+=1
 
     #data is a dictionary
-    def setPieChart(self, data):
-        #missing set x, y and scale function
-        #  posX, posY, lenX, lenY,
+    def setPieChart(self, data, title="", size=1):
+        #missing set x, y
+        #  posX, posY
         if self.nPieChart >= self.totalPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
         pieChart.addData(data)
         pieChart.setSeries(pieChart.series)
         pieChart.viewChart(self.QWin)
+        pieChart.setSize(size)
+        pieChart.setTitle(title)
+        pieChart.explodeSlice(0)
         self.nPieChart+=1
 
     def show(self):

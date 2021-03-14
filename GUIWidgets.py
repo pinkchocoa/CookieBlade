@@ -262,15 +262,20 @@ class newPieChart():
     def __init__(self):
         self.chart = QChart()
         self.chart.setAnimationOptions(QChart.SeriesAnimations)
-        self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
+        
         #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
         #self.chart.mapToPosition(QtCore.QPointF(500,500))
         self.chart.setBackgroundVisible(False)
         self.series = QPieSeries()
-        self.series.setPieSize(0.3)
-        self.series.setHorizontalPosition(0.12)
-        self.series.setVerticalPosition(0.8)
-        #self.chart.setTitle("Pie Chart Test")
+        
+        self.chart.legend().setVisible(True)
+        self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
+
+    def setSize(self, size):
+        self.series.setPieSize(size)
+
+    def setTitle(self, title):
+        self.chart.setTitle(title)
 
     def setSeries(self, series):
         self.chart.addSeries(series)
@@ -284,3 +289,9 @@ class newPieChart():
         self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         window.setCentralWidget(self.chartview)
+
+    def explodeSlice(self, index):
+        a = self.series.slices()[index]
+        a.setExploded(True)
+        a.setLabelVisible(True)
+        a.setPen(QPen(2))

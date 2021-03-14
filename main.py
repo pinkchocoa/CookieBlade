@@ -45,7 +45,7 @@ def secondWindow():
     y.setPush(490, 250, 81, 41, testChangeWindow,"Change Window")
     
     data = {"a":20,"b":25,"c":20, "d":25}
-    y.setPieChart(data)
+    y.setPieChart(data, "tesT", 2)
     return y
 
 
