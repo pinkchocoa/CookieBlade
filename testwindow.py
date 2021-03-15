@@ -1,3 +1,4 @@
+#NOT IN USE#
 from GUIWidgets import *
 
 class UI:
@@ -72,9 +73,12 @@ class UI:
         self.ytText = NewTextBox(window, textX, textY, textBoxWidth, textBoxHeight)
         self.ytText.setPlaceholderText("Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>")
         self.ytText.setFont("Ariel", fontSize)
-        self.userM.setTextbox(textX, textY, textBoxWidth, textBoxHeight, "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>", "Ariel", fontSize)
-        self.userM.setTextbox(textX, textY+50, textBoxWidth, textBoxHeight, "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>", "Ariel", fontSize)
-        self.userM.setLabel(labelX, labelY, labelWidth, labelHeight, "YouTube:", "", "Ariel", fontSize)
+        self.tText = NewTextBox(window, textX, textY+50, textBoxWidth, textBoxHeight)
+        self.tText.setPlaceholderText("Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>")
+        self.tText.setFont("Ariel", fontSize)
+        self.ytLabel = NewLabel(window, labelX, labelY, labelWidth, labelHeight)
+        self.ytLabel.setText("YouTube:")
+        self.ytLabel.setFont("Ariel", fontSize)
         self.userM.setLabel(labelX, labelY+50, labelWidth, labelHeight, "Twitter:", "", "Ariel", fontSize)
         self.userM.setPush(buttonX, buttonY, buttonWidth, buttonHeight, self.userCrawlClicked, "Crawl!", "Ariel", fontSize)
         self.userM.setPush(buttonX+500, buttonY, buttonWidth, buttonHeight, self.userBackClicked, "Back", "Ariel", fontSize)

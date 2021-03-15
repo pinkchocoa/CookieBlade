@@ -101,6 +101,9 @@ class NewLabel:
         self.label.setPixmap(QtGui.QPixmap(image))
         #Enable image scaling to fit Label size
         self.label.setScaledContents(True)
+    
+    def setFont(self, fontStyle, fontSize):
+        self.label.setFont(QFont(fontStyle,int(fontSize)))
 
 #Class to create new TextBox
 class NewTextBox:
