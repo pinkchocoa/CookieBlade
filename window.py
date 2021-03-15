@@ -4,36 +4,36 @@ from cookieBlade import startCrawl
 class UI:
     
     def __init__(self):
-        app = StartApp()
-        mainM = self.mainMenu()
-        mainM.show()
-        sys.exit(app.QApp.exec_())
+        self.app = StartApp()
+        self.mainM = self.mainMenu()
+        self.mainM.show()
+        sys.exit(self.app.QApp.exec_())
 
     def mainToUser(self):
-        userM = self.userMenu()
+        self.userM = self.userMenu()
         self.mainM.hide()
-        userM.show()
+        self.userM.show()
 
     def mainToTopic(self):
-        topicM = self.topicMenu()
+        self.topicM = self.topicMenu()
         self.mainM.hide()
-        topicM.show()
+        self.topicM.show()
 
     def userCrawlClicked(self):
-        snsM = self.snsMenu()
+        self.snsM = self.snsMenu()
         self.userM.hide()
         self.prev = "user"
-        snsM.show()
+        self.snsM.show()
 
     def userBackClicked(self):
         self.userM.hide()
         self.mainM.show()
 
     def topicCrawlClicked(self):
-        snsM = self.snsMenu()
+        self.snsM = self.snsMenu()
         self.topicM.hide()
         self.prev = "topic"
-        snsM.show()
+        self.snsM.show()
 
     def topicBackClicked(self):
         self.topicM.hide()
@@ -206,5 +206,4 @@ class UI:
         self.snsM.setLabel(0, labelY+200, labelWidth+1005, labelHeight, "____________________________________________________________________________", "", "Ariel", 2*fontSize)
         self.snsM.setPush(buttonX, buttonY, buttonWidth, buttonHeight, self.snsBackClicked, "Back", "Ariel", fontSize)
         return self.snsM
-    
     

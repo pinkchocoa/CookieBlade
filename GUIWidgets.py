@@ -124,6 +124,9 @@ class NewTextBox:
         @param text used to set the text to be displayed by the label
         """
         self.textbox.setPlaceholderText(text)
+    
+    def setFont(self, fontStyle, fontSize):
+        self.textbox.setFont(QFont(fontStyle,int(fontSize)))
 
 #Class to create new PushButton
 class NewPushButton:
