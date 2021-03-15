@@ -1,60 +1,51 @@
 from windowGen import *
 
-def crawlClicked():
-    testUserwindow.setBrowser(1080, 720, "https://www.google.com/")
-
-
 def backClicked():
     pass
 
-def labelClicked(event):
-    testUserwindow.setBrowser(1080, 720, "https://www.google.com/")
-
-buttonX = 310
-buttonY = 250
-
 wWidth = 1080
 wHeight = 720
+fontSize = 10
 
-bWidth = 150
-bHeight = 80
+logoWidth = 120
+logoHeight = 100
+logoX = 50
+logoY = 20
 
-tWidth = 591
-tHeight = 31
+labelWidth = 150
+labelHeight = 40
+labelX = logoX+100
+labelY = logoY
 
-lWidth = 61
-lHeight = 31
+buttonWidth = 150
+buttonHeight = 80
+buttonX = 900
+buttonY = 600
 
-buttonXSpace = 300
-buttonYSpace = 100
+subCount = 1
+viewCount = 2
+videoCount = 3
+ytCreateDate = "01/01/2020"
 
-textX = 150
-textY = 160
-
-labelX = 70
-labelY = 160
-
-textXSpace = 0
-textYSpace = 45
-
-labelXSpace = 70
-labelYSpace = 50
+followerCount = 4
+tweetsLiked = 5
+totalTweets = 6
+tCreatDate = "02/02/2020"
 
 App = StartApp()
-testUserwindow = windowGen("User Crawler", 1080, 720)
-# piechart = newPieChart()
-# piechart.addData("Python", 100)
-# piechart.addData("C++", 100)
-# piechart.addData("Dog", 100)
-# piechart.setSeries(piechart.series)
-# piechart.viewChart(testUserwindow.QWin)
-testUserwindow.setLabel(labelX+50, 50, 800, 81, "Leave fields empty for random crawl", "", "Ariel", 20)
-testUserwindow.setLabel(labelX+50, 450, 800, 81, "www.google.com", "", "Ariel", 20, labelClicked)
-testUserwindow.setTextbox(textX, textY, 800, 40, "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>", "Ariel", 10)
-testUserwindow.setTextbox(textX, textY + textYSpace, 800, 40, "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>", "Ariel", 10)
-testUserwindow.setPush(buttonX, buttonY, 150, 80, crawlClicked, "Crawl!", "Ariel", 10)
-testUserwindow.setPush(buttonX + buttonXSpace, buttonY, 150, 80, backClicked, "Back", "Ariel", 10)
-testUserwindow.setLabel(labelX, labelY, 75, 31, "Enter link:", "", "Ariel", 10)
-testUserwindow.setLabel(labelX, labelY + labelYSpace, 75, 31, "Enter link:", "", "Ariel", 10)
-testUserwindow.show()
+userWindow = windowGen("Crawled Data", wWidth, wHeight)
+userWindow.setWindowIcon("CookieIcon.png")
+userWindow.setLabel(logoX, logoY, logoWidth, logoHeight, "","YouTubeLogo.PNG")
+userWindow.setLabel(logoX, logoY+120, logoWidth, logoHeight, "","TwitterLogo.PNG")
+userWindow.setLabel(labelX-12, labelY-10, labelWidth, labelHeight, "Sub Count: " + str(subCount), "", "Ariel", fontSize)
+userWindow.setLabel(labelX+8, labelY+15, labelWidth, labelHeight, "Total View Count: " + str(viewCount), "", "Ariel", fontSize)
+userWindow.setLabel(labelX+10, labelY+40, labelWidth, labelHeight, "Total Video Count: " + str(videoCount), "", "Ariel", fontSize)
+userWindow.setLabel(labelX+19, labelY+65, labelWidth, labelHeight, "Created At: " + str(ytCreateDate), "", "Ariel", fontSize)
+userWindow.setLabel(labelX, labelY+110, labelWidth, labelHeight, "Follower Count: " + str(followerCount), "", "Ariel", fontSize)
+userWindow.setLabel(labelX+10, labelY+135, labelWidth, labelHeight, "Total Tweets Liked: " + str(tweetsLiked), "", "Ariel", fontSize)
+userWindow.setLabel(labelX-5, labelY+160, labelWidth, labelHeight, "Total Tweets: " + str(totalTweets), "", "Ariel", fontSize)
+userWindow.setLabel(labelX+18, labelY+185, labelWidth, labelHeight, "Created At: " + str(tCreatDate), "", "Ariel", fontSize)
+userWindow.setLabel(0, labelY+200, labelWidth+1005, labelHeight, "____________________________________________________________________________", "", "Ariel", 2*fontSize)
+userWindow.setPush(buttonX, buttonY, buttonWidth, buttonHeight, backClicked, "Back", "Ariel", fontSize)
+userWindow.show()
 sys.exit(App.QApp.exec_())
