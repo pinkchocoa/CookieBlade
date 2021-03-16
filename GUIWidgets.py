@@ -165,7 +165,7 @@ class newTextBox:
         @param lenY used to set the vertical height of the label
         """
         #Initialize new instance of TextBox UI
-        self.textbox = QLineEdit(window)
+        self.textbox = QtWidgets.QLineEdit(window)
         #Set TextBox x & y position and size
         self.textbox.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
 
@@ -182,6 +182,10 @@ class newTextBox:
         @param fontSize used to set the font size of textbox placeholder text
         """
         self.textbox.setFont(QFont(fontStyle,int(fontSize)))
+
+    def returnText(self):
+        print("b")
+        return self.textbox.text()
 
 #Class to create new PushButton
 class newPushButton:
@@ -441,6 +445,8 @@ class newBarChart():
     def viewChart(self, window,x,y,size):
         self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
+
+        #need to find the equivalent of this in his stackwidget
         window.setCentralWidget(self.chartview)
         test = QtCore.QRectF()
         test.setHeight(size)

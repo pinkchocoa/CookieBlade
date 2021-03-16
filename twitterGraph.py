@@ -50,8 +50,8 @@ def twitterGraph(amount,URL_or_Username = ""):
                 RTcount = RTcount + tTweet.RTCount()
                 Likes = Likes + tTweet.favCount()
                 if counter == amount:
-                    nestlist.append(RTcount)
-                    nestlist.append(Likes)
+                    nestlist.append(str(RTcount))
+                    nestlist.append(str(Likes))
                     mainlist.append(nestlist)
                     nestlist = []
                     return mainlist, datelist
@@ -59,8 +59,8 @@ def twitterGraph(amount,URL_or_Username = ""):
 
             else:
                 datelist.append(date)
-                nestlist.append(RTcount)
-                nestlist.append(Likes)
+                nestlist.append(str(RTcount))
+                nestlist.append(str(Likes))
                 mainlist.append(nestlist)
                 nestlist = []
                 RTcount = tTweet.RTCount()
@@ -70,6 +70,7 @@ def twitterGraph(amount,URL_or_Username = ""):
 
 
 #Example:      
-# data1,data2= twitterGraph(10,"BarackObama")
-# print(data1)
-# print(data2)
+
+#data1,data2= twitterGraph(10,"BarackObama")
+#print(data1)
+#print(data2)
