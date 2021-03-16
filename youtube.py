@@ -243,11 +243,12 @@ def searchurl(input):
 
 #Function to return back the revenue and total views per month for the year of 2020
 def getRevenueData(input):
+
     # converting the url input to just the channel id
     url_parsed = parse.urlparse(input).path
     id = url_parsed.split('/')[-1]
 
-    resultsList = []  # list to return result
+    resultsList = []
     datesList = []
 
     # Get a list of the channel's videos and put them into a list
@@ -271,7 +272,7 @@ def getRevenueData(input):
         for vidId in reply['items']:
             resultsList.append(vidId["id"]["videoId"])
 
-    # convert the video ids into created date and put them into another list
+    #convert the video ids into created date and put them into another list
     for id in range(0, len(resultsList)):
         response = youtube.videos().list(
             part='snippet',
@@ -285,8 +286,33 @@ def getRevenueData(input):
         newdateMade = dateMade[0:10]
         datesList.append(newdateMade)
 
-    # Filter out the videos that are made in Year 2020
-    # setting the filter for months (Year 2020)
+
+    #create a list of list based on the number of videos in the channel
+    #I want 3 things in each list inside the list
+    #first - videoid, second - no of views, third - createdAt date
+    mainList = [list() for x in range(len(resultsList))]
+
+    for i in range(0, len(mainList)):
+        mainList[i].append(resultsList[i])
+
+    for i in range(0, len(mainList)):
+        response = youtube.videos().list(
+            part='statistics',
+            id=mainList[i][0]
+        )
+        try:
+            reply = response.execute()
+        except Exception as e:
+            print(str(e))
+        viewcount = reply["items"][0]["statistics"]["viewCount"]
+        mainList[i].append(viewcount)
+
+    for i in range(0, len(mainList)):
+        mainList[i].append(datesList[i])
+
+
+    #Filter out the videos that are made in Year 2020
+    #setting the filter for months (Year 2020)
     start_date = datetime.strptime('2020-1-1', '%Y-%m-%d')
     janstart_date = datetime.date(start_date)
     end_date = datetime.strptime('2020-1-31', '%Y-%m-%d')
@@ -336,71 +362,69 @@ def getRevenueData(input):
     end_date = datetime.strptime('2020-12-31', '%Y-%m-%d')
     decend_date = datetime.date(end_date)
 
-    # Converting the list of dates type string into a list of dates type date
-    dt_dates = []
-    for d in datesList:
-        datetimeobject = datetime.strptime(d, '%Y-%m-%d')
+    #Converting the list of dates type string into a list of dates type date
+    for d in range(0, len(mainList)):
+        datetimeobject = datetime.strptime(mainList[d][2], '%Y-%m-%d')
         datetimeobject = datetime.date(datetimeobject)
-        dt_dates.append(datetimeobject)
+        mainList[d][2] = datetimeobject
 
-    # Filtering done here and returns back a list of filtered dates type string
-    # lists for the various months of 2020
+    #Filtering done here and returns back a list of filtered dates type string
+    #lists for the various months of 2020
     monthVids = [list() for x in range(12)]
     sortedmonthVids = []
     channelRevByMonth = []
 
-    # sorting the list of dates into their respective months
-    for d in dt_dates:
-        if d >= janstart_date and d <= janend_date:
-            d = str(d)
+    #sorting the list of dates into their respective months
+    for d in mainList:
+        if d[2] >= janstart_date and d[2] <= janend_date:
+            d[2] = str(d[2])
             monthVids[0].append(d)
-        elif d >= febstart_date and d <= febend_date:
-            d = str(d)
+        elif d[2] >= febstart_date and d[2] <= febend_date:
+            d[2] = str(d[2])
             monthVids[1].append(d)
-        elif d >= marstart_date and d <= marend_date:
-            d = str(d)
+        elif d[2] >= marstart_date and d[2] <= marend_date:
+            d[2] = str(d[2])
             monthVids[2].append(d)
-        elif d >= aprstart_date and d <= aprend_date:
-            d = str(d)
+        elif d[2] >= aprstart_date and d[2] <= aprend_date:
+            d[2] = str(d[2])
             monthVids[3].append(d)
-        elif d >= maystart_date and d <= mayend_date:
-            d = str(d)
+        elif d[2] >= maystart_date and d[2] <= mayend_date:
+            d[2] = str(d[2])
             monthVids[4].append(d)
-        elif d >= junstart_date and d <= junend_date:
-            d = str(d)
+        elif d[2] >= junstart_date and d[2] <= junend_date:
+            d[2] = str(d[2])
             monthVids[5].append(d)
-        elif d >= julstart_date and d <= julend_date:
-            d = str(d)
+        elif d[2] >= julstart_date and d[2] <= julend_date:
+            d[2] = str(d[2])
             monthVids[6].append(d)
-        elif d >= augstart_date and d <= augend_date:
-            d = str(d)
+        elif d[2] >= augstart_date and d[2] <= augend_date:
+            d[2] = str(d[2])
             monthVids[7].append(d)
-        elif d >= sepstart_date and d <= sepend_date:
-            d = str(d)
+        elif d[2] >= sepstart_date and d[2] <= sepend_date:
+            d[2] = str(d[2])
             monthVids[8].append(d)
-        elif d >= octstart_date and d <= octend_date:
-            d = str(d)
+        elif d[2] >= octstart_date and d[2] <= octend_date:
+            d[2] = str(d[2])
             monthVids[9].append(d)
-        elif d >= novstart_date and d <= novend_date:
-            d = str(d)
+        elif d[2] >= novstart_date and d[2] <= novend_date:
+            d[2] = str(d[2])
             monthVids[10].append(d)
-        elif d >= decstart_date and d <= decend_date:
-            d = str(d)
+        elif d[2] >= decstart_date and d[2] <= decend_date:
+            d[2] = str(d[2])
             monthVids[11].append(d)
-    # Store the number of vids made per month into a list to return
-    sortedmonthVids.append(len(monthVids[0]))
-    sortedmonthVids.append(len(monthVids[1]))
-    sortedmonthVids.append(len(monthVids[2]))
-    sortedmonthVids.append(len(monthVids[3]))
-    sortedmonthVids.append(len(monthVids[4]))
-    sortedmonthVids.append(len(monthVids[5]))
-    sortedmonthVids.append(len(monthVids[6]))
-    sortedmonthVids.append(len(monthVids[7]))
-    sortedmonthVids.append(len(monthVids[8]))
-    sortedmonthVids.append(len(monthVids[9]))
-    sortedmonthVids.append(len(monthVids[10]))
-    sortedmonthVids.append(len(monthVids[11]))
 
-    # Store the amount of revenue earned per month into a list to return
+    #Store the number of vids made per month into a list to return
+    for i in range(0,12):
+        sortedmonthVids.append(len(monthVids[i]))
 
-    return sortedmonthVids
+
+    #Store the amount of revenue earned per month into a list to return
+    for i in range(0,12):
+        monthRev = 0
+        for j in range(0,len(monthVids[i])):
+            #formula to calculate revenue here
+            monthRev += int(monthVids[i][j][1]) * 0.02
+        channelRevByMonth.append(monthRev)
+
+    finalresult = [sortedmonthVids, channelRevByMonth]
+    return finalresult
