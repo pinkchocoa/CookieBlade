@@ -63,6 +63,7 @@ class newWindow:
     def show(self):
         self.QWin.show()
 
+#Class to create a stack widget
 class newStackWidget:
     """! newStackWidget class
     Defines the stack widget object used to store and load multiple widget
@@ -86,7 +87,12 @@ class newStackWidget:
         self.sWidget.addWidget(widget)
     
     def setCurrentWidget(self, widget):
-        self.sWidget.setCurrentWidget(widget)
+        self.sWidget.setCurrentWidget(widget.page)
+
+class newWidgetPage:
+
+    def __init__(self):
+        self.page = QtWidgets.QWidget()
 
 #Class to create a new Label
 class newLabel:
