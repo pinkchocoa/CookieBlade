@@ -61,6 +61,8 @@ class window(object):
         self.setupUserMenu()
         self.setupsnsMenu()
 
+        self.addToStack()
+
         window.QWin.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(window.QWin)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
@@ -71,6 +73,14 @@ class window(object):
         self.retranslateUi(window.QWin)
         QtCore.QMetaObject.connectSlotsByName(window.QWin)
 
+
+    def addToStack(self):
+        self.stackedWidget.addWidget(self.mainM.window.page)
+        self.stackedWidget.addWidget(self.userM.window.page)
+        self.stackedWidget.addWidget(self.topicM.window.page)
+        self.stackedWidget.addWidget(self.snsM.window.page)
+
+
     def setupMainMenu(self):
         #Start of mainMenu
         self.mainM = windowGen()
@@ -79,7 +89,7 @@ class window(object):
         self.mainM.setPush(340, 357, 150, 80, self.mainToUser,"User")
         #topic push button
         self.mainM.setPush(590, 357, 150, 80, self.topicToSns, "Topic")
-        self.stackedWidget.addWidget(self.mainM.window.page)
+        
 
     def setupUserMenu(self):
         #Start of userMenu
@@ -100,7 +110,7 @@ class window(object):
         self.userM.setPush(215, 328, 150, 80, self.userToSns, "Crawl!")
         #userBackPush
         self.userM.setPush(715, 328, 150, 80, self.userToMain, "Back")
-        self.stackedWidget.addWidget(self.userM.window.page)
+        
 
     def setupTopicMenu(self):
         #Start of topicMenu
@@ -121,7 +131,7 @@ class window(object):
         self.topicM.setLabel(270, 228, 75, 40, "country" )
         #topicnotelabel
         self.topicM.setLabel(325, 253, 350, 40, "Leave fields empty for random crawl.", "", "", "", "", True)
-        self.stackedWidget.addWidget(self.topicM.window.page)
+        
 
     def setupsnsMenu(self):
         #Start of snsMenu
@@ -153,10 +163,6 @@ class window(object):
         #snsBackPush
         self.snsM.setPush(920, 580, 150, 80, self.snsBack, "Back")
 
-        self.stackedWidget.addWidget(self.snsM.window.page)
-
-        
-        
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
