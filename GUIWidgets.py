@@ -59,6 +59,9 @@ class NewWindow:
         @param image image name to be used as Window Icon
         """
         self.QWin.setWindowIcon(QtGui.QIcon(image))
+    
+    def show(self):
+        self.QWin.show()
 
 #Class to create a new Label
 class NewLabel:
@@ -160,6 +163,9 @@ class NewPushButton:
         @param text used to set the text to be displayed by the label
         """
         self.PushButton.setText(text)
+    
+    def setFont(self, fontStyle, fontSize):
+        self.PushButton.setFont(QFont(fontStyle,int(fontSize)))
 
 class messageBox:
     def __init__(self, winTitle="", text="", winIcon="" ,show=True,icon="Critical"):
