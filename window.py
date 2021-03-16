@@ -56,22 +56,6 @@ class window(object):
         self.centralwidget = QtWidgets.QWidget(window.QWin)
         self.stackedWidget = newStackWidget(self.centralwidget, 0,0, 1080, 720)
 
-        self.setupMainMenu()
-        self.setupTopicMenu()
-        self.setupUserMenu()
-        self.setupsnsMenu()
-
-        window.QWin.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(window.QWin)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
-        window.QWin.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(window.QWin)
-        window.QWin.setStatusBar(self.statusbar)
-
-        self.retranslateUi(window.QWin)
-        QtCore.QMetaObject.connectSlotsByName(window.QWin)
-
-    def setupMainMenu(self):
         #Start of mainMenu
         self.mainM = windowGen()
         self.mainM.setLabel(340, 157, 400, 90,"","GUIMainLogo.PNG","","","",True)
@@ -81,7 +65,6 @@ class window(object):
         self.mainM.setPush(590, 357, 150, 80, self.topicToSns, "Topic")
         self.stackedWidget.addWidget(self.mainM.window.page)
 
-    def setupUserMenu(self):
         #Start of userMenu
         self.userM = windowGen()
         #userLogo
@@ -102,7 +85,6 @@ class window(object):
         self.userM.setPush(715, 328, 150, 80, self.userToMain, "Back")
         self.stackedWidget.addWidget(self.userM.window.page)
 
-    def setupTopicMenu(self):
         #Start of topicMenu
         self.topicM = windowGen()
         #topicLogo
@@ -123,7 +105,6 @@ class window(object):
         self.topicM.setLabel(325, 253, 350, 40, "Leave fields empty for random crawl.", "", "", "", "", True)
         self.stackedWidget.addWidget(self.topicM.window.page)
 
-    def setupsnsMenu(self):
         #Start of snsMenu
         self.snsM = windowGen()
         #ytlogo
@@ -156,7 +137,18 @@ class window(object):
         self.stackedWidget.addWidget(self.snsM.window.page)
 
         
+        window.QWin.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(window.QWin)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
+        window.QWin.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(window.QWin)
+        window.QWin.setStatusBar(self.statusbar)
+        #SNS Window Content
         
+        #End of SNS Window Content
+
+        self.retranslateUi(window.QWin)
+        QtCore.QMetaObject.connectSlotsByName(window.QWin)
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
