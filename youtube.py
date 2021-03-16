@@ -429,5 +429,5 @@ def getRevenueData(input):
     finalresult = [sortedmonthVids, channelRevByMonth]
     return finalresult
 
-print(searchurl("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
-print(getRevenueData("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
+# print(searchurl("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
+# print(getRevenueData("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
