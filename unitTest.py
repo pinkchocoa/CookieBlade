@@ -6,7 +6,7 @@ from twitterGraph import twitterGraph
 from LinkValidation import LinkValidation
 from twitter import Twitter,TUser,TTweet
 from youtube import *
-
+from domain import get_domain_name,get_sub_domain_name
 
 class Testing(unittest.TestCase):
 
@@ -72,6 +72,9 @@ class Testing(unittest.TestCase):
         test.UrlValidation("https://twitter.com/BarackObama")
         #test.InternetVaild() - This takes awhile as well.
 
+    def testDomain(self):
+        get_domain_name("https://twitter.com/BarackObama")
+        get_sub_domain_name("https://twitter.com/BarackObama")
 
 if __name__ == '__main__':
     unittest.main()
