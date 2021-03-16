@@ -1,8 +1,5 @@
 from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
 
-def emptyFn():
-    pass
-
 class windowGen(NewWindow):
     totalNLabel = 0
     totalNText = 0
@@ -152,9 +149,9 @@ class windowGen(NewWindow):
         if self.nPieChart >= self.totalNPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
-        pieChart.setSize(width,height)
+        #pieChart.setSize(width,height)
         pieChart.viewChart(self.QWin)
-        pieChart.setPos(500,700)
+        pieChart.setPos(500,500)
         pieChart.addData(data)
         pieChart.setTitle(title)
         

@@ -290,8 +290,11 @@ class newPieChart():
         #functions i have tested that did not work ^
 
         #function im currently testing but made it disappear instead:
-        test = QtCore.QRectF(posX, posY, 500, 500)
-        self.chart.setPlotArea(test) 
+        test = QtCore.QRectF()
+        test.setHeight(500)
+        test.setWidth(500)
+        test.moveTo(250,250)#This move the pi chart without the label.
+        self.chart.setPlotArea(test)
         pass
 
     def setSize(self, width, height):
@@ -378,4 +381,8 @@ class newBarChart():
         self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         window.setCentralWidget(self.chartview)
-
+        test = QtCore.QRectF()
+        test.setHeight(500)
+        test.setWidth(500)
+        test.moveTo(250,250)#This move the pi chart without the label.
+        self.chart.setPlotArea(test)

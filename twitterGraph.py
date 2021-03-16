@@ -70,6 +70,6 @@ def twitterGraph(amount,URL_or_Username = ""):
 
 
 #Example:      
-data1,data2= twitterGraph(10,"BarackObama")
-print(data1)
-print(data2)
+# data1,data2= twitterGraph(10,"BarackObama")
+# print(data1)
+# print(data2)
