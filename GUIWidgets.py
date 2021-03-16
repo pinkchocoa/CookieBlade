@@ -56,17 +56,20 @@ class newWindow:
     #Method to set Window icon image
     def setWindowIcon(self,image):
         """! setWindowIcon method used to set image as Window Icon
-        @param image image name to be used as Window Icon
+        @param image image to be used as Window Icon
         """
         self.QWin.setWindowIcon(QtGui.QIcon(image))
     
     def show(self):
+        """! show method used to display the window
+        """
+        #Display window
         self.QWin.show()
 
 #Class to create a stack widget
 class newStackWidget:
     """! newStackWidget class
-    Defines the stack widget object used to store and load multiple widget
+    Defines the stack widget object used to store and load widget pages
     """
     def __init__(self, window, posX, posY, lenX, lenY):
         """! newStackWidget class initializer
@@ -87,16 +90,24 @@ class newStackWidget:
         self.sWidget.addWidget(widget)
     
     def setCurrentWidget(self, widget):
+        """! setCurrentWidget method
+        @param widget set current page widget's page
+        """
         self.sWidget.setCurrentWidget(widget.page)
 
+#Class to create a new widget page
 class newWidgetPage:
-
+    """! newWidgetPage class
+    Defines the widget page object used to store multiple widgets to be loaded by stack widget
+    """
     def __init__(self):
+        """! newStackWidget class initializer used to create a new widget page
+        """
         self.page = QtWidgets.QWidget()
 
 #Class to create a new Label
 class newLabel:
-    """! NewLabel class
+    """! newLabel class
     Defines the label object used to display text label to guide users
     """
     def __init__(self, window, posX, posY, lenX, lenY):
@@ -124,6 +135,10 @@ class newLabel:
         self.label.update()
 
     def setFont(self, fontStyle, fontSize):
+        """! setFont method 
+        @param fontStyle used to set the font style of label text
+        @param fontSize used to set the font size of label text
+        """
         self.label.setFont(QFont(fontStyle, fontSize))
     
     #Method to display image in Label
@@ -135,13 +150,10 @@ class newLabel:
         self.label.setPixmap(QtGui.QPixmap(image))
         #Enable image scaling to fit Label size
         self.label.setScaledContents(True)
-    
-    def setFont(self, fontStyle, fontSize):
-        self.label.setFont(QFont(fontStyle,int(fontSize)))
 
 #Class to create new TextBox
 class newTextBox:
-    """! NewTextBox class
+    """! newTextBox class
     Defines the textbox object used to retrieve user input
     """
     def __init__(self, window, posX, posY, lenX, lenY):
@@ -165,11 +177,15 @@ class newTextBox:
         self.textbox.setPlaceholderText(text)
     
     def setFont(self, fontStyle, fontSize):
+        """! setFont method 
+        @param fontStyle used to set the font style of textbox placeholder text
+        @param fontSize used to set the font size of textbox placeholder text
+        """
         self.textbox.setFont(QFont(fontStyle,int(fontSize)))
 
 #Class to create new PushButton
 class newPushButton:
-    """! NewPushButton class
+    """! newPushButton class
     Defines the PushButton object to recieve button click input
     """
     def __init__(self, window, posX, posY, lenX, lenY, functionName):
@@ -191,14 +207,22 @@ class newPushButton:
     #Set PushButton text
     def setText(self, text):
         """! setText method
-        @param text used to set the text to be displayed by the label
+        @param text used to set the text to be displayed by the push button
         """
         self.PushButton.setText(text)
     
     def setFont(self, fontStyle, fontSize):
+        """! setFont method 
+        @param fontStyle used to set the font style of push button text
+        @param fontSize used to set the font size of push button text
+        """
         self.PushButton.setFont(QFont(fontStyle,int(fontSize)))
 
+#Class to create new messagebox object
 class messageBox:
+    """! messageBox class
+    Defines the message box object to display error messages
+    """
     def __init__(self, winTitle="", text="", winIcon="" ,show=True,icon="Critical"):
         self.msgBox = QMessageBox()
         msgBox = self.msgBox
