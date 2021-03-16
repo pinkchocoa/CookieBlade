@@ -166,7 +166,7 @@ class windowGen(NewWindow):
 
     #data is a list of list
     #categories is a list
-    def setBarChart(self, data, categories, title=""):
+    def setBarChart(self, data, categories, x=0,y=0,size=500,title=""):
         #missing set x, y
         #  posX, posY
         if self.nBarChart >= self.totalNBarChart:
@@ -174,7 +174,7 @@ class windowGen(NewWindow):
         barChart = self.barChartList[self.nBarChart]
         barChart.addData(data, categories)
         barChart.setSeries(barChart.series)
-        barChart.viewChart(self.QWin)
+        barChart.viewChart(self.QWin,x,y,size)
         barChart.setTitle(title)
         self.nBarChart+=1
 

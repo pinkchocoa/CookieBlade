@@ -408,12 +408,12 @@ class newBarChart():
         self.chart.createDefaultAxes()
         self.chart.setAxisX(axis, self.series)
     
-    def viewChart(self, window):
+    def viewChart(self, window,x,y,size):
         self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         window.setCentralWidget(self.chartview)
         test = QtCore.QRectF()
-        test.setHeight(500)
-        test.setWidth(500)
-        test.moveTo(250,250)#This move the pi chart without the label.
+        test.setHeight(size)
+        test.setWidth(size)
+        test.moveTo(x,y)#This move the pi chart without the label.
         self.chart.setPlotArea(test)
