@@ -283,10 +283,16 @@ class newPieChart():
     def setPos(self, posX, posY):
         #self.Graph = PlotWidget(window)
         #self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
-        
-        self.chart.setGeometry(posX,posY,100,100)
+        #self.chart.setGeometry(posX,posY,100,100)
+        #self.chart.setPos(posX,posY)
         #QChartView(self.chart).frameGeometry, #frameGeometry returns QRect
         #self.chartview.setGeometry(posX, posY,100,100)
+        #functions i have tested that did not work ^
+
+        #function im currently testing but made it disappear instead:
+        test = QtCore.QRectF(posX, posY, 500, 500)
+        self.chart.setPlotArea(test) 
+        pass
 
     def setSize(self, width, height):
         self.chartview.setFixedSize(width,height)

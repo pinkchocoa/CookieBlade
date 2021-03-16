@@ -154,7 +154,7 @@ class windowGen(NewWindow):
         pieChart = self.pieChartList[self.nPieChart]
         pieChart.setSize(width,height)
         pieChart.viewChart(self.QWin)
-        pieChart.setPos(5,100)
+        pieChart.setPos(500,700)
         pieChart.addData(data)
         pieChart.setTitle(title)
         
