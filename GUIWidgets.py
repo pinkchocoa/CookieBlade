@@ -273,17 +273,23 @@ class newPieChart():
         
         #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
         #self.chart.mapToPosition(QtCore.QPointF(500,500))
-        #self.chart.setBackgroundVisible(False)
+        self.chart.setBackgroundVisible(False)
         self.series = QPieSeries()
         
         self.chart.legend().setVisible(True)
         self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
+        self.chartview = QChartView(self.chart)
 
-    def setPos(self, posX, posY, lenX, lenY):
-        self.chart.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+    def setPos(self, posX, posY):
+        #self.Graph = PlotWidget(window)
+        #self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        
+        self.chart.setGeometry(posX,posY,100,100)
+        #QChartView(self.chart).frameGeometry, #frameGeometry returns QRect
+        #self.chartview.setGeometry(posX, posY,100,100)
 
-    def setSize(self, size):
-        self.series.setPieSize(size)
+    def setSize(self, width, height):
+        self.chartview.setFixedSize(width,height)
 
     def setTitle(self, title):
         self.chart.setTitle(title)
@@ -313,7 +319,6 @@ class newPieChart():
         self.setSeries(donut)
     
     def viewChart(self, window):
-        self.chartview = QChartView(self.chart)
         self.chartview.setRenderHint(QPainter.Antialiasing)
         window.setCentralWidget(self.chartview)
 

@@ -146,15 +146,18 @@ class windowGen(NewWindow):
         self.totalNPieChart+=1
 
     #data is a dictionary
-    def setPieChart(self, data, title="", size=1):
+    def setPieChart(self, data, title="", width=300, height=300):
         #missing set x, y
         #  posX, posY
         if self.nPieChart >= self.totalNPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
+        pieChart.setSize(width,height)
         pieChart.viewChart(self.QWin)
+        pieChart.setPos(5,100)
         pieChart.addData(data)
         pieChart.setTitle(title)
+        
         self.nPieChart+=1
 
     def addNewBarChart(self):
