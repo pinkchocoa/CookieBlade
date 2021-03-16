@@ -1,5 +1,8 @@
 from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
 
+def emptyFn():
+    pass
+
 class windowGen(NewWindow):
     totalNLabel = 0
     totalNText = 0
