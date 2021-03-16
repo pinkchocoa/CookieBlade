@@ -1,11 +1,15 @@
 from googleapiclient.discovery import build
-from datetime import timedelta
+from database import *
 from urllib import parse
 from datetime import datetime
-import re
 
-api_key = 'AIzaSyB3ely6qW_YfbjHIFVODyufGs9exzVqnM4'
+
+api_key = 'AIzaSyA_JNhdO1UNp8ww2CATP-BwuWbwqWC3Zxw'
 youtube = build('youtube', 'v3', developerKey=api_key)
+
+#database to store trending vid info
+tuser = database('TrendVideo')  # DB name must be given to start.
+tuser.createTable('TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
 
 class youtubeVid():
     # object variable
@@ -127,7 +131,7 @@ class channel():
 #Function to crawl for top trending videos for a list of countries
 def scrapData():
     VidList = []
-    countryCode = ['SG', 'MY', 'KR', 'JP', 'PH', 'ID']
+    countryCode = ['SG', 'MY', 'PH']
     videoCategory = ['10', '17', '20', '25',] #10 - music, 17 - sports, 20 - gaming, 25 - news and politics
     nextPageToken = None
     for code in countryCode:
@@ -445,6 +449,128 @@ def getRevenueData(input):
     finalresult = [sortedmonthVids, revList]
     return finalresult
 
+#Get trending video #return dictionary of video info
+def getTrendingVideo():
 
-# print(searchurl("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
-# print(getRevenueData("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
+    reply = scrapData()
+    path = '1009Project' + '/crawled.txt'
+    for i in range(0, len(reply)):
+        reply[i] = vidInfo(reply[i])
+        TrendVidsInfo = reply[i].getDict()
+        TrendVidsInfoList = [(v) for k, v in TrendVidsInfo.items()]
+        TrendVidsInfoList.insert(0, i)
+        tuser.insertTable(TrendVidsInfoList, 'TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
+
+#function to retrieve a list of trend vids info based on the input and sorted by category
+def getDBvids(country):
+    #variables
+    totalmusicviews = 0
+    totalsportsviews = 0
+    totalgamesviews = 0
+    totalnewsviews = 0
+    datalist = []
+
+    templist = tuser.getTableData('TrendVideo')
+    if country == 1: #SG
+        #viewcounts for music
+        for i in range(0,5):
+            totalmusicviews += int(templist[i][7])
+        datalist.append(totalmusicviews)
+        #viewcounts for sports
+        for i in range(5, 10):
+            totalsportsviews += int(templist[i][7])
+        datalist.append(totalsportsviews)
+        #viewcounts for gaming
+        for i in range(10,15):
+            totalgamesviews += int(templist[i][7])
+        datalist.append(totalgamesviews)
+        #viewcounts for news & politics
+        for i in range(15,20):
+            totalnewsviews += int(templist[i][7])
+        datalist.append(totalnewsviews)
+
+        # dictionary for dbinfo
+        dbdict = {
+            "totalmusicviews": datalist[0],
+            "totalsportsviews": datalist[1],
+            "totalgamesviews": datalist[2],
+            "totalnewsviews": datalist[3]
+        }
+        dbdatalist = [(k, v) for k, v in dbdict.items()]
+
+        return dbdatalist
+
+    elif country == 2: #MY
+        # viewcounts for music
+        for i in range(20, 25):
+            totalmusicviews += int(templist[i][7])
+        datalist.append(totalmusicviews)
+        # viewcounts for sports
+        for i in range(25, 30):
+            totalsportsviews += int(templist[i][7])
+        datalist.append(totalsportsviews)
+        # viewcounts for gaming
+        for i in range(30, 35):
+            totalgamesviews += int(templist[i][7])
+        datalist.append(totalgamesviews)
+        # viewcounts for news & politics
+        for i in range(35, 40):
+            totalnewsviews += int(templist[i][7])
+        datalist.append(totalnewsviews)
+
+        # dictionary for dbinfo
+        dbdict = {
+            "totalmusicviews": datalist[0],
+            "totalsportsviews": datalist[1],
+            "totalgamesviews": datalist[2],
+            "totalnewsviews": datalist[3]
+        }
+        dbdatalist = [(k, v) for k, v in dbdict.items()]
+
+        return dbdatalist
+
+    elif country == 3: #PH
+        # viewcounts for music
+        for i in range(40, 45):
+            totalmusicviews += int(templist[i][7])
+        datalist.append(totalmusicviews)
+        # viewcounts for sports
+        for i in range(45, 50):
+            totalsportsviews += int(templist[i][7])
+        datalist.append(totalsportsviews)
+        # viewcounts for gaming
+        for i in range(50, 55):
+            totalgamesviews += int(templist[i][7])
+        datalist.append(totalgamesviews)
+        # viewcounts for news & politics
+        for i in range(55, 60):
+            totalnewsviews += int(templist[i][7])
+        datalist.append(totalnewsviews)
+
+        # dictionary for dbinfo
+        dbdict = {
+            "totalmusicviews": datalist[0],
+            "totalsportsviews": datalist[1],
+            "totalgamesviews": datalist[2],
+            "totalnewsviews": datalist[3]
+        }
+        dbdatalist = [(k, v) for k, v in dbdict.items()]
+
+        return dbdatalist
+getTrendingVideo()
+
+#HOW TO USE FOR NOW
+#########################################################################################################
+#Firstly, populate the database with trending vid info by calling the getTrendingVideo() once
+#To test if there's data in the database, install DB Browser (SQLite) to check
+#
+#Functions to usable:
+#getDBvids() assumes that the input to get a particular country's trending vid is a number, which will then return a list
+#searchurl returns back a list of subs, totalviewno, totalvidno and created-at-date from a channel
+#getRevenueData returns back a list containing (1)a list containing the no of list made each month
+#                                              (2)a list containing the total amount of revenue earned for each month
+#
+#To note:
+#url must be in this format for now: 'https://www.youtube.com/channel/(replace with own channel id)'
+#Example below:
+# x = getRevenueData('https://www.youtube.com/channel/UCo_IB5145EVNcf8hw1Kku7w')
