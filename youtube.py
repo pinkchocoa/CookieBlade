@@ -426,8 +426,25 @@ def getRevenueData(input):
             monthRev += int(monthVids[i][j][1]) * 0.02
         channelRevByMonth.append(monthRev)
 
-    finalresult = [sortedmonthVids, channelRevByMonth]
+    revDict = {
+        "jan" : channelRevByMonth[0],
+        "feb" : channelRevByMonth[1],
+        "mar" : channelRevByMonth[2],
+        "apr" : channelRevByMonth[3],
+        "may" : channelRevByMonth[4],
+        "jun" : channelRevByMonth[5],
+        "jul" : channelRevByMonth[6],
+        "aug" : channelRevByMonth[7],
+        "sep" : channelRevByMonth[8],
+        "oct" : channelRevByMonth[9],
+        "nov" : channelRevByMonth[10],
+        "dec" : channelRevByMonth[11]
+    }
+    revList = [(k, v) for k, v in revDict.items()]
+
+    finalresult = [sortedmonthVids, revList]
     return finalresult
+
 
 # print(searchurl("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
 # print(getRevenueData("https://www.youtube.com/channel/UCbaGn5VkOVlcRgIWAHcrJKA"))
