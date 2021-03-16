@@ -5,6 +5,7 @@ from UrlExtraction import UrlExtraction
 from twitterGraph import twitterGraph
 from LinkValidation import LinkValidation
 from twitter import Twitter,TUser,TTweet
+from youtube import *
 
 
 class Testing(unittest.TestCase):
