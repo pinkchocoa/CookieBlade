@@ -28,20 +28,20 @@ import functools
 # We can reuse classes to make different widgets for diffferent purpose
 
 #Class to initialize a new instance of QApplication module which is required to run PyQt5
-class StartApp:
-    """! StartApp class
+class startApp:
+    """! startApp class
     Defines the QApplication object which allows the creation of all QtWidgets
     """
     def __init__(self):
         self.QApp = QApplication(sys.argv)
 
 #Class to create a new Window
-class NewWindow:
-    """! NewWindow class
+class newWindow:
+    """! newWindow class
     Defines the window object used to display widgets
     """
     def __init__(self, name, lenX, lenY):
-        """! NewWindow class initializer
+        """! newWindow class initializer
         @param name used to name the window title
         @param lenX used to set the horizontal length of the window
         @param lenY used to set the veritical height of the window
@@ -63,13 +63,38 @@ class NewWindow:
     def show(self):
         self.QWin.show()
 
+class newStackWidget:
+    """! newStackWidget class
+    Defines the stack widget object used to store and load multiple widget
+    """
+    def __init__(self, window, posX, posY, lenX, lenY):
+        """! newStackWidget class initializer
+        @param window used to determine which window for the widget to appear on
+        @param posX used to set the X coordinate of where the label will appear
+        @param posY used to set the Y coordinate of where the label will appear
+        @param lenX used to set the horizontal length of the label
+        @param lenY used to set the vertical height of the label
+        """
+        self.sWidget = QtWidgets.QStackedWidget(window)
+        self.sWidget.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        self.sWidget.setCurrentIndex(0)
+    
+    def addWidget(self, widget):
+        """! addWidget method 
+        @param widget adds a widget to the stack widget
+        """
+        self.sWidget.addWidget(widget)
+    
+    def setCurrentWidget(self, widget):
+        self.sWidget.setCurrentWidget(widget)
+
 #Class to create a new Label
-class NewLabel:
+class newLabel:
     """! NewLabel class
     Defines the label object used to display text label to guide users
     """
     def __init__(self, window, posX, posY, lenX, lenY):
-        """! NewLabel class initializer
+        """! newLabel class initializer
         @param window used to determine which window for the widget to appear on
         @param posX used to set the X coordinate of where the label will appear
         @param posY used to set the Y coordinate of where the label will appear
@@ -109,12 +134,12 @@ class NewLabel:
         self.label.setFont(QFont(fontStyle,int(fontSize)))
 
 #Class to create new TextBox
-class NewTextBox:
+class newTextBox:
     """! NewTextBox class
     Defines the textbox object used to retrieve user input
     """
     def __init__(self, window, posX, posY, lenX, lenY):
-        """! NewTextBox class initializer
+        """! newTextBox class initializer
         @param window used to determine which window for the widget to appear on
         @param posX used to set the X coordinate of where the label will appear
         @param posY used to set the Y coordinate of where the label will appear
@@ -137,12 +162,12 @@ class NewTextBox:
         self.textbox.setFont(QFont(fontStyle,int(fontSize)))
 
 #Class to create new PushButton
-class NewPushButton:
+class newPushButton:
     """! NewPushButton class
     Defines the PushButton object to recieve button click input
     """
     def __init__(self, window, posX, posY, lenX, lenY, functionName):
-        """! NewPushButton class initializer
+        """! newPushButton class initializer
         @param window used to determine which window for the widget to appear on
         @param posX used to set the X coordinate of where the label will appear
         @param posY used to set the Y coordinate of where the label will appear
@@ -187,8 +212,8 @@ class messageBox:
         msgBox.exec_()
 
 #Class to create new Graph
-class NewGraph:
-    """! NewGraph class
+class newGraph:
+    """! newGraph class
     Defines the Graph object to take in input and display graph
     """
     def __init__(self, window, posX, posY, lenX, lenY):

@@ -1,11 +1,19 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from testwindow import window
+from GUIWidgets import *
+from window import window
 from youtube import *
+from twitterGraph import twitterGraph
 
 class UI():
+
+    wWidth = 1080
+    wHeight = 720
+    ytlink = ""
+    tlink = ""
+
     def __init__(self):
-        self.win = QMainWindow()
+        self.win = newWindow("Cookie Crawler", self.wWidth, self.wHeight)
         self.ui = window()
         self.ui.setupUi(self.win)
         self.ui.stackedWidget.setCurrentWidget(self.ui.mainM)
@@ -32,10 +40,24 @@ class UI():
     def userToSns(self):
         self.prev = "user"
         self.ui.stackedWidget.setCurrentWidget(self.ui.snsM)
-    
+        self.ytlink = self.ui.ytTextBox.text()
+        self.tlink = self.ui.tTextBox.text()
+
+        #Begin Crawl logic.
+        if (self.ytlink and self.tlink == ""):
+            #assign random link to twitter and youtube
+            pass
+        elif (self.ytlink == ""):
+            #assign random link to youtube
+            pass
+        elif (self.tlink == ""):
+            #assign random link to twitter
+            pass
+            
     def topicToSns(self):
         self.prev = "topic"
         self.ui.stackedWidget.setCurrentWidget(self.ui.snsM)
+        
         
     def snsBack(self):
         if self.prev == "user":
@@ -48,7 +70,7 @@ class UI():
     def show(self):
         self.win.show()
 
-app = QApplication(sys.argv)
+app = startApp()
 win = UI()
 win.show()
-sys.exit(app.exec_())
+sys.exit(app.QApp.exec_())
