@@ -16,7 +16,8 @@ def twitterGraph(amount,URL_or_Username = ""):
     """! get details of tweets by user.
     @param amount; amount of tweet to retrieve.
     @param URL_or_Username; By url or username.
-    @return mainlist; Return list in the following format list = [[RTCountperDay,LikesperDay] * last 7 days]
+    @return rtList; Return list in the following format list = [[RTCountperDay] * last x days]
+    @return likesList; Return list in the following format list = [[LikesperDay] * last x days]
     @return datelist; Return list of dates. with most recent to oldest date.
     """
 
