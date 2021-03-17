@@ -3,27 +3,11 @@ from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
 def emptyFn():
     pass
 
-class windowGen(NewWindow):
-    totalNLabel = 0
-    totalNText = 0
-    totalNPush = 0
-    totalnLGraph = 0
-    totalNPieChart = 0
-    totalNBrowser = 0
-    totalNBarChart = 0
+class windowGen():
+    
 
-    labelList = []
-    textList = []
-    pushList = []
-    lineGraphList = []
-    pieChartList = []
-    barChartList = []
-    browserList = []
-
-
-    def __init__(self, name, width, height):
-        super().__init__(name, width, height)
-
+    def __init__(self):
+        self.window = newWidgetPage()
         #to keep track of what i've set, all widgets unset are at 0,0,0,0
         self.nLabel = 0
         self.nText = 0
@@ -33,8 +17,25 @@ class windowGen(NewWindow):
         self.nPieChart = 0
         self.nBarChart = 0
 
+        self.totalNLabel = 0
+        self.totalNText = 0
+        self.totalNPush = 0
+        self.totalnLGraph = 0
+        self.totalNPieChart = 0
+        self.totalNBrowser = 0
+        self.totalNBarChart = 0
+
+        self.labelList = []
+        self.textList = []
+        self.pushList = []
+        self.lineGraphList = []
+        self.pieChartList = []
+        self.barChartList = []
+        self.browserList = []
+
+
     def addNewLineGraph(self):
-        self.lineGraphList.append(NewGraph(self.QWin, 0, 0, 800, 800))
+        self.lineGraphList.append(newGraph(self.window.page, 0, 0, 800, 800))
         self.totalnLGraph+=1
 
     def setLineGraph(self,posX, posY, lenX, lenY,
@@ -60,13 +61,13 @@ class windowGen(NewWindow):
             Graph.setAxisIntervalTo1(axisLabel, axis)
         self.nLGraph+=1
 
-    def addNewLabel(self):
-        self.labelList.append(NewLabel(self.QWin,0,0,0,0))
+    def addnewLabel(self):
+        self.labelList.append(newLabel(self.window.page,0,0,0,0))
         self.totalNLabel+=1
 
-    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize="", functionName=""):
+    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize=10, functionName="", scaled = True):
         if self.nLabel >= self.totalNLabel:
-            self.addNewLabel()
+            self.addnewLabel()
         label = self.labelList[self.nLabel].label
         #Set Label x & y position and size
         label.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
@@ -82,21 +83,25 @@ class windowGen(NewWindow):
             label.setScaledContents(True)
         if fontStyle and fontSize:
             label.setFont(QFont(fontStyle, fontSize))
+        else:
+            label.setFont(QFont("Arial", 10))
         if functionName:
             label.mousePressEvent = functionName
+        if scaled:
+            label.setScaledContents(scaled)
 
         self.nLabel+=1
 
-    def addNewTextbox(self):
-        self.textList.append(NewTextBox(self.QWin,0,0,0,0))
+    def addnewTextBox(self):
+        self.textList.append(newTextBox(self.window.page,0,0,0,0))
         self.totalNText+=1
 
     def setTextbox(self, posX, posY, lenX, lenY, text="", fontStyle="", fontSize=""):
         if self.nText >= self.totalNText:
-            self.addNewTextbox()
+            self.addnewTextBox()
         textbox = self.textList[self.nText].textbox
         #Initialize new instance of TextBox UI
-        textbox = QLineEdit(self.QWin)
+        textbox = QLineEdit(self.window.page)
         #Set TextBox x & y position and size
         textbox.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         if text:
@@ -106,7 +111,7 @@ class windowGen(NewWindow):
         self.nText+=1
 
     def addNewPush(self):
-        self.pushList.append(NewPushButton(self.QWin,0,0,0,0,emptyFn))
+        self.pushList.append(newPushButton(self.window.page,0,0,0,0,emptyFn))
         self.totalNPush+=1
 
     def setPush(self, posX, posY, lenX, lenY, functionName, text="", fontStyle="", fontSize=""):
@@ -114,7 +119,7 @@ class windowGen(NewWindow):
             self.addNewPush()
         pushButton = self.pushList[self.nPush].PushButton
         #Initialize new instance of PushButton UI
-        pushButton = QPushButton(self.QWin)
+        pushButton = QPushButton(self.window.page)
         #Set PushButton x & y position and size
         pushButton.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         #Calls function when PushButton is clicked
@@ -133,7 +138,7 @@ class windowGen(NewWindow):
         if self.nBrowser >= self.totalNBrowser:
             self.addNewBrowser()
         webBrowser = self.browserList[self.nBrowser].webEngine
-        webBrowser = QWebEngineView(self.QWin)
+        webBrowser = QWebEngineView(self.window.page)
         webBrowser.resize(lenX,lenY)
         webBrowser.setWindowTitle(link)
         webBrowser.load(QtCore.QUrl(link))
@@ -153,7 +158,7 @@ class windowGen(NewWindow):
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
         #pieChart.setSize(width,height)
-        pieChart.viewChart(self.QWin)
+        pieChart.viewChart(self.window.page)
         pieChart.setPos(500,500)
         pieChart.addData(data)
         pieChart.setTitle(title)
@@ -174,15 +179,15 @@ class windowGen(NewWindow):
         barChart = self.barChartList[self.nBarChart]
         barChart.addData(data, categories)
         barChart.setSeries(barChart.series)
-        barChart.viewChart(self.QWin,x,y,size)
+        barChart.viewChart(self.window.page,x,y,size)
         barChart.setTitle(title)
         self.nBarChart+=1
 
     def show(self):
-        self.QWin.show()
+        self.window.page.show()
 
     def hide(self):
-        self.QWin.hide()
+        self.window.page.hide()
 
     def isVisible(self):
-        return self.QWin.isVisible()
+        return self.window.page.isVisible()
