@@ -178,7 +178,6 @@ class windowGen():
             self.addNewBarChart()
         barChart = self.barChartList[self.nBarChart]
         barChart.addData(data, categories)
-        barChart.setSeries(barChart.series)
         barChart.viewChart(self.window.page,x,y,size)
         barChart.setTitle(title)
         self.nBarChart+=1

@@ -415,9 +415,6 @@ class newBarChart():
     def setTitle(self, title):
         self.chart.setTitle(title)
 
-    def setSeries(self, series):
-        self.chart.addSeries(series)
-
     #data is a list of list
     def addData(self, data, categories):
         for a in data:
@@ -432,6 +429,7 @@ class newBarChart():
         axis.append(categories)
         self.chart.createDefaultAxes()
         self.chart.setAxisX(axis, self.series)
+        self.chart.addSeries(self.series)
     
     def viewChart(self, window,x,y,size):
         self.chartview = QChartView(self.chart, window)
