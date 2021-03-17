@@ -65,14 +65,15 @@ class windowGen():
         self.labelList.append(newLabel(self.window.page,0,0,0,0))
         self.totalNLabel+=1
 
-    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize=10, functionName="", scaled = True):
+    def setLabel(self, posX, posY, lenX, lenY, text="", image="", fontStyle="", fontSize="", functionName="", scaled = True):
         if self.nLabel >= self.totalNLabel:
             self.addnewLabel()
         label = self.labelList[self.nLabel].label
         #Set Label x & y position and size
         label.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
-        #Set alignment of Label text to align center
-        label.setAlignment(QtCore.Qt.AlignCenter)
+        #Set alignment of Label text to align left and centered
+        label.setAlignment(QtCore.Qt.AlignLeft)
+        label.setAlignment(QtCore.Qt.AlignVCenter)
         if text:
             label.setText(text)
             label.update()
@@ -128,6 +129,8 @@ class windowGen():
             pushButton.setText(text)
         if fontStyle and fontSize:
             pushButton.setFont(QFont(fontStyle,int(fontSize)))
+        else:
+            pushButton.setFont(QFont("Arial", 10))
         self.nPush+=1
     
     def addNewBrowser(self):
