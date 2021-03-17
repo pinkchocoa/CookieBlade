@@ -4,9 +4,8 @@ from database import database #contain class: database()
 from LinkValidation import LinkValidation #contain class: LinkValidation
 from UrlExtraction import UrlExtraction
 from windowGen import windowGen
-from GUIWidgets import StartApp #contain class from GUI.py and GUIwidgets.py.
+from GUIWidgets import startApp #contain class from GUI.py and GUIwidgets.py.
 from GUIWidgets import messageBox
-from cookieBlade import *
 import sys
 import window as wind
 #need to clean the imports up later btw
@@ -87,7 +86,7 @@ def testUser():
 
 
 
-App = StartApp() #init
+App = startApp() #init
 w = createMainWindow()
 y = secondWindow()
 w.show()

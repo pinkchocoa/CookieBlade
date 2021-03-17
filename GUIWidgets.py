@@ -165,7 +165,7 @@ class newTextBox:
         @param lenY used to set the vertical height of the label
         """
         #Initialize new instance of TextBox UI
-        self.textbox = QLineEdit(window)
+        self.textbox = QtWidgets.QLineEdit(window)
         #Set TextBox x & y position and size
         self.textbox.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
 
@@ -182,6 +182,10 @@ class newTextBox:
         @param fontSize used to set the font size of textbox placeholder text
         """
         self.textbox.setFont(QFont(fontStyle,int(fontSize)))
+
+    def returnText(self):
+        print("b")
+        return self.textbox.text()
 
 #Class to create new PushButton
 class newPushButton:
@@ -334,29 +338,19 @@ class newPieChart():
         
         #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
         #self.chart.mapToPosition(QtCore.QPointF(500,500))
-        self.chart.setBackgroundVisible(False)
+        self.chart.setBackgroundVisible(True)
         self.series = QPieSeries()
         
-        self.chart.legend().setVisible(True)
-        self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
-        self.chartview = QChartView(self.chart)
+        self.chart.legend().setVisible(False)
+        #self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
+        
 
-    def setPos(self, posX, posY):
-        #self.Graph = PlotWidget(window)
-        #self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
-        #self.chart.setGeometry(posX,posY,100,100)
-        #self.chart.setPos(posX,posY)
-        #QChartView(self.chart).frameGeometry, #frameGeometry returns QRect
-        #self.chartview.setGeometry(posX, posY,100,100)
-        #functions i have tested that did not work ^
-
-        #function im currently testing but made it disappear instead:
+    def setPos(self, posX, posY, width, height):
         test = QtCore.QRectF()
-        test.setHeight(500)
-        test.setWidth(500)
-        test.moveTo(250,250)#This move the pi chart without the label.
+        test.setHeight(width)
+        test.setWidth(height)
+        test.moveTo(posX,posY)#This move the pi chart without the label.
         self.chart.setPlotArea(test)
-        pass
 
     def setSize(self, width, height):
         self.chartview.setFixedSize(width,height)
@@ -389,8 +383,9 @@ class newPieChart():
         self.setSeries(donut)
     
     def viewChart(self, window):
+        self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QPainter.Antialiasing)
-        window.setCentralWidget(self.chartview)
+        #window.setCentralWidget(self.chartview)
 
     def explodeSlice(self, exploded, slice_):
         if exploded:
@@ -420,9 +415,6 @@ class newBarChart():
     def setTitle(self, title):
         self.chart.setTitle(title)
 
-    def setSeries(self, series):
-        self.chart.addSeries(series)
-
     #data is a list of list
     def addData(self, data, categories):
         for a in data:
@@ -437,11 +429,14 @@ class newBarChart():
         axis.append(categories)
         self.chart.createDefaultAxes()
         self.chart.setAxisX(axis, self.series)
+        self.chart.addSeries(self.series)
     
     def viewChart(self, window,x,y,size):
-        self.chartview = QChartView(self.chart)
+        self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QPainter.Antialiasing)
-        window.setCentralWidget(self.chartview)
+
+        #need to find the equivalent of this in his stackwidget
+        #window.setCentralWidget(self.chartview)
         test = QtCore.QRectF()
         test.setHeight(size)
         test.setWidth(size)

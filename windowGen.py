@@ -1,6 +1,6 @@
 from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
 
-def emptyFn():
+def emptyFn(): #dun remove this.
     pass
 
 class windowGen():
@@ -151,7 +151,7 @@ class windowGen():
         self.totalNPieChart+=1
 
     #data is a dictionary
-    def setPieChart(self, data, title="", width=300, height=300):
+    def setPieChart(self, data, title="", x=0, y=0, width=300, height=300):
         #missing set x, y
         #  posX, posY
         if self.nPieChart >= self.totalNPieChart:
@@ -159,7 +159,7 @@ class windowGen():
         pieChart = self.pieChartList[self.nPieChart]
         #pieChart.setSize(width,height)
         pieChart.viewChart(self.window.page)
-        pieChart.setPos(500,500)
+        pieChart.setPos(x,y,width,height)
         pieChart.addData(data)
         pieChart.setTitle(title)
         
@@ -178,7 +178,6 @@ class windowGen():
             self.addNewBarChart()
         barChart = self.barChartList[self.nBarChart]
         barChart.addData(data, categories)
-        barChart.setSeries(barChart.series)
         barChart.viewChart(self.window.page,x,y,size)
         barChart.setTitle(title)
         self.nBarChart+=1

@@ -2,13 +2,13 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from GUIWidgets import *
 from windowGen import windowGen
+import twitterGraph
 
 class window(object):
 
     wWidth = 1080
     wHeight = 720
-    ytlink = ""
-    tlink = ""
+    numberOfTweets = 10
 
     def mainToUser(self):
         self.stackedWidget.setCurrentWidget(self.userM.window)
@@ -24,10 +24,9 @@ class window(object):
     
     def userToSns(self):
         self.prev = "user"
-        self.stackedWidget.setCurrentWidget(self.snsM.window)
 
-        self.ytlink = self.userM.textList[0]
-        self.tlink = self.userM.textList[1]
+        self.ytlink = self.ytTextBox.returnText()
+        self.tlink = self.tTextBox.returnText()
 
         #Begin Crawl logic.
         if (self.ytlink and self.tlink == ""):
@@ -39,11 +38,15 @@ class window(object):
         elif (self.tlink == ""):
             #assign random link to twitter
             pass
+        
+        test = self.setupsnsMenu()
+        
+        self.stackedWidget.addWidget(test.window.page)
+        self.stackedWidget.setCurrentWidget(test.window)
             
     def topicToSns(self):
         self.prev = "topic"
-        self.stackedWidget.setCurrentWidget(self.snsM.window)
-        
+        self.stackedWidget.setCurrentWidget(self.topicM.window)
         
     def snsBack(self):
         if self.prev == "user":
@@ -56,6 +59,53 @@ class window(object):
         self.centralwidget = QtWidgets.QWidget(window.QWin)
         self.stackedWidget = newStackWidget(self.centralwidget, 0,0, 1080, 720)
 
+        self.setupMainMenu()
+        self.setupTopicMenu()
+        self.setupUserMenu()
+        #can't set up sns menu here as the graphs needs to be added in before
+        #self.setupsnsMenu()
+
+        self.addToStack()
+        
+        window.QWin.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(window.QWin)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
+        window.QWin.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(window.QWin)
+        window.QWin.setStatusBar(self.statusbar)
+
+        self.retranslateUi(window.QWin)
+        QtCore.QMetaObject.connectSlotsByName(window.QWin)
+
+    def addToStack(self):
+        self.stackedWidget.addWidget(self.mainM.window.page)
+        self.stackedWidget.addWidget(self.userM.window.page)
+        self.stackedWidget.addWidget(self.topicM.window.page)
+        
+    def setTwitterGraphs(self, window):
+        a = ["a",1,42,13,64]
+        b = ["b",12,2,33,14]
+        c = ["c",15,23,31,14]
+        d = ["d",11,12,32,42]
+        e = ["e",19,24,35,42]
+        data = [a,b,c,d]
+        cat = ["jan", "feb", "mar", "apr"]
+
+        #data,cat = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        print(data)
+        print(cat)
+        window.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
+    
+    def setYoutubeGraphs(self, window):
+        #t = Twitter()
+        #data = t.trendingTopics()
+        data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        print(data)
+        window.setPieChart(data, "tesT", 500, 30)
+
+
+
+    def setupMainMenu(self):
         #Start of mainMenu
         self.mainM = windowGen()
         self.mainM.setLabel(340, 157, 400, 90,"","GUIMainLogo.PNG","","","",True)
@@ -63,16 +113,23 @@ class window(object):
         self.mainM.setPush(340, 357, 150, 80, self.mainToUser,"User")
         #topic push button
         self.mainM.setPush(590, 357, 150, 80, self.topicToSns, "Topic")
-        self.stackedWidget.addWidget(self.mainM.window.page)
+        
 
         #Start of userMenu
         self.userM = windowGen()
         #userLogo
         self.userM.setLabel(340, 78, 400, 90, "", "GUIMainLogo.PNG", "","","",True)
+
+        self.ytTextBox = newTextBox(self.userM.window.page, 140, 178, 800, 40)
+        self.tTextBox = newTextBox(self.userM.window.page, 140, 228, 800, 40)
+
         #ytTextbox
-        self.userM.setTextbox(140, 178, 800, 40, "Enter Youtube channel URL:")
+        #self.userM.setTextbox(140, 178, 800, 40, "Enter Youtube channel URL:")
+
         #tTextBox
-        self.userM.setTextbox(140, 228, 800, 40, "Enter Twitter User URL:")
+        #self.userM.setTextbox(140, 228, 800, 40, "Enter Twitter User URL:")
+
+
         #ytlabel
         self.userM.setLabel(65, 178, 75, 40, "Enter yt Link")
         #tLabel
@@ -83,7 +140,7 @@ class window(object):
         self.userM.setPush(215, 328, 150, 80, self.userToSns, "Crawl!")
         #userBackPush
         self.userM.setPush(715, 328, 150, 80, self.userToMain, "Back")
-        self.stackedWidget.addWidget(self.userM.window.page)
+        
 
         #Start of topicMenu
         self.topicM = windowGen()
@@ -103,52 +160,41 @@ class window(object):
         self.topicM.setLabel(270, 228, 75, 40, "country" )
         #topicnotelabel
         self.topicM.setLabel(325, 253, 350, 40, "Leave fields empty for random crawl.", "", "", "", "", True)
-        self.stackedWidget.addWidget(self.topicM.window.page)
+        
 
         #Start of snsMenu
-        self.snsM = windowGen()
+        snsM = windowGen()
+        self.setYoutubeGraphs(snsM) 
+        self.setTwitterGraphs(snsM) 
         #ytlogo
-        self.snsM.setLabel(20, 20, 130, 100, "", "YouTubeLogo.png", "", "", "", True)
+        snsM.setLabel(20, 20, 130, 100, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
-        self.snsM.setLabel(20, 140, 130, 100, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(20, 140, 130, 100, "", "TwitterLogo.png", "", "", "", True)
         #subcountlabel
-        self.snsM.setLabel(132, 10, 150, 40, "Sub count:")
+        snsM.setLabel(132, 10, 150, 40, "Sub count:")
         #viewcountlabel
-        self.snsM.setLabel(158, 35, 150, 40, "View count:")
+        snsM.setLabel(158, 35, 150, 40, "View count:")
         #videocountlabel
-        self.snsM.setLabel(160, 60, 150, 40, "Video count:")
+        snsM.setLabel(160, 60, 150, 40, "Video count:")
         #ytCreatedLabel
-        self.snsM.setLabel(152, 130, 150, 40, "Created At:")
+        snsM.setLabel(152, 130, 150, 40, "Created At:")
 
         #twitter
         #followerCountLabel
-        self.snsM.setLabel(152, 130, 150, 40, "Follower Count:")
+        snsM.setLabel(152, 130, 150, 40, "Follower Count:")
         #tweetsLikedLabel
-        self.snsM.setLabel(165, 155, 150, 40, "Liked tweets:")
+        snsM.setLabel(165, 155, 150, 40, "Liked tweets:")
         #totalTweetsLabel
-        self.snsM.setLabel(145, 180, 150, 40, "Total tweets:")
+        snsM.setLabel(145, 180, 150, 40, "Total tweets:")
         #tCreatedLabel
-        self.snsM.setLabel(137, 205, 150, 40, "Created at:")
+        snsM.setLabel(137, 205, 150, 40, "Created at:")
         #seperateLineLabel
-        self.snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
+        snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
-        self.snsM.setPush(920, 580, 150, 80, self.snsBack, "Back")
-
-        self.stackedWidget.addWidget(self.snsM.window.page)
+        snsM.setPush(920, 580, 150, 80, self.snsBack, "Back")
+        return snsM
 
         
-        window.QWin.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(window.QWin)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
-        window.QWin.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(window.QWin)
-        window.QWin.setStatusBar(self.statusbar)
-        #SNS Window Content
-        
-        #End of SNS Window Content
-
-        self.retranslateUi(window.QWin)
-        QtCore.QMetaObject.connectSlotsByName(window.QWin)
 
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate

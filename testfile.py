@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from GUIWidgets import *
 from window import window
 from youtube import *
-from twitterGraph import twitterGraph
 
 class UI():
 
