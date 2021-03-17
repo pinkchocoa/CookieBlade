@@ -64,8 +64,11 @@ class Testing(unittest.TestCase):
         test.getSiteName("")
 
     def testTwitterGraph(self): #Testing method.
-        #twitterGraph(1,"https://twitter.com/BarackObama") - Run this if you really need to as API call is slow,
-        pass
+        
+        rtList,likesList,dateList = twitterGraph(1,"https://twitter.com/BarackObama") # Run this if you really need to as API call is slow,
+        print(rtList)
+        print(likesList)
+        print(dateList)
 
     def testLinkValidation(self):
         test = LinkValidation()

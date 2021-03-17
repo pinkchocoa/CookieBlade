@@ -65,11 +65,3 @@ def twitterGraph(amount,URL_or_Username = ""):
                 counter = counter + 1
                 
     return rtList,likesList,dateList
-
-
-#Example:      
-
-rtList,likesList,dateList = twitterGraph(10,"BarackObama")
-print(rtList)
-print(likesList)
-print(dateList)
