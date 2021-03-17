@@ -20,9 +20,9 @@ def twitterGraph(amount,URL_or_Username = ""):
     @return datelist; Return list of dates. with most recent to oldest date.
     """
 
-    mainlist = []
-    nestlist = []
-    datelist = []
+    likesList = []
+    rtList = []
+    dateList = []
     RTcount = 0
     Likes = 0
     counter = 1
@@ -39,38 +39,36 @@ def twitterGraph(amount,URL_or_Username = ""):
     tTweet = TTweet(tweets[0])
     date = str(tTweet.getDate())
     date = date.split(" ",1)[0] #split date and time.
-    datelist.append(date)
+    dateList.append(date)
 
     tweets = tUser.userTweets(amount)
     for x in tweets:
             tTweet = TTweet(x)
             date = str(tTweet.getDate())
             date = date.split(" ",1)[0] #split date and time.
-            if date in datelist:
+            if date in dateList:
                 RTcount = RTcount + tTweet.RTCount()
                 Likes = Likes + tTweet.favCount()
                 if counter == amount:
-                    nestlist.append(str(RTcount))
-                    nestlist.append(str(Likes))
-                    mainlist.append(nestlist)
-                    nestlist = []
-                    return mainlist, datelist
+                    rtList.append(str(RTcount))
+                    likesList.append(str(Likes))
+                    return rtList,likesList,dateList
                 counter = counter + 1
 
             else:
-                datelist.append(date)
-                nestlist.append(str(RTcount))
-                nestlist.append(str(Likes))
-                mainlist.append(nestlist)
-                nestlist = []
+                dateList.append(date)
+                rtList.append(str(RTcount))
+                likesList.append(str(Likes))
                 RTcount = tTweet.RTCount()
                 Likes = tTweet.favCount()
                 counter = counter + 1
-    return mainlist, datelist
+                
+    return rtList,likesList,dateList
 
 
 #Example:      
 
-#data1,data2= twitterGraph(10,"BarackObama")
-#print(data1)
-#print(data2)
+rtList,likesList,dateList = twitterGraph(10,"BarackObama")
+print(rtList)
+print(likesList)
+print(dateList)
