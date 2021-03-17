@@ -151,7 +151,7 @@ class windowGen():
         self.totalNPieChart+=1
 
     #data is a dictionary
-    def setPieChart(self, data, title="", width=300, height=300):
+    def setPieChart(self, data, title="", x=0, y=0, width=300, height=300):
         #missing set x, y
         #  posX, posY
         if self.nPieChart >= self.totalNPieChart:
@@ -159,7 +159,7 @@ class windowGen():
         pieChart = self.pieChartList[self.nPieChart]
         #pieChart.setSize(width,height)
         pieChart.viewChart(self.window.page)
-        pieChart.setPos(500,500)
+        pieChart.setPos(x,y,width,height)
         pieChart.addData(data)
         pieChart.setTitle(title)
         

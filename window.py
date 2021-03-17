@@ -24,7 +24,6 @@ class window(object):
     
     def userToSns(self):
         self.prev = "user"
-        self.stackedWidget.setCurrentWidget(self.snsM.window)
 
         self.ytlink = self.ytTextBox.returnText()
         self.tlink = self.tTextBox.returnText()
@@ -39,14 +38,15 @@ class window(object):
         elif (self.tlink == ""):
             #assign random link to twitter
             pass
-
-        self.setTwitterGraphs()
-        self.setYoutubeGraphs()
+        
+        test = self.setupsnsMenu()
+        
+        self.stackedWidget.addWidget(test.window.page)
+        self.stackedWidget.setCurrentWidget(test.window)
             
     def topicToSns(self):
         self.prev = "topic"
-        self.stackedWidget.setCurrentWidget(self.snsM.window)
-        
+        self.stackedWidget.setCurrentWidget(self.topicM.window)
         
     def snsBack(self):
         if self.prev == "user":
@@ -62,10 +62,10 @@ class window(object):
         self.setupMainMenu()
         self.setupTopicMenu()
         self.setupUserMenu()
-        self.setupsnsMenu()
+        #self.setupsnsMenu()
 
         self.addToStack()
-
+        
         window.QWin.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(window.QWin)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
@@ -76,15 +76,12 @@ class window(object):
         self.retranslateUi(window.QWin)
         QtCore.QMetaObject.connectSlotsByName(window.QWin)
 
-
     def addToStack(self):
         self.stackedWidget.addWidget(self.mainM.window.page)
         self.stackedWidget.addWidget(self.userM.window.page)
         self.stackedWidget.addWidget(self.topicM.window.page)
-        self.stackedWidget.addWidget(self.snsM.window.page)
-
-
-    def setTwitterGraphs(self):
+        
+    def setTwitterGraphs(self, window):
         #use self.snsM
         a = ["a",1,42,13,64]
         b = ["b",12,2,33,14]
@@ -98,11 +95,14 @@ class window(object):
         #data,cat = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
         print(data)
         print(cat)
-        self.snsM.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
+        window.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
     
-    def setYoutubeGraphs(self):
-        #use self.snsM
-        pass
+    def setYoutubeGraphs(self, window):
+        #t = Twitter()
+        #data = t.trendingTopics()
+        data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        print(data)
+        window.setPieChart(data, "tesT", 500, 30)
 
 
 
@@ -167,33 +167,37 @@ class window(object):
 
     def setupsnsMenu(self):
         #Start of snsMenu
-        self.snsM = windowGen()
+        snsM = windowGen()
+        self.setYoutubeGraphs(snsM) 
+        self.setTwitterGraphs(snsM) 
         #ytlogo
-        self.snsM.setLabel(20, 20, 130, 100, "", "YouTubeLogo.png", "", "", "", True)
+        snsM.setLabel(20, 20, 130, 100, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
-        self.snsM.setLabel(20, 140, 130, 100, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(20, 140, 130, 100, "", "TwitterLogo.png", "", "", "", True)
         #subcountlabel
-        self.snsM.setLabel(132, 10, 150, 40, "Sub count:")
+        snsM.setLabel(132, 10, 150, 40, "Sub count:")
         #viewcountlabel
-        self.snsM.setLabel(158, 35, 150, 40, "View count:")
+        snsM.setLabel(158, 35, 150, 40, "View count:")
         #videocountlabel
-        self.snsM.setLabel(160, 60, 150, 40, "Video count:")
+        snsM.setLabel(160, 60, 150, 40, "Video count:")
         #ytCreatedLabel
-        self.snsM.setLabel(152, 130, 150, 40, "Created At:")
+        snsM.setLabel(152, 130, 150, 40, "Created At:")
 
         #twitter
         #followerCountLabel
-        self.snsM.setLabel(152, 130, 150, 40, "Follower Count:")
+        snsM.setLabel(152, 130, 150, 40, "Follower Count:")
         #tweetsLikedLabel
-        self.snsM.setLabel(165, 155, 150, 40, "Liked tweets:")
+        snsM.setLabel(165, 155, 150, 40, "Liked tweets:")
         #totalTweetsLabel
-        self.snsM.setLabel(145, 180, 150, 40, "Total tweets:")
+        snsM.setLabel(145, 180, 150, 40, "Total tweets:")
         #tCreatedLabel
-        self.snsM.setLabel(137, 205, 150, 40, "Created at:")
+        snsM.setLabel(137, 205, 150, 40, "Created at:")
         #seperateLineLabel
-        self.snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
+        snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
-        self.snsM.setPush(920, 580, 150, 80, self.snsBack, "Back")
+        snsM.setPush(920, 580, 150, 80, self.snsBack, "Back")
+        return snsM
+
         
 
     def retranslateUi(self, window):
