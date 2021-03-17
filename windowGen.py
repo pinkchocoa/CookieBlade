@@ -1,6 +1,6 @@
 from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
 
-def emptyFn():
+def emptyFn(): #dun remove this.
     pass
 
 class windowGen():

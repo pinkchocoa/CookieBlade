@@ -557,7 +557,6 @@ def getDBvids(country):
         dbdatalist = [(k, v) for k, v in dbdict.items()]
 
         return dbdatalist
-getTrendingVideo()
 
 #HOW TO USE FOR NOW
 #########################################################################################################
