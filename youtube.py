@@ -8,8 +8,6 @@ api_key = 'AIzaSyA_JNhdO1UNp8ww2CATP-BwuWbwqWC3Zxw'
 youtube = build('youtube', 'v3', developerKey=api_key)
 
 #database to store trending vid info
-tuser = database('TrendVideo')  # DB name must be given to start.
-tuser.createTable('TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
 
 class youtubeVid():
     # object variable
@@ -167,8 +165,9 @@ def scrapData():
     return VidList
 
 
-def vidInfo(video):
+def vidInfo(videoUrl):
     #video statistics
+    video = videoUrl
     info = youtube.videos().list(
     part='statistics',
     id=video.videoID
@@ -195,9 +194,9 @@ def vidInfo(video):
 #############################################################
 
 #Function to return a list of subs, totalviewno, totalvidno and created-at-date from a channel
-def searchurl(input):
+def getChannelStats(channelUrl):
     #converting the url input to just the channel id
-    url_parsed = parse.urlparse(input).path
+    url_parsed = parse.urlparse(channelUrl).path
     id = url_parsed.split('/')[-1]
 
     result = [] #list that contains results to return
@@ -245,11 +244,11 @@ def searchurl(input):
     return result
 
 
-#Function to return back the revenue and total views per month for the year of 2020
-def getRevenueData(input):
+#Function to return back the revenue and total views per month for the year of 2020 #Broken
+def getRevenueData(channelUrl):
 
     # converting the url input to just the channel id
-    url_parsed = parse.urlparse(input).path
+    url_parsed = parse.urlparse(channelUrl).path
     id = url_parsed.split('/')[-1]
 
     resultsList = []
@@ -449,11 +448,13 @@ def getRevenueData(input):
     finalresult = [sortedmonthVids, revList]
     return finalresult
 
-#Get trending video #return dictionary of video info
+#Get trending video #return dictionary of video info #No return type
 def getTrendingVideo():
 
     reply = scrapData()
     path = '1009Project' + '/crawled.txt'
+    tuser = database('TrendVideo')
+    tuser.createTable('TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
     for i in range(0, len(reply)):
         reply[i] = vidInfo(reply[i])
         TrendVidsInfo = reply[i].getDict()
@@ -461,17 +462,17 @@ def getTrendingVideo():
         TrendVidsInfoList.insert(0, i)
         tuser.insertTable(TrendVidsInfoList, 'TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
 
-#function to retrieve a list of trend vids info based on the input and sorted by category
-def getDBvids(country):
+#function to retrieve a list of trend vids info based on the input and sorted by category #supports only SG,MY,PH
+def getDBvids(countryCode):
     #variables
     totalmusicviews = 0
     totalsportsviews = 0
     totalgamesviews = 0
     totalnewsviews = 0
     datalist = []
-
+    tuser = database('TrendVideo')
     templist = tuser.getTableData('TrendVideo')
-    if country == 1: #SG
+    if countryCode == "SG": #SG
         #viewcounts for music
         for i in range(0,5):
             totalmusicviews += int(templist[i][7])
@@ -500,7 +501,7 @@ def getDBvids(country):
 
         return dbdatalist
 
-    elif country == 2: #MY
+    elif countryCode == "MY": #MY
         # viewcounts for music
         for i in range(20, 25):
             totalmusicviews += int(templist[i][7])
@@ -529,7 +530,7 @@ def getDBvids(country):
 
         return dbdatalist
 
-    elif country == 3: #PH
+    elif countryCode == "PH": #PH
         # viewcounts for music
         for i in range(40, 45):
             totalmusicviews += int(templist[i][7])
@@ -566,10 +567,14 @@ def getDBvids(country):
 #Functions to usable:
 #getDBvids() assumes that the input to get a particular country's trending vid is a number, which will then return a list
 #searchurl returns back a list of subs, totalviewno, totalvidno and created-at-date from a channel
-#getRevenueData returns back a list containing (1)a list containing the no of list made each month
-#                                              (2)a list containing the total amount of revenue earned for each month
+#getRevenueData returns back a list containing (1)a list containing the no of list made each month ?
+#                                              (2)a list containing the total amount of revenue earned for each month ?
 #
 #To note:
-#url must be in this format for now: 'https://www.youtube.com/channel/(replace with own channel id)'
+#url format: 'https://www.youtube.com/channel/(replace with own channel id)'
 #Example below:
-# x = getRevenueData('https://www.youtube.com/channel/UCo_IB5145EVNcf8hw1Kku7w')
+# x = searchurl('https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg')
+# getTrendingVideo()
+# y = getDBvids('SG')
+# print(x)
+# print(y)
