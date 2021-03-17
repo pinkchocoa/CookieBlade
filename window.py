@@ -1,11 +1,55 @@
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets
 from GUIWidgets import *
-
+from windowGen import windowGen
 
 class window(object):
 
+    wWidth = 1080
+    wHeight = 720
+    ytlink = ""
+    tlink = ""
+
+    def mainToUser(self):
+        self.stackedWidget.setCurrentWidget(self.userM.window)
     
+    def userToMain(self):
+        self.stackedWidget.setCurrentWidget(self.mainM.window)
+    
+    def mainToTopic(self):
+        self.stackedWidget.setCurrentWidget(self.topicM.window)
+    
+    def topicToMain(self):
+        self.stackedWidget.setCurrentWidget(self.mainM.window)
+    
+    def userToSns(self):
+        self.prev = "user"
+        self.stackedWidget.setCurrentWidget(self.snsM.window)
+
+        self.ytlink = self.userM.textList[0]
+        self.tlink = self.userM.textList[1]
+
+        #Begin Crawl logic.
+        if (self.ytlink and self.tlink == ""):
+            #assign random link to twitter and youtube
+            pass
+        elif (self.ytlink == ""):
+            #assign random link to youtube
+            pass
+        elif (self.tlink == ""):
+            #assign random link to twitter
+            pass
+            
+    def topicToSns(self):
+        self.prev = "topic"
+        self.stackedWidget.setCurrentWidget(self.snsM.window)
+        
+        
+    def snsBack(self):
+        if self.prev == "user":
+            self.stackedWidget.setCurrentWidget(self.userM.window)
+        if self.prev == "topic":
+            self.stackedWidget.setCurrentWidget(self.topicM.window)
 
     def setupUi(self, window):
         window.setWindowIcon("CookieIcon.png")
@@ -13,196 +57,95 @@ class window(object):
         self.stackedWidget = newStackWidget(self.centralwidget, 0,0, 1080, 720)
 
         #Start of mainMenu
-        self.mainM = newWidgetPage()
-        self.mainLogo = QtWidgets.QLabel(self.mainM.page)
-        self.mainLogo.setGeometry(QtCore.QRect(340, 157, 400, 90))
-        self.mainLogo.setText("")
-        self.mainLogo.setPixmap(QtGui.QPixmap("GUIMainLogo.PNG"))
-        self.mainLogo.setScaledContents(True)
-        self.userPushButton = QtWidgets.QPushButton(self.mainM.page)
-        self.userPushButton.setGeometry(QtCore.QRect(340, 357, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.userPushButton.setFont(font)
-        self.topicPushButton = QtWidgets.QPushButton(self.mainM.page)
-        self.topicPushButton.setGeometry(QtCore.QRect(590, 357, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.topicPushButton.setFont(font)
-        self.stackedWidget.addWidget(self.mainM.page)
+        self.mainM = windowGen()
+        self.mainM.setLabel(340, 157, 400, 90,"","GUIMainLogo.PNG","","","",True)
+        #user push button
+        self.mainM.setPush(340, 357, 150, 80, self.mainToUser,"User")
+        #topic push button
+        self.mainM.setPush(590, 357, 150, 80, self.topicToSns, "Topic")
+        self.stackedWidget.addWidget(self.mainM.window.page)
 
         #Start of userMenu
-        self.userM = newWidgetPage()
-        self.userLogo = QtWidgets.QLabel(self.userM.page)
-        self.userLogo.setGeometry(QtCore.QRect(340, 78, 400, 90))
-        self.userLogo.setText("")
-        self.userLogo.setPixmap(QtGui.QPixmap("GUIMainLogo.PNG"))
-        self.userLogo.setScaledContents(True)
-        self.ytTextBox = QtWidgets.QLineEdit(self.userM.page)
-        self.ytTextBox.setGeometry(QtCore.QRect(140, 178, 800, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.ytTextBox.setFont(font)
-        self.tTextBox = QtWidgets.QLineEdit(self.userM.page)
-        self.tTextBox.setGeometry(QtCore.QRect(140, 228, 800, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tTextBox.setFont(font)
-        self.ytLabel = QtWidgets.QLabel(self.userM.page)
-        self.ytLabel.setGeometry(QtCore.QRect(65, 178, 75, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.ytLabel.setFont(font)
-        self.ytLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.tLabel = QtWidgets.QLabel(self.userM.page)
-        self.tLabel.setGeometry(QtCore.QRect(70, 228, 75, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tLabel.setFont(font)
-        self.tLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.userNoteLabel = QtWidgets.QLabel(self.userM.page)
-        self.userNoteLabel.setGeometry(QtCore.QRect(125, 253, 350, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.userNoteLabel.setFont(font)
-        self.userNoteLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.userCrawlPush = QtWidgets.QPushButton(self.userM.page)
-        self.userCrawlPush.setGeometry(QtCore.QRect(215, 328, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.userCrawlPush.setFont(font)
-        self.userBackPush = QtWidgets.QPushButton(self.userM.page)
-        self.userBackPush.setGeometry(QtCore.QRect(715, 328, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.userBackPush.setFont(font)
-        self.stackedWidget.addWidget(self.userM.page)
+        self.userM = windowGen()
+        #userLogo
+        self.userM.setLabel(340, 78, 400, 90, "", "GUIMainLogo.PNG", "","","",True)
+        #ytTextbox
+        self.userM.setTextbox(140, 178, 800, 40, "Enter Youtube channel URL:")
+        #tTextBox
+        self.userM.setTextbox(140, 228, 800, 40, "Enter Twitter User URL:")
+        #ytlabel
+        self.userM.setLabel(65, 178, 75, 40, "Enter yt Link")
+        #tLabel
+        self.userM.setLabel(70, 228, 75, 40, "Enter twitter link")
+        #userNoteLabel
+        self.userM.setLabel(125, 253, 350, 40, "Leave fields empty for a random generation.")
+        #userCrawlPush
+        self.userM.setPush(215, 328, 150, 80, self.userToSns, "Crawl!")
+        #userBackPush
+        self.userM.setPush(715, 328, 150, 80, self.userToMain, "Back")
+        self.stackedWidget.addWidget(self.userM.window.page)
 
         #Start of topicMenu
-        self.topicM = newWidgetPage()
-        self.topicLogo = QtWidgets.QLabel(self.topicM.page)
-        self.topicLogo.setGeometry(QtCore.QRect(340, 78, 400, 90))
-        self.topicLogo.setText("")
-        self.topicLogo.setPixmap(QtGui.QPixmap("GUIMainLogo.PNG"))
-        self.topicLogo.setScaledContents(True)
-        self.topicCrawlPush = QtWidgets.QPushButton(self.topicM.page)
-        self.topicCrawlPush.setGeometry(QtCore.QRect(340, 328, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.topicCrawlPush.setFont(font)
-        self.topicBackPush = QtWidgets.QPushButton(self.topicM.page)
-        self.topicBackPush.setGeometry(QtCore.QRect(590, 328, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.topicBackPush.setFont(font)
-        self.topicTextBox = QtWidgets.QLineEdit(self.topicM.page)
-        self.topicTextBox.setGeometry(QtCore.QRect(340, 178, 400, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.topicTextBox.setFont(font)
-        self.countryTextBox = QtWidgets.QLineEdit(self.topicM.page)
-        self.countryTextBox.setGeometry(QtCore.QRect(340, 228, 400, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.countryTextBox.setFont(font)
-        self.topicLabel = QtWidgets.QLabel(self.topicM.page)
-        self.topicLabel.setGeometry(QtCore.QRect(270, 178, 75, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.topicLabel.setFont(font)
-        self.topicLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.countryLabel = QtWidgets.QLabel(self.topicM.page)
-        self.countryLabel.setGeometry(QtCore.QRect(270, 228, 75, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.countryLabel.setFont(font)
-        self.countryLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.topicNoteLabel = QtWidgets.QLabel(self.topicM.page)
-        self.topicNoteLabel.setGeometry(QtCore.QRect(325, 253, 350, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.topicNoteLabel.setFont(font)
-        self.topicNoteLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.stackedWidget.addWidget(self.topicM.page)
+        self.topicM = windowGen()
+        #topicLogo
+        self.topicM.setLabel(340, 78, 400, 90, "", "GUIMainLogo.PNG", "", "", "", True)
+        #topicCrawlPush
+        self.topicM.setPush(340, 328, 150, 80, self.topicToSns, "Crawl!")
+        #topicbackpush
+        self.topicM.setPush(590, 328, 150, 80, self.topicToMain, "Back")
+        #topictextbox
+        self.topicM.setTextbox(340, 178, 400, 40, "Enter Topic:")
+        #countrytextbox
+        self.topicM.setTextbox(340, 228, 400, 40, "Enter Country:")
+        #topiclabel
+        self.topicM.setLabel(270, 178, 75, 40, "Topic:")
+        #countrylaebl
+        self.topicM.setLabel(270, 228, 75, 40, "country" )
+        #topicnotelabel
+        self.topicM.setLabel(325, 253, 350, 40, "Leave fields empty for random crawl.", "", "", "", "", True)
+        self.stackedWidget.addWidget(self.topicM.window.page)
 
         #Start of snsMenu
-        self.snsM = newWidgetPage()
-        self.ytLogo = QtWidgets.QLabel(self.snsM.page)
-        self.ytLogo.setGeometry(QtCore.QRect(20, 20, 130, 100))
-        self.ytLogo.setText("")
-        self.ytLogo.setPixmap(QtGui.QPixmap("YouTubeLogo.png"))
-        self.ytLogo.setScaledContents(True)
-        self.tLogo = QtWidgets.QLabel(self.snsM.page)
-        self.tLogo.setGeometry(QtCore.QRect(20, 140, 130, 100))
-        self.tLogo.setText("")
-        self.tLogo.setPixmap(QtGui.QPixmap("TwitterLogo.png"))
-        self.tLogo.setScaledContents(True)
-        self.subCountLabel = QtWidgets.QLabel(self.snsM.page)
-        self.subCountLabel.setGeometry(QtCore.QRect(132, 10, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.subCountLabel.setFont(font)
-        self.subCountLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.viewCountLabel = QtWidgets.QLabel(self.snsM.page)
-        self.viewCountLabel.setGeometry(QtCore.QRect(158, 35, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.viewCountLabel.setFont(font)
-        self.viewCountLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.videoCountLabel = QtWidgets.QLabel(self.snsM.page)
-        self.videoCountLabel.setGeometry(QtCore.QRect(160, 60, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.videoCountLabel.setFont(font)
-        self.videoCountLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.ytCreatedLabel = QtWidgets.QLabel(self.snsM.page)
-        self.ytCreatedLabel.setGeometry(QtCore.QRect(135, 85, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.ytCreatedLabel.setFont(font)
-        self.ytCreatedLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.followerCountLabel = QtWidgets.QLabel(self.snsM.page)
-        self.followerCountLabel.setGeometry(QtCore.QRect(152, 130, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.followerCountLabel.setFont(font)
-        self.followerCountLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.tweetsLikedLabel = QtWidgets.QLabel(self.snsM.page)
-        self.tweetsLikedLabel.setGeometry(QtCore.QRect(165, 155, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tweetsLikedLabel.setFont(font)
-        self.tweetsLikedLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.totalTweetsLabel = QtWidgets.QLabel(self.snsM.page)
-        self.totalTweetsLabel.setGeometry(QtCore.QRect(145, 180, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.totalTweetsLabel.setFont(font)
-        self.totalTweetsLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.tCreatedLabel = QtWidgets.QLabel(self.snsM.page)
-        self.tCreatedLabel.setGeometry(QtCore.QRect(137, 205, 150, 40))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.tCreatedLabel.setFont(font)
-        self.tCreatedLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.seperateLineLabel = QtWidgets.QLabel(self.snsM.page)
-        self.seperateLineLabel.setGeometry(QtCore.QRect(-20, 210, 1100, 40))
-        font = QtGui.QFont()
-        font.setPointSize(20)
-        self.seperateLineLabel.setFont(font)
-        self.seperateLineLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.snsBackPush = QtWidgets.QPushButton(self.snsM.page)
-        self.snsBackPush.setGeometry(QtCore.QRect(920, 580, 150, 80))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        self.snsBackPush.setFont(font)
-        self.stackedWidget.addWidget(self.snsM.page)
+        self.snsM = windowGen()
+        #ytlogo
+        self.snsM.setLabel(20, 20, 130, 100, "", "YouTubeLogo.png", "", "", "", True)
+        #tLogo
+        self.snsM.setLabel(20, 140, 130, 100, "", "TwitterLogo.png", "", "", "", True)
+        #subcountlabel
+        self.snsM.setLabel(132, 10, 150, 40, "Sub count:")
+        #viewcountlabel
+        self.snsM.setLabel(158, 35, 150, 40, "View count:")
+        #videocountlabel
+        self.snsM.setLabel(160, 60, 150, 40, "Video count:")
+        #ytCreatedLabel
+        self.snsM.setLabel(152, 130, 150, 40, "Created At:")
+
+        #twitter
+        #followerCountLabel
+        self.snsM.setLabel(152, 130, 150, 40, "Follower Count:")
+        #tweetsLikedLabel
+        self.snsM.setLabel(165, 155, 150, 40, "Liked tweets:")
+        #totalTweetsLabel
+        self.snsM.setLabel(145, 180, 150, 40, "Total tweets:")
+        #tCreatedLabel
+        self.snsM.setLabel(137, 205, 150, 40, "Created at:")
+        #seperateLineLabel
+        self.snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
+        #snsBackPush
+        self.snsM.setPush(920, 580, 150, 80, self.snsBack, "Back")
+
+        self.stackedWidget.addWidget(self.snsM.window.page)
+
+        
         window.QWin.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(window.QWin)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1080, 26))
         window.QWin.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(window.QWin)
         window.QWin.setStatusBar(self.statusbar)
+        #SNS Window Content
+        
+        #End of SNS Window Content
 
         self.retranslateUi(window.QWin)
         QtCore.QMetaObject.connectSlotsByName(window.QWin)
@@ -210,32 +153,7 @@ class window(object):
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("window", "Cookie Crawler"))
-        self.userPushButton.setText(_translate("window", "User"))
-        self.topicPushButton.setText(_translate("window", "Topic"))
-        self.ytTextBox.setPlaceholderText(_translate("window", "Enter Youtube Channel URL: E.g., <https://www.youtube.com/channel>"))
-        self.tTextBox.setPlaceholderText(_translate("window", "Enter Twitter User URL: E.g., <https://twitter.com/leehsienloong>"))
-        self.ytLabel.setText(_translate("window", "YouTube:"))
-        self.tLabel.setText(_translate("window", "Twitter:"))
-        self.userNoteLabel.setText(_translate("window", "Note: Leave fields empty for random crawl"))
-        self.userCrawlPush.setText(_translate("window", "Crawl!"))
-        self.userBackPush.setText(_translate("window", "Back"))
-        self.topicCrawlPush.setText(_translate("window", "Crawl!"))
-        self.topicBackPush.setText(_translate("window", "Back"))
-        self.topicTextBox.setPlaceholderText(_translate("window", "Enter Topic:"))
-        self.countryTextBox.setPlaceholderText(_translate("window", "Enter Country"))
-        self.topicLabel.setText(_translate("window", "Topic:"))
-        self.countryLabel.setText(_translate("window", "Country:"))
-        self.topicNoteLabel.setText(_translate("window", "Note: Leave fields empty for random crawl"))
-        self.subCountLabel.setText(_translate("window", "Sub Count:"))
-        self.viewCountLabel.setText(_translate("window", "Total View Count:"))
-        self.videoCountLabel.setText(_translate("window", "Total Video Count:"))
-        self.ytCreatedLabel.setText(_translate("window", "Created At:"))
-        self.followerCountLabel.setText(_translate("window", "Follower Count:"))
-        self.tweetsLikedLabel.setText(_translate("window", "Total Tweets Liked:"))
-        self.totalTweetsLabel.setText(_translate("window", "Total Tweets:"))
-        self.tCreatedLabel.setText(_translate("window", "Created At:"))
-        self.seperateLineLabel.setText(_translate("window", "____________________________________________________________________________"))
-        self.snsBackPush.setText(_translate("window", "Back"))
+
 
 
 # if __name__ == "__main__":
