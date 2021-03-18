@@ -12,7 +12,7 @@ class UrlExtraction:
     def getUniqueID(self,UserUrl):
         """! Extract Unqiue User ID based on site and return said ID.
         @param UserUrl Url link provided by user.
-        @return uniqueID or UserUrl
+        @return uniqueID
         """
 
         if "youtube" in UserUrl:
@@ -26,8 +26,6 @@ class UrlExtraction:
             uniqueID = UserUrl.replace("https://twitter.com/","")
             uniqueID = uniqueID.split("?",1)[0] #Split User ID from /ref/.. onwards in link.
             return uniqueID
-        else:
-            return UserUrl
 
     #Get Sitename based on Url provided by user.
     def getSiteName(self,UserUrl):
