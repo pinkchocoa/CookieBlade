@@ -21,8 +21,8 @@ def twitterGraph(amount,URL_or_Username = ""):
     @param URL_or_Username; By url or username.
     """
 
-    likesList = []
-    rtList = []
+    likesList = ["Like Count"]
+    rtList = ["RT Count"]
     dateList = []
     RTcount = 0
     Likes = 0
@@ -54,8 +54,8 @@ def twitterGraph(amount,URL_or_Username = ""):
                     rtList.append(RTcount)
                     likesList.append(Likes)
                     if len(dateList) >1:
-                        dateList.pop()
-                    break
+                        #dateList.pop()
+                        break
                 counter = counter + 1
 
             else:
@@ -66,7 +66,8 @@ def twitterGraph(amount,URL_or_Username = ""):
                 Likes = tTweet.favCount()
                 counter = counter + 1
     if len(dateList) > 1:
-        dateList.pop()
+        pass
+        #dateList.pop()
     twitterDB.setTwitterGraphDB(URL_or_Username,rtList,likesList,dateList)
 
 ## Documentation for twitterTrend Method

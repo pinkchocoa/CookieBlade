@@ -110,7 +110,7 @@ class Testing(unittest.TestCase):
         data = []
         assert fileExist("FalseTest") == False
         createDir('UnitTest')
-        writeNewFile(data)
+        writeNewFile('Fail',data)
 
     def testGeneral(self):
         pass

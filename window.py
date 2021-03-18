@@ -148,9 +148,12 @@ class window(object):
         # data = [a,b,c,d]
         # cat = ["jan", "feb", "mar", "apr"]
 
-        twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
-        rtData,favData,dateData = twitterDB.getTwitterGraphDB(self.tlink)
-        window.setBarChart(rtData, favData, 100, 100, 500, "User's Fav and RT Count")
+        #twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        rt,fav,date = twitterDB.getTwitterGraphDB(self.tlink)
+        print(rt)
+        print(fav)
+        print(date)
+        window.setBarChart([rt,fav], date, 100, 100, 500, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
@@ -278,8 +281,8 @@ class window(object):
 
 # if __name__ == "__main__":
 #     app = QtWidgets.QApplication(sys.argv)
-    # MainWindow = QtWidgets.QMainWindow()
-    # ui = Ui_MainWindow()
-    # ui.setupUi(MainWindow)
-    # MainWindow.show()
-    # sys.exit(app.exec_())
+#     MainWindow = QtWidgets.QMainWindow()
+#     ui = Ui_MainWindow()
+#     ui.setupUi(MainWindow)
+#     MainWindow.show()
+#     sys.exit(app.exec_())
