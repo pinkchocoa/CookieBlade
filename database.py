@@ -54,6 +54,7 @@ class database(mkFolder):
         #create database if not exist else connect to database.
         db = sqlite3.connect(arg)
         db.close() #close database
+        connect.close()
         return arg #return database location
 
     #create custom table with min arg: tablename, primary key col and atleast 1 col. #Max 2000 col #data stored at text. #11/3/21
@@ -79,6 +80,8 @@ class database(mkFolder):
         db.execute(tableArg)
         connect.commit() #save database
         db.close() #close database
+        connect.close()
+
 
     #insert data into table in database #12/3/21
     def insertTable(self, data, *argument):
@@ -101,7 +104,9 @@ class database(mkFolder):
         #Pass string argurment with data to insert into database.
         db.execute(tableArg,(data))
         connect.commit() #save database
-        db.close    #close database
+        db.close()    #close database
+        connect.close()
+
 
     #retrieve user data from database. #good but user need remember the table style inforamtion. #11/3/21
     def getTableData(self, tableName, argCol='*', argWhere = ''):
@@ -121,4 +126,5 @@ class database(mkFolder):
         for row in rows:
             templist.append(list(row))
         db.close()
+        connect.close()
         return templist
