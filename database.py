@@ -120,4 +120,5 @@ class database(mkFolder):
         rows = db.fetchall()
         for row in rows:
             templist.append(list(row))
+        db.close()
         return templist
