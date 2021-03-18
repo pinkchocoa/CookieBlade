@@ -94,10 +94,3 @@ def getTwitterTrendDB():
     data = db.getTableData('trends','dict',strArg)
     data = ast.literal_eval(data[0][0]) #convert str to dict
     return data
-
-# rtData,favData,dateData = getTwitterGraphDB("https://twitter.com/BarackObama")
-# print(rtData)
-# print(favData)
-# print(dateData)
-
-getTwitterGraphDB("https://twitter.com/BarackObama")
