@@ -261,14 +261,7 @@ class TUser(Twitter):
                 for media in tweet.extended_entities['media']:
                     files_location = str(media['media_url'])
                     images.append(files_location)
-            date = str(tweet.created_at)
-            date = date.split(" ",1)[0]
-            templist = []
-            templist.append(tweet.id)
-            templist.append(date)
-            templist.append(tweet.favorite_count)
-            templist.append(tweet.retweet_count)
-            tweets.append(templist)
+            tweets.append(tweet.id)
 
         return tweets
 

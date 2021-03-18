@@ -18,7 +18,7 @@
 # - functools standard library
 #   - tools to work with high order functions
 
-# Imports
+#Imports
 import sys
 from PyQt5 import QtCore, QtGui, QtWidgets #pip3 install pyqt5
 from PyQt5.QtCore import Qt
