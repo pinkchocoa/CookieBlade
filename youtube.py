@@ -578,3 +578,5 @@ def getDBvids(countryCode):
 # y = getDBvids('SG')
 # print(x)
 # print(y)
+
+# print(getRevenueData('https://www.youtube.com/channel/UCtUId5WFnN82GdDy7DgaQ7w'))
