@@ -28,7 +28,7 @@ def setTwitterGraphDB(tlink,*argument):
     """
     db = database('twitter')
     uid = db.getUniqueID(tlink)
-    db.createTable(uid,"Date","Rt","Fav")
+    db.createTable(uid,'Date','Rt','Fav')
 
     rtData = argument[0]
     favData = argument[1]
