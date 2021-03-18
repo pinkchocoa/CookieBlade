@@ -21,12 +21,13 @@ def getTwitterGraphDB(tlink):
     db = database('twitter')
     uid = db.getUniqueID(tlink)
     dateData = db.getTableData(uid,'Date')
-    dateData = itertools.chain(*dateData)
+    dateData = list(itertools.chain(*dateData))
+    dateData.reverse()
     rtData = db.getTableData(uid,'Rt')
-    rtData = itertools.chain(*rtData)
+    rtData = list(itertools.chain(*rtData))
     favData = db.getTableData(uid,'Fav')
-    favData = itertools.chain(*favData)
-    return list(rtData),list(favData),list(dateData)
+    favData = list(itertools.chain(*favData))
+    return rtData,favData,dateData
 
 
 #main
