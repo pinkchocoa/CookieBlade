@@ -34,13 +34,20 @@ def setTwitterGraphDB(tlink,*argument):
     favData = argument[1]
     dateData = argument[2]
 
-    for x in range(0,len(rtData)):
+    for x in range(0,len(rtData)-1):
         data = []
         data.append(dateData[x])
         data.append(rtData[x])
         data.append(favData[x])
         db.insertTable(data,uid,'Date','Rt','Fav')
 
+    data = []
+    data.append(dateData[len(rtData)-1])
+    data.append(rtData[len(rtData)-1])
+    data.append(favData[len(rtData)-1])
+    db.insertTable(data,uid,'Date','Rt','Fav')
+
+    
 ## Documentation for getTwitterGraphDB Method
 # This method retrive twitter data from database.
 def getTwitterGraphDB(tlink):
@@ -55,8 +62,12 @@ def getTwitterGraphDB(tlink):
     dateData.reverse()
     rtData = db.getTableData(uid,'Rt')
     rtData = list(itertools.chain(*rtData))
+    for i in range(1,len(rtData)):
+        rtData[i] = int(rtData[i])
     favData = db.getTableData(uid,'Fav')
     favData = list(itertools.chain(*favData))
+    for i in range(1,len(favData)):
+        favData[i] = int(favData[i])
     return rtData,favData,dateData
 
 ## Documentation for setTwitterTrendDB Method
@@ -83,3 +94,10 @@ def getTwitterTrendDB():
     data = db.getTableData('trends','dict',strArg)
     data = ast.literal_eval(data[0][0]) #convert str to dict
     return data
+
+# rtData,favData,dateData = getTwitterGraphDB("https://twitter.com/BarackObama")
+# print(rtData)
+# print(favData)
+# print(dateData)
+
+getTwitterGraphDB("https://twitter.com/BarackObama")
