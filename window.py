@@ -260,7 +260,7 @@ class window(object):
         #topicLogo
         self.topicM.setLabel(self.logoX, self.logoY-79, self.logoWidth, self.logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
         #topicCrawlPush
-        #self.topicM.setPush(self.pushX, self.pushY-29, self.pushWidth, self.pushHeight, "", "Crawl!")
+        self.topicM.setPush(self.pushX, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Crawl!")
         #topicbackpush
         self.topicM.setPush(self.pushX+250, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Back")
         #topictextbox
