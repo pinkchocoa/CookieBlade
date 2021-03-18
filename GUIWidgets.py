@@ -11,6 +11,10 @@
 #   - access to PyQt5 UI Widgets
 # - PyQt5.QtWebEngineWidgets external library (pip install PyQtWebEngine)
 #   - access to PyQt5 web browser functions
+# - PyQt5.QtChart external library (pip inststall PyQtChart)
+#   - access to PyQt5 bar and pie chart plotting fuctions
+# - pyqtgraph external library (pip install pyqtgraph)
+#   - access to graph plotting functions
 
 #Imports
 import sys
@@ -54,13 +58,13 @@ class newWindow:
 
     #Method to set Window icon image
     def setWindowIcon(self,image):
-        """! set the window icon to the image from parameter
+        """! set the window icon to the image from input parameter
         @param image image to be used as Window Icon
         """
         self.QWin.setWindowIcon(QtGui.QIcon(image))
     
     def show(self):
-        """! used to display the window
+        """! set window to be visible
         """
         #Display window
         self.QWin.show()
@@ -72,14 +76,16 @@ class newStackWidget:
     """
     def __init__(self, window, posX, posY, lenX, lenY):
         """! newStackWidget class initializer
-        @param window used to determine which window for the widget to appear on
-        @param posX used to set the X coordinate of where the label will appear
-        @param posY used to set the Y coordinate of where the label will appear
-        @param lenX used to set the horizontal length of the label
-        @param lenY used to set the vertical height of the label
+        @param window used to determine which window for the stack widget to appear on
+        @param posX used to set the X coordinate of where the stack widget will appear
+        @param posY used to set the Y coordinate of where the stack widget will appear
+        @param lenX used to set the horizontal length of the stack widget
+        @param lenY used to set the vertical height of the stack widget
         """
         self.sWidget = QtWidgets.QStackedWidget(window)
+        #Set the position and size of the stack widget
         self.sWidget.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
+        #Set the stack widget index to point to the first widget page
         self.sWidget.setCurrentIndex(0)
     
     def addWidget(self, widget):
@@ -89,7 +95,7 @@ class newStackWidget:
         self.sWidget.addWidget(widget)
     
     def setCurrentWidget(self, widget):
-        """! used to set which page of widgets to be displayed
+        """! used to set selected page of widgets to be displayed
         @param widget to be set as the current page
         """
         self.sWidget.setCurrentWidget(widget.page)
@@ -134,7 +140,7 @@ class newLabel:
         self.label.update()
 
     def setFont(self, fontStyle, fontSize):
-        """! setFont method 
+        """! sets the font style and size of the label widget
         @param fontStyle used to set the font style of label text
         @param fontSize used to set the font size of label text
         """
@@ -142,7 +148,7 @@ class newLabel:
     
     #Method to display image in Label
     def setImage(self, image):
-        """! setImage method
+        """! set label to display image
         @param image used to determine what image to be displayed in label
         """
         #Set display image in parameter in Label
@@ -158,10 +164,11 @@ class newTextBox:
     def __init__(self, window, posX, posY, lenX, lenY):
         """! newTextBox class initializer
         @param window used to determine which window for the widget to appear on
-        @param posX used to set the X coordinate of where the label will appear
-        @param posY used to set the Y coordinate of where the label will appear
-        @param lenX used to set the horizontal length of the label
-        @param lenY used to set the vertical height of the label
+        @param posX used to set the X coordinate of where the textbox will appear
+        @param posY used to set the Y coordinate of where the textbox will appear
+        @param lenX used to set the horizontal length of the textbox
+        @param lenY used to set the vertical height of the textbox
+        @return user input stored in textbox
         """
         #Initialize new instance of TextBox UI
         self.textbox = QtWidgets.QLineEdit(window)
@@ -170,20 +177,21 @@ class newTextBox:
 
     #Method to set palceholder text
     def setText(self, text):
-        """! setText method
-        @param text used to set the text to be displayed by the label
+        """! set placeholder text to be displayed by the textbox
+        @param text used to set the text to be displayed by the textbox
         """
         self.textbox.setPlaceholderText(text)
     
     def setFont(self, fontStyle, fontSize):
-        """! setFont method 
+        """! set the font style and font size of textboxes
         @param fontStyle used to set the font style of textbox placeholder text
         @param fontSize used to set the font size of textbox placeholder text
         """
         self.textbox.setFont(QFont(fontStyle,int(fontSize)))
 
     def returnText(self):
-        print("b")
+        """! used to retrieve the user input from textboxes
+        """
         return self.textbox.text()
 
 #Class to create new PushButton
@@ -194,10 +202,10 @@ class newPushButton:
     def __init__(self, window, posX, posY, lenX, lenY, functionName):
         """! newPushButton class initializer
         @param window used to determine which window for the widget to appear on
-        @param posX used to set the X coordinate of where the label will appear
-        @param posY used to set the Y coordinate of where the label will appear
-        @param lenX used to set the horizontal length of the label
-        @param lenY used to set the vertical height of the label
+        @param posX used to set the X coordinate of where the push button will appear
+        @param posY used to set the Y coordinate of where the push button will appear
+        @param lenX used to set the horizontal length of the push button
+        @param lenY used to set the vertical height of the push button
         @param functionname used to determine which function to call when button is clicked
         """
         #Initialize new instance of PushButton UI
@@ -209,13 +217,13 @@ class newPushButton:
 
     #Set PushButton text
     def setText(self, text):
-        """! setText method
+        """! set the text to be displayed on the push button
         @param text used to set the text to be displayed by the push button
         """
         self.PushButton.setText(text)
     
     def setFont(self, fontStyle, fontSize):
-        """! setFont method 
+        """! set the font style and font size of text displayed on the push button
         @param fontStyle used to set the font style of push button text
         @param fontSize used to set the font size of push button text
         """
@@ -234,6 +242,7 @@ class messageBox:
         @param show value set to true to show message box, false to hide message box
         @param icon used to determine which icon to be displayed with message box text
         """
+        #Initialized a new instance of message box UI
         self.msgBox = QMessageBox()
         msgBox = self.msgBox
         if winTitle:
@@ -248,6 +257,8 @@ class messageBox:
             self.show()
 
     def show(self):
+        """! set the messagebox to be visible
+        """
         msgBox = self.msgBox
         msgBox.exec_()
 
@@ -270,7 +281,7 @@ class newGraph:
         self.Graph.showGrid(x = True, y = True)
 
     def plotGraph(self, axisX, axisY, color, points):
-        """! plotGraph method
+        """! take in values for X and Y axis, line color and points to plot graph
         @param axisX takes in list to plot the X axis of graph
         @param axisY takes in list to plot the Y axis of graph
         @param color used to determine the line color of graph
@@ -279,13 +290,13 @@ class newGraph:
         self.Graph.plot(axisX, axisY, pen = color, symbol = points)
         
     def setBackGroundColor(self, color):
-        """! setBackGroundColor method
+        """! sets the background color of the graph
         @param color used to set the background color of graph
         """
         self.Graph.setBackground(color)
     
     def setGraphTitle(self, title, titleColor, titleSize):
-        """! setGraphTitle method
+        """! sets the title of the graph
         @param title used to set the graph title label
         @param titleColor used to set the graph title color
         @param titleSize used to set the font size of graph title
@@ -293,7 +304,7 @@ class newGraph:
         self.Graph.setTitle(title, color = titleColor, size = titleSize)
 
     def setAxisLabel(self, position, label, labelColor, labelSize):
-        """! setAxisLabel method
+        """! sets the axis label of the graph
         @param position used to determine the position of axis
         @param label used to determine what to display for axis
         @param labelcolor used to determine the color for axis
@@ -303,7 +314,7 @@ class newGraph:
         self.Graph.setLabel(position, label, **fontstyle)
     
     def setAxisIntervalTo1(self, axisLabel, axis):
-        """! setAxisIntervalTo1 method
+        """! sets the axis to be in intervals of 1
         @param axisLabel used to determine which axis label to re-set interval
         @param axis used to determine the range of values to set for axis
         """
@@ -322,17 +333,20 @@ class newWebBrowser():
         @param lenY used to set the vertical height of the browser
         """
         self.webEngine = QWebEngineView()
+        #Set web browser window size
         self.webEngine.resize(lenX, lenY)
     
     def openURL(self, link):
-        """! openURL method
+        """! takes in link input and open link with web browser
         @param link used to determine which webpage to display/set as window name
         """
+        #Set window title of web browser to link address
         self.webEngine.setWindowTitle(link)
+        #Loads the web browser with link address
         self.webEngine.load(QtCore.QUrl(link))
     
     def showWeb(self):
-        """! showWeb method
+        """! set the web browser to be visible
         Used to show the browser
         """
         self.webEngine.show()
@@ -343,19 +357,28 @@ class newPieChart():
     Defines the pie chart object to display pie charts
     """
     def __init__(self):
+        """! newPieChart class initializer
+        """
         self.chart = QChart()
+        #Set chart animation
         self.chart.setAnimationOptions(QChart.AllAnimations)
         
         #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
         #self.chart.mapToPosition(QtCore.QPointF(500,500))
         self.chart.setBackgroundVisible(True)
         self.series = QPieSeries()
-        
+        #Set pie chart legend to be non visible
         self.chart.legend().setVisible(False)
         #self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
         
 
     def setPos(self, posX, posY, width, height):
+        """! set the position and size of pie chart
+        @param posX used to determine the X coordinate of pie chart
+        @param posY used to determine the Y coordinate of pie chart
+        @param width used to set the width of pie chart
+        @param height used to set the height of pie chart
+        """
         test = QtCore.QRectF()
         test.setHeight(width)
         test.setWidth(height)
@@ -363,16 +386,29 @@ class newPieChart():
         self.chart.setPlotArea(test)
 
     def setSize(self, width, height):
+        """! sets the area where the pie chart can be displayed
+        @param width used to determine the width of the area
+        @param height used to determine the height of the area
+        """
         self.chartview.setFixedSize(width,height)
 
     def setTitle(self, title):
+        """! sets the title of pie chart
+        @param title input to be set as pie chart title
+        """
         self.chart.setTitle(title)
 
     def setSeries(self, series):
+        """! used to add a series of values to be displayed on the pie chart
+        @param series a list of values to be displayed on the pie chart
+        """
         self.chart.addSeries(series)
 
     #data is a dictionary
     def addData(self, data):
+        """! used to split series of data into seperate slices on the pie chart
+        @param data a dictionary of values
+        """
         minSize = 0.1
         maxSize = 0.9
         donut = QPieSeries()
@@ -383,7 +419,9 @@ class newPieChart():
             slice_.setLabelVisible(True)
             slice_.setLabelColor(Qt.white)
             slice_.setLabelPosition(QPieSlice.LabelInsideTangential)
+            #Set pie slices to detect mouse hover
             slice_.hovered[bool].connect(functools.partial(self.explodeSlice, slice_=slice_))
+            #Set pie slices to detect mouse double click input
             slice_.doubleClicked.connect(functools.partial(self.doubleClickSlice, slice_=slice_))
             donut.append(slice_)
             donut.setHoleSize(minSize)
@@ -393,11 +431,18 @@ class newPieChart():
         self.setSeries(donut)
     
     def viewChart(self, window):
+        """! used to set the pie chart to be visible
+        @param window used to determine which window for the pie chart to be displayed
+        """
         self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
         #window.setCentralWidget(self.chartview)
 
     def explodeSlice(self, exploded, slice_):
+        """! called when mouse hover is detected to perform pie slice movement
+        @param exploded used to set slice movement
+        @param slice_ used to determine which slice to move
+        """
         if exploded:
             self.chart.setToolTip(str(int(slice_.value())))
         else:
@@ -405,11 +450,19 @@ class newPieChart():
         slice_.setExploded(exploded)
 
     def doubleClickSlice(self, slice_):
+        """! called when mouse double click input is detected
+        @param slice_ used to determine which slice to perform action on
+        """
         print("test")
 
 
 class newBarChart():
+    """! newBarChart class
+    Defines the bar chart object to display bar charts
+    """
     def __init__(self):
+        """! newBarChart class initializer
+        """
         self.chart = QChart()
         self.chart.setAnimationOptions(QChart.SeriesAnimations)
         
@@ -423,10 +476,17 @@ class newBarChart():
 
 
     def setTitle(self, title):
+        """! used to set bar chart title
+        @param title used to set title name
+        """
         self.chart.setTitle(title)
 
     #data is a list of list
     def addData(self, data, categories):
+        """! used to input data into bar chart to be displayed
+        @param data to be displayed as bar charts
+        @param categories used to show what each bar chart represent
+        """
         for a in data:
             tempset = QBarSet(a[0])
             for idx, x in enumerate(a):
@@ -447,7 +507,13 @@ class newBarChart():
         self.series.attachAxis(axisY)
         axisY.setRange(0,50)
     
-    def viewChart(self, window,x,y,size):
+    def viewChart(self, window, posX, posY,size):
+        """! set bar chart as visible
+        @param window used to determine which window the bar chart will appear on
+        @param posX used to determine the X coordinate of bar chart
+        @param posY used to determine the Y coordinate of bar chart
+        @param size used to determine the size of the bar chart
+        """
         self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
 
