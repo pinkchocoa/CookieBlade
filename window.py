@@ -128,7 +128,10 @@ class window(object):
         window.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
-        #t = Twitter()
+        pass
+
+    def setTwitterTopics(self, window):
+        t = Twitter()
         #data = t.trendingTopics()
         data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
         print(data)
