@@ -243,6 +243,7 @@ class window(object):
         snsM = windowGen()
         self.setYoutubeGraphs(snsM) 
         self.setTwitterGraphs(snsM) 
+        self.setTwitterTopics(snsM) 
 
         #ytlogo
         snsM.setLabel(self.logoX-320, self.logoY-137, self.logoWidth-270, self.logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
