@@ -16,6 +16,7 @@ from LinkValidation import LinkValidation
 from twitter import Twitter,TUser,TTweet
 from youtube import *
 from domain import get_domain_name,get_sub_domain_name
+from twitterDB import *
 
 ## Documentation for Testing Class
 # The testing class is called and run allowing us to know which function failed.
@@ -80,10 +81,11 @@ class Testing(unittest.TestCase):
         test.getUniqueID("")
         test.getSiteName("")
 
-    def testTwitterGraph(self):
-        """! TwitterGraph Test method.
+    def testTwitterGraphandDB(self):
+        """! TwitterGraph and DB Test method.
         """ 
-        twitterGraph(1,"https://twitter.com/BarackObama") # Run this if you really need to as API call is slow,
+        twitterGraph(1,"https://twitter.com/BarackObama") # Run this if you really need to as API call is slow, this include calling setTwitterGraphDB()
+        getTwitterGraphDB("https://twitter.com/BarackObama")
 
     def testLinkValidation(self):
         """! LinkValidation Test method
