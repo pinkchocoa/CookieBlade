@@ -52,7 +52,10 @@ class database(mkFolder):
         #String Argurment to create database based on site.
         arg = './data/' + self.dataBaseName + '.db'
         #create database if not exist else connect to database.
-        db = sqlite3.connect(arg)
+        try:
+            db = sqlite3.connect(arg)
+        except:
+            print("database creation failed.")
         db.close() #close database
         connect.close()
         return arg #return database location
@@ -64,20 +67,34 @@ class database(mkFolder):
         """
 
         #connect to DB
-        connect = sqlite3.connect(self.arg)
-        db = connect.cursor()
+        try:
+            connect = sqlite3.connect(self.arg)
+            db = connect.cursor()
+        except:
+            print("failed to connect to database.")
 
         #Custom Argument string phrase and execute
-        tableArg = 'CREATE TABLE IF NOT EXISTS ' + argument[0] + '(' + argument[1] + ' text PRIMARY KEY, ' #argument[0] = tablename, argument[1] = primary key
-        last = len(argument)
-        for i in range(2, len(argument)-1):
-            tableArg = tableArg + argument[i] + ' text, ' #append till 2nd last argument.
-        tableArg = tableArg + argument[last-1] + ' text)' #add last argument.
-        db.execute(tableArg)
+        try:
+            tableArg = 'CREATE TABLE IF NOT EXISTS ' + argument[0] + '(' + argument[1] + ' text PRIMARY KEY, ' #argument[0] = tablename, argument[1] = primary key
+            last = len(argument)
+            for i in range(2, len(argument)-1):
+                tableArg = tableArg + argument[i] + ' text, ' #append till 2nd last argument.
+            tableArg = tableArg + argument[last-1] + ' text)' #add last argument.
+        except:
+            print("tableArg string failed.")
 
-        #Create Unqiue index for replace function of SQLite3
-        tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' + argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
-        db.execute(tableArg)
+        try:
+            db.execute(tableArg)
+        except:
+            print("db.execute() failed.")
+
+        try:
+            #Create Unqiue index for replace function of SQLite3
+            tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' + argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
+            db.execute(tableArg)
+        except:
+            print("Unqiue index creation failed.")
+        
         connect.commit() #save database
         db.close() #close database
         connect.close()
@@ -89,20 +106,32 @@ class database(mkFolder):
         @param data; data list to be stored in db
         @param *argument;  where ('tablename', 'primary key', '1 col name') MUST BE PROVIDED.
         """
-        connect = sqlite3.connect(self.arg)
-        db = connect.cursor()
+
+        try:
+            connect = sqlite3.connect(self.arg)
+            db = connect.cursor()
+        except:
+            print("failed to connect to database.")
 
         #Append tableArg according to *argument
-        last = len(argument)
-        tableArg = 'REPLACE INTO ' + argument[0] + ' ('
-        for i in range(1,len(argument)-1):
-            tableArg = tableArg  + argument[i] + ', '
-        tableArg = tableArg + argument[last-1] + ') VALUES ('
-        for i in range(1,len(argument)-1):
-            tableArg = tableArg + '?, '
-        tableArg = tableArg + '?)'
+        try:
+            last = len(argument)
+            tableArg = 'REPLACE INTO ' + argument[0] + ' ('
+            for i in range(1,len(argument)-1):
+                tableArg = tableArg  + argument[i] + ', '
+            tableArg = tableArg + argument[last-1] + ') VALUES ('
+            for i in range(1,len(argument)-1):
+                tableArg = tableArg + '?, '
+            tableArg = tableArg + '?)'
+        except:
+            print("tableArg string failed.")
+
         #Pass string argurment with data to insert into database.
-        db.execute(tableArg,(data))
+        try:
+            db.execute(tableArg,(data))
+        except:
+            print("db.execute() failed.")
+
         connect.commit() #save database
         db.close()    #close database
         connect.close()
@@ -117,14 +146,26 @@ class database(mkFolder):
         @return templist; where data is in python 2d list format.
         """
         templist = []
-        connect = sqlite3.connect(self.arg)
-        db = connect.cursor()
+        try:
+            connect = sqlite3.connect(self.arg)
+            db = connect.cursor()
+        except:
+            print("failed to connect to database")
+
         #String Argurment to retrieve data from database.
-        tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + "'" + argWhere + "'"
-        db.execute(tableArg)     
-        rows = db.fetchall()
-        for row in rows:
-            templist.append(list(row))
+        try:
+            tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + "'" + argWhere + "'"
+        except:
+            print("tableArg string failed.")
+        
+        try:
+            db.execute(tableArg)     
+            rows = db.fetchall()
+            for row in rows:
+                templist.append(list(row))
+        except:
+            print("db.execute() failed.")
+            
         db.close()
         connect.close()
         return templist
