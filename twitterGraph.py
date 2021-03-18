@@ -53,6 +53,7 @@ def twitterGraph(amount,URL_or_Username = ""):
                 if counter == amount:
                     rtList.append(RTcount)
                     likesList.append(Likes)
+                    dateList.pop()
                     return rtList,likesList,dateList
                 counter = counter + 1
 
@@ -63,5 +64,5 @@ def twitterGraph(amount,URL_or_Username = ""):
                 RTcount = tTweet.RTCount()
                 Likes = tTweet.favCount()
                 counter = counter + 1
-                
+    dateList.pop()
     return rtList,likesList,dateList

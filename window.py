@@ -108,9 +108,6 @@ class window(object):
         # cat = ["jan", "feb", "mar", "apr"]
 
         rtData,favData,dateData = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
-        db = database('twitter')
-        uid = db.getUniqueID(self.tlink)
-        db.createTable(uid,'Date','Rt','Fav')
         print(rtData)
         print(favData)
         print(dateData)
@@ -229,9 +226,6 @@ class window(object):
     def retranslateUi(self, window):
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("window", "Cookie Crawler"))
-
-    def saveToDb(self,)
-
 
 
 # if __name__ == "__main__":
