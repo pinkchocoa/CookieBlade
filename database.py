@@ -113,13 +113,10 @@ class database(mkFolder):
         """
         templist = []
         connect = sqlite3.connect(self.arg)
-        #connect.row_factory = sqlite3.Row
         db = connect.cursor()
         #String Argurment to retrieve data from database.
-        #tableArg = self.__setTableArg(argCol, argWhere)
         tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + "'" + argWhere + "'"
         db.execute(tableArg)     
-        #return db.fetchone() #return data in a list.
         rows = db.fetchall()
         for row in rows:
             templist.append(list(row))

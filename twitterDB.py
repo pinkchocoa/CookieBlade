@@ -4,15 +4,19 @@
 #
 # @section libraries_main Libraries/Modules
 # - database(local)
-#   - access to database class
+#   - access to database class.
 # - itertools
 #   - to flatten 2d list.
+# - ast
+#   - to convert string to dict type.
+# - datetime
+#   - to get today date.
 
 
 #imports
-from database import database #contain database class and its methods
-import itertools #contain itertools method like chain.
-import ast #contain method to convert str to dict
+from database import database
+import itertools
+import ast
 import datetime
 
 ## Documentation for setTwitterGraphDB Method
