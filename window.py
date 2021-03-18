@@ -1,13 +1,31 @@
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+## @file window.py
+#
+# @brief this file generates the widgets for the windows
+#
+# @section libraries_main Libraries/Modules
+# - GUIWidgets (local) 
+#   - access to widget classes
+# - windowGen (local)
+#   - access to windowGen class to generate widgets
+# - twitterGraph
+#   - access to twitterGraph function to retrieve data for twitter graph
+
+# Imports
 from GUIWidgets import *
 from windowGen import windowGen
 import twitterGraph
 
-class window(object):
+## Documentation for window Class
+# The window class intialize the different menus and their corresponding widgets
+# this allows us to initialize the UI by calling a single class
 
-    wWidth = 1080
-    wHeight = 720
+class window(object):
+    """! window class
+    Defines the window object which will create the menus and widgets
+    """
+    #Width and Height values for window and widgets
+    wWidth = 1080 
+    wHeight = 720 
     logoWidth = 400
     logoHeight = 90
     pushWidth = 150
@@ -16,18 +34,25 @@ class window(object):
     textHeight = 40
     labelWidth = 150
     labelHeight = 40
+
+    #X & Y coordinates for widgets
     logoX = pushX = (wWidth- logoWidth)/2
     logoY = (wHeight - logoHeight)/4
     pushY = logoY+200
     textX = logoX - 200
     textY = labelY = logoY + 21
     labelX = textX - 85
+
     numberOfTweets = 10
 
     def mainToUser(self):
+        """! switches the widgets from main menu to widgets from user menu
+        """ 
         self.stackedWidget.setCurrentWidget(self.userM.window)
     
     def userToMain(self):
+        """! switches the widgets from user menu to widgets from main menu
+        """
         self.stackedWidget.setCurrentWidget(self.mainM.window)
     
     def mainToTopic(self):
@@ -117,8 +142,6 @@ class window(object):
         print(data)
         window.setPieChart(data, "tesT", 500, 30)
 
-
-
     def setupMainMenu(self):
 
         #Start of mainMenu
@@ -169,24 +192,22 @@ class window(object):
         #topicbackpush
         self.topicM.setPush(self.pushX+250, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Back")
         #topictextbox
-        self.topicText = self.topicM.setTextbox(self.textX+200, self.textY, self.textWidth, self.textHeight, "Enter Topic:")
+        self.topicM.setTextbox(self.textX+200, self.textY, self.textWidth, self.textHeight, "Enter Topic:")
         #countrytextbox
-        self.countryText = self.topicM.setTextbox(self.textX+200, self.textY+50, self.textWidth, self.textHeight, "Enter Country:")
+        self.topicM.setTextbox(self.textX+200, self.textY+50, self.textWidth, self.textHeight, "Enter Country:")
         #topiclabel
         self.topicM.setLabel(self.labelX+238, self.labelY, self.labelWidth, self.labelHeight, "Topic:")
         #countrylaebl
         self.topicM.setLabel(self.labelX+218, self.labelY+50, self.labelWidth, self.labelHeight, "Country:")
         #topicnotelabel
         self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
-        self.topicText = self.topicM.textList[0].textbox
-        self.topicText2 = self.topicM.textList[1].textbox
         
     def setupSnsMenu(self):
 
         #Start of snsMenu
         snsM = windowGen()
-        #self.setYoutubeGraphs(snsM) 
-        #self.setTwitterGraphs(snsM) 
+        self.setYoutubeGraphs(snsM) 
+        self.setTwitterGraphs(snsM) 
 
         #ytlogo
         snsM.setLabel(self.logoX-320, self.logoY-137, self.logoWidth-270, self.logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
@@ -222,12 +243,3 @@ class window(object):
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("window", "Cookie Crawler"))
 
-
-
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-    # MainWindow = QtWidgets.QMainWindow()
-    # ui = Ui_MainWindow()
-    # ui.setupUi(MainWindow)
-    # MainWindow.show()
-    # sys.exit(app.exec_())

@@ -17,7 +17,6 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets #pip3 install pyqt5
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import * #pip3 install PyQtWebEngine
 from PyQt5.QtChart import * #pip3 install PyQtChart
 from pyqtgraph import PlotWidget, plot, exporters #pip3 install pyqtgraph
@@ -55,13 +54,13 @@ class newWindow:
 
     #Method to set Window icon image
     def setWindowIcon(self,image):
-        """! setWindowIcon method used to set image as Window Icon
+        """! set the window icon to the image from parameter
         @param image image to be used as Window Icon
         """
         self.QWin.setWindowIcon(QtGui.QIcon(image))
     
     def show(self):
-        """! show method used to display the window
+        """! used to display the window
         """
         #Display window
         self.QWin.show()
@@ -84,14 +83,14 @@ class newStackWidget:
         self.sWidget.setCurrentIndex(0)
     
     def addWidget(self, widget):
-        """! addWidget method 
-        @param widget adds a widget to the stack widget
+        """! used to add a widget page into the stack widget
+        @param widget to be added to stack widget
         """
         self.sWidget.addWidget(widget)
     
     def setCurrentWidget(self, widget):
-        """! setCurrentWidget method
-        @param widget set current page widget's page
+        """! used to set which page of widgets to be displayed
+        @param widget to be set as the current page
         """
         self.sWidget.setCurrentWidget(widget.page)
 
@@ -127,8 +126,8 @@ class newLabel:
 
     #Method to set Label Text
     def setText(self, text):
-        """! setText method 
-        @param text used to set the text to be displayed by the label
+        """! used to set the text that will be displayed by the label widget
+        @param text string of text to be displayed
         """
         self.label.setText(text)
         #Automatically update the length of label to fit text
@@ -340,6 +339,9 @@ class newWebBrowser():
     
 #Class to create new pie chart
 class newPieChart():
+    """! newPieChart class
+    Defines the pie chart object to display pie charts
+    """
     def __init__(self):
         self.chart = QChart()
         self.chart.setAnimationOptions(QChart.AllAnimations)
@@ -392,7 +394,7 @@ class newPieChart():
     
     def viewChart(self, window):
         self.chartview = QChartView(self.chart, window)
-        self.chartview.setRenderHint(QPainter.Antialiasing)
+        self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
         #window.setCentralWidget(self.chartview)
 
     def explodeSlice(self, exploded, slice_):
@@ -441,7 +443,7 @@ class newBarChart():
     
     def viewChart(self, window,x,y,size):
         self.chartview = QChartView(self.chart, window)
-        self.chartview.setRenderHint(QPainter.Antialiasing)
+        self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
 
         #need to find the equivalent of this in his stackwidget
         #window.setCentralWidget(self.chartview)
