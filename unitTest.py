@@ -6,21 +6,27 @@
 # - All Imports are nesscary to run test.
 # - unittest
 #   - Allows the running of unittests.
+# - import *
+#   - this allow check of which method or class has not been check as it will be highlighted if unused.
 
 #Imports
 import unittest
-from database import database
-from UrlExtraction import UrlExtraction
-from twitterGraph import twitterGraph
-from LinkValidation import LinkValidation
-from twitter import Twitter,TUser,TTweet
+from database import *
+from UrlExtraction import *
+from twitterGraph import *
+from LinkValidation import *
+from twitter import *
 from youtube import *
-from domain import get_domain_name,get_sub_domain_name
+from domain import *
 from twitterDB import *
+from fileIO import *
+from general import *
+from getLinks import *
+from linkFinder import *
 
 ## Documentation for Testing Class
 # The testing class is called and run allowing us to know which function failed.
-# Assertion statement is not used due to varying return types.
+# Assertion statement is not used for some due to varying return types.
 # Error statement is autogenenrated in the test.
 class Testing(unittest.TestCase):
     """! Testing class
@@ -82,9 +88,9 @@ class Testing(unittest.TestCase):
         test.getSiteName("")
 
     def testTwitterGraphandDB(self):
-        """! TwitterGraph and DB Test method.
+        """! TwitterGraph and TwitterDB Test method.
         """ 
-        twitterGraph(1,"https://twitter.com/BarackObama") # Run this if you really need to as API call is slow, this include calling setTwitterGraphDB()
+        #twitterGraph(1,"https://twitter.com/BarackObama") # Run this if you really need to as API call is slow, this include calling setTwitterGraphDB()
         getTwitterGraphDB("https://twitter.com/BarackObama")
 
     def testLinkValidation(self):
@@ -99,6 +105,28 @@ class Testing(unittest.TestCase):
         """
         get_domain_name("https://twitter.com/BarackObama")
         get_sub_domain_name("https://twitter.com/BarackObama")
+
+    def testfileIO(self):
+        assert fileExist("Test") == False
+
+    def testGeneral(self):
+        pass
+
+    def testGetLinks(self):
+        pass
+
+    def testLinkFinder(self):
+        pass
+
+    def testYoutubeGraph(self):
+        pass
+
+    def testSingleSpider(self):
+        pass
+
+    def testSpider(self):
+        pass
+
 
 if __name__ == '__main__':
     unittest.main()
