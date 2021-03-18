@@ -12,6 +12,8 @@
 #imports
 from database import database #contain database class and its methods
 import itertools #contain itertools method like chain.
+import ast #contain method to convert str to dict
+import datetime
 
 ## Documentation for setTwitterGraphDB Method
 # This method store data retive from crawler into the database.
@@ -52,3 +54,18 @@ def getTwitterGraphDB(tlink):
     favData = db.getTableData(uid,'Fav')
     favData = list(itertools.chain(*favData))
     return rtData,favData,dateData
+
+def setTwitterTrendDB(trenddata):
+    data = []
+    data.append(str(datetime.date.today()))
+    data.append(str(trenddata))
+    db = database('twitter')
+    db.createTable('trends','date','dict')
+    db.insertTable(list(data),'trends','date','dict')
+
+def getTwitterTrendDB():
+    db = database('twitter')
+    strArg = "WHERE date = " + str(datetime.date.today())
+    data = db.getTableData('trends','dict',strArg)
+    data = ast.literal_eval(data[0][0]) #convert str to dict
+    return data

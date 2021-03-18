@@ -133,10 +133,13 @@ class window(object):
         pass
 
     def setTwitterTopics(self, window):
-        t = Twitter()
-        #data = t.trendingTopics()
-        data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
-        print(data)
+        # t = Twitter()
+        # #data = t.trendingTopics()
+        # data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        # print(data)
+        twitterGraph.twitterTrend()
+        data = twitterDB.getTwitterTrendDB()
+        return data
         window.setPieChart(data, "tesT", 500, 30)
 
     def setupMainMenu(self):

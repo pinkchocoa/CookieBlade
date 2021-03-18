@@ -10,8 +10,8 @@
 
 
 #imports
-from twitter import Twitter, TUser, TTweet #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
-import twitterDB                   #contains methods of twitterDB
+from twitter import Twitter, TUser, TTweet  #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
+import twitterDB                            #contains methods of twitterDB
 
 ## Documentation for twitterGraph Method
 # This method return tweets stats in a list.
@@ -70,6 +70,7 @@ def twitterGraph(amount,URL_or_Username = ""):
     twitterDB.setTwitterGraphDB(URL_or_Username,rtList,likesList,dateList)
 
 def twitterTrend():
-    pass
-
-twitterTrend()
+    data = []
+    t = Twitter()
+    data = t.trendingTopics()
+    twitterDB.setTwitterTrendDB(data)

@@ -117,7 +117,7 @@ class database(mkFolder):
         db = connect.cursor()
         #String Argurment to retrieve data from database.
         #tableArg = self.__setTableArg(argCol, argWhere)
-        tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + argWhere
+        tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + "'" + argWhere + "'"
         db.execute(tableArg)     
         #return db.fetchone() #return data in a list.
         rows = db.fetchall()
