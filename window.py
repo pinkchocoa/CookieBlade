@@ -14,6 +14,8 @@
 from GUIWidgets import *
 from windowGen import windowGen
 import twitterGraph
+from twitter import Twitter
+from database import database
 
 ## Documentation for window Class
 # The window class intialize the different menus and their corresponding widgets
@@ -122,25 +124,30 @@ class window(object):
         self.stackedWidget.addWidget(self.topicM.window.page)
         
     def setTwitterGraphs(self, window):
-        a = ["a",1,42,13,64]
-        b = ["b",12,2,33,14]
-        c = ["c",15,23,31,14]
-        d = ["d",11,12,32,42]
-        e = ["e",19,24,35,42]
-        data = [a,b,c,d]
-        cat = ["jan", "feb", "mar", "apr"]
+        # a = ["a",1,42,13,64]
+        # b = ["b",12,2,33,14]
+        # c = ["c",15,23,31,14]
+        # d = ["d",11,12,32,42]
+        # e = ["e",19,24,35,42]
+        # data = [a,b,c,d]
+        # cat = ["jan", "feb", "mar", "apr"]
 
-        #data,cat = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
-        print(data)
-        print(cat)
-        window.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
+        rtData,favData,dateData = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        print(rtData)
+        print(favData)
+        print(dateData)
+        window.setBarChart([rtData,favData], dateData, 100, 100, 500, "User's Fav and RT Count")
     
+
     def setYoutubeGraphs(self, window):
-        #t = Twitter()
-        #data = t.trendingTopics()
-        data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        pass
+
+    def setTwitterTopics(self, window):
+        t = Twitter()
+        data = t.trendingTopics()
+        #data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
         print(data)
-        window.setPieChart(data, "tesT", 500, 30)
+        window.setPieChart(data, "tesT", 700, 30)
 
     def setupMainMenu(self):
 
@@ -243,3 +250,11 @@ class window(object):
         _translate = QtCore.QCoreApplication.translate
         window.setWindowTitle(_translate("window", "Cookie Crawler"))
 
+
+# if __name__ == "__main__":
+#     app = QtWidgets.QApplication(sys.argv)
+    # MainWindow = QtWidgets.QMainWindow()
+    # ui = Ui_MainWindow()
+    # ui.setupUi(MainWindow)
+    # MainWindow.show()
+    # sys.exit(app.exec_())
