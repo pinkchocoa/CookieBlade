@@ -14,7 +14,7 @@ from twitter import Twitter, TUser, TTweet  #contain class: Twitter(), Tuser(), 
 import twitterDB                            #contains methods of twitterDB
 
 ## Documentation for twitterGraph Method
-# This method return tweets stats in a list.
+# This method saves tweets stats in database.
 def twitterGraph(amount,URL_or_Username = ""):
     """! get details of tweets by user.
     @param amount; amount of tweet to retrieve.
@@ -69,7 +69,11 @@ def twitterGraph(amount,URL_or_Username = ""):
         dateList.pop()
     twitterDB.setTwitterGraphDB(URL_or_Username,rtList,likesList,dateList)
 
+## Documentation for twitterTrend Method
+#This method saves twitter trends in database
 def twitterTrend():
+    """! Get Trending topics and save to database.
+    """
     data = []
     t = Twitter()
     data = t.trendingTopics()

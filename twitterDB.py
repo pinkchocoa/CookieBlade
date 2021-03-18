@@ -55,7 +55,12 @@ def getTwitterGraphDB(tlink):
     favData = list(itertools.chain(*favData))
     return rtData,favData,dateData
 
-def setTwitterTrendDB(trenddata):
+## Documentation for setTwitterTrendDB Method
+# This method store twitter trend in database.
+def setTwitterTrendDB(trendData):
+    """! store twitter trend in database by date.
+    @param trendData; twitter trend data.
+    """
     data = []
     data.append(str(datetime.date.today()))
     data.append(str(trenddata))
@@ -63,7 +68,12 @@ def setTwitterTrendDB(trenddata):
     db.createTable('trends','date','dict')
     db.insertTable(list(data),'trends','date','dict')
 
+## Documentation for getTwitterTrendDB Method
+# This method retrive twitter trend data from database.
 def getTwitterTrendDB():
+    """! retrive twitter trend data from database.
+    @return data; return trend data as a dictionary.
+    """
     db = database('twitter')
     strArg = "WHERE date = " + str(datetime.date.today())
     data = db.getTableData('trends','dict',strArg)
