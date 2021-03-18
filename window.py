@@ -148,7 +148,7 @@ class window(object):
         # data = [a,b,c,d]
         # cat = ["jan", "feb", "mar", "apr"]
 
-        #twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
         rt,fav,date = twitterDB.getTwitterGraphDB(self.tlink)
         print(rt)
         print(fav)
