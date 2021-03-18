@@ -1,16 +1,31 @@
-import sys
-from PyQt5 import QtCore, QtGui, QtWidgets
+## @file window.py
+#
+# @brief this file generates the widgets for the windows
+#
+# @section libraries_main Libraries/Modules
+# - GUIWidgets (local) 
+#   - access to widget classes
+# - windowGen (local)
+#   - access to windowGen class to generate widgets
+# - twitterGraph
+#   - access to twitterGraph function to retrieve data for twitter graph
+
+# Imports
 from GUIWidgets import *
 from windowGen import windowGen
 import twitterGraph
-from twitter import Twitter
-from database import database
-import twitterDB
+
+## Documentation for window Class
+# The window class intialize the different menus and their corresponding widgets
+# this allows us to initialize the UI by calling a single class
 
 class window(object):
-
-    wWidth = 1080
-    wHeight = 720
+    """! window class
+    Defines the window object which will create the menus and widgets
+    """
+    #Width and Height values for window and widgets
+    wWidth = 1080 
+    wHeight = 720 
     logoWidth = 400
     logoHeight = 90
     pushWidth = 150
@@ -19,18 +34,25 @@ class window(object):
     textHeight = 40
     labelWidth = 150
     labelHeight = 40
+
+    #X & Y coordinates for widgets
     logoX = pushX = (wWidth- logoWidth)/2
     logoY = (wHeight - logoHeight)/4
     pushY = logoY+200
     textX = logoX - 200
     textY = labelY = logoY + 21
     labelX = textX - 85
+
     numberOfTweets = 10
 
     def mainToUser(self):
+        """! switches the widgets from main menu to widgets from user menu
+        """ 
         self.stackedWidget.setCurrentWidget(self.userM.window)
     
     def userToMain(self):
+        """! switches the widgets from user menu to widgets from main menu
+        """
         self.stackedWidget.setCurrentWidget(self.mainM.window)
     
     def mainToTopic(self):
@@ -100,33 +122,25 @@ class window(object):
         self.stackedWidget.addWidget(self.topicM.window.page)
         
     def setTwitterGraphs(self, window):
-        # a = ["a",1,42,13,64]
-        # b = ["b",12,2,33,14]
-        # c = ["c",15,23,31,14]
-        # d = ["d",11,12,32,42]
-        # e = ["e",19,24,35,42]
-        # data = [a,b,c,d]
-        # cat = ["jan", "feb", "mar", "apr"]
+        a = ["a",1,42,13,64]
+        b = ["b",12,2,33,14]
+        c = ["c",15,23,31,14]
+        d = ["d",11,12,32,42]
+        e = ["e",19,24,35,42]
+        data = [a,b,c,d]
+        cat = ["jan", "feb", "mar", "apr"]
 
-        twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
-        rtData,favData,dateData=twitterDB.getTwitterGraphDB(self.tlink)
-        print(rtData)
-        print(favData)
-        print(dateData)
-        window.setBarChart([rtData,favData], dateData, 100, 100, 500, "User's Fav and RT Count")
-    
-
-    def setYoutubeGraphs(self, window):
-        pass
-
-    def setTwitterTopics(self, window):
-        t = Twitter()
-        data = t.trendingTopics()
-        #data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        #data,cat = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
         print(data)
-        window.setPieChart(data, "tesT", 700, 30)
-
-
+        print(cat)
+        window.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
+    
+    def setYoutubeGraphs(self, window):
+        #t = Twitter()
+        #data = t.trendingTopics()
+        data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        print(data)
+        window.setPieChart(data, "tesT", 500, 30)
 
     def setupMainMenu(self):
 
@@ -156,11 +170,11 @@ class window(object):
 
 
         #ytlabel
-        self.userM.setLabel(self.labelX, self.labelY, self.labelWidth, self.labelHeight, "YouTube Link:")
+        self.userM.setLabel(self.labelX-22, self.labelY, self.labelWidth, self.labelHeight, "YouTube Link:")
         #tLabel
-        self.userM.setLabel(self.labelX+12, self.labelY+50, self.labelWidth, self.labelHeight, "Twitter Link:")
+        self.userM.setLabel(self.labelX-6, self.labelY+50, self.labelWidth, self.labelHeight, "Twitter Link:")
         #userNoteLabel
-        self.userM.setLabel(self.labelX+85, self.labelY+80, self.labelWidth+100, self.labelHeight, "Leave fields empty for a random generation.")
+        self.userM.setLabel(self.labelX+85, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.")
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.pushY-29, self.pushWidth, self.pushHeight, self.userToSns, "Crawl!")
         #userBackPush
@@ -182,11 +196,11 @@ class window(object):
         #countrytextbox
         self.topicM.setTextbox(self.textX+200, self.textY+50, self.textWidth, self.textHeight, "Enter Country:")
         #topiclabel
-        self.topicM.setLabel(self.labelX+248, self.labelY, self.labelWidth, self.labelHeight, "Topic:")
+        self.topicM.setLabel(self.labelX+238, self.labelY, self.labelWidth, self.labelHeight, "Topic:")
         #countrylaebl
-        self.topicM.setLabel(self.labelX+233, self.labelY+50, self.labelWidth, self.labelHeight, "Country:")
+        self.topicM.setLabel(self.labelX+218, self.labelY+50, self.labelWidth, self.labelHeight, "Country:")
         #topicnotelabel
-        self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+100, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
+        self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
         
     def setupSnsMenu(self):
 
