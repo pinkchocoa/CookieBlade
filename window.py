@@ -60,10 +60,6 @@ class window(object):
     
     def topicToMain(self):
         self.stackedWidget.setCurrentWidget(self.mainM.window)
-    
-    def topicToSns(self):
-        self.prev = "topic"
-        self.stackedWidget.setCurrentWidget(self.snsM.window)
 
     def userToSns(self):
         self.prev = "user"
@@ -82,9 +78,6 @@ class window(object):
         
         self.stackedWidget.addWidget(test.window.page)
         self.stackedWidget.setCurrentWidget(test.window)
-            
-        self.prev = "topic"
-        self.stackedWidget.setCurrentWidget(self.topicM.window)
         
     def snsBack(self):
         if self.prev == "user":
@@ -187,7 +180,7 @@ class window(object):
         #topicLogo
         self.topicM.setLabel(self.logoX, self.logoY-79, self.logoWidth, self.logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
         #topicCrawlPush
-        self.topicM.setPush(self.pushX, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToSns, "Crawl!")
+        #self.topicM.setPush(self.pushX, self.pushY-29, self.pushWidth, self.pushHeight, "", "Crawl!")
         #topicbackpush
         self.topicM.setPush(self.pushX+250, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Back")
         #topictextbox
