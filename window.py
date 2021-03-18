@@ -71,10 +71,9 @@ class window(object):
         self.tlink = self.tTextBox.returnText()
 
         #Begin Crawl logic.
-        if (self.ytlink == ""):
+        if (self.ytlink == ""): #assign random youtube link
             self.ytlink = "https://www.youtube.com/user/LilyPichu"
-        if (self.tlink == ""):
-            #assign random link to twitter
+        if (self.tlink == ""): #assign random twitter link
             self.tlink = "lilypichu"
         
         test = self.setupSnsMenu()
