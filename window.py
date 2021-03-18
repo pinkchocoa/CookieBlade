@@ -139,7 +139,6 @@ class window(object):
         # print(data)
         twitterGraph.twitterTrend()
         data = twitterDB.getTwitterTrendDB()
-        return data
         window.setPieChart(data, "tesT", 500, 30)
 
     def setupMainMenu(self):
