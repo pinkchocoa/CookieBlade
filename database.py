@@ -57,7 +57,6 @@ class database(mkFolder):
         except:
             print("database creation failed.")
         db.close() #close database
-        connect.close()
         return arg #return database location
 
     #create custom table with min arg: tablename, primary key col and atleast 1 col. #Max 2000 col #data stored at text. #11/3/21

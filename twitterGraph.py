@@ -7,11 +7,14 @@
 #   - access to twitter classes and methods.
 # - twitterDB(local)
 #   - access to twitterDB methods.
+# - UrlExtraction
+#   - UrlExtraction methods
 
 
 #imports
 from twitter import Twitter, TUser, TTweet  #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
 import twitterDB                            #contains methods of twitterDB
+from UrlExtraction import UrlExtraction
 
 ## Documentation for twitterGraph Method
 # This method saves tweets stats in database.
@@ -24,6 +27,7 @@ def twitterGraph(amount,URL_or_Username = ""):
     likesList = ["Like Count"]
     rtList = ["RT Count"]
     dateList = []
+    tweety = []
     RTcount = 0
     Likes = 0
     counter = 1
@@ -31,19 +35,25 @@ def twitterGraph(amount,URL_or_Username = ""):
     if URL_or_Username == "":
         return 'Empty URL/UserName'
     elif "twitter" in URL_or_Username:
-        tUser = TUser.byURL(URL_or_Username)
+        u = UrlExtraction()
+        uid = u.getUniqueID(URL_or_Username)
+        tUser = TUser.byID(uid)
     else:
         tUser = TUser.byID(URL_or_Username)
 
 
     tweets = tUser.userTweets(1)
-    tTweet = TTweet(tweets[0])
+    tweets = tweets[0][0]
+    tTweet = TTweet(tweets)
     date = str(tTweet.getDate())
     date = date.split(" ",1)[0] #split date and time.
     dateList.append(date)
 
     tweets = tUser.userTweets(amount)
-    for x in tweets:
+    for i in range(len(tweets)):
+        tweety.append(tweets[i][0])
+
+    for x in tweety:
             tTweet = TTweet(x)
             date = str(tTweet.getDate())
             date = date.split(" ",1)[0] #split date and time.
