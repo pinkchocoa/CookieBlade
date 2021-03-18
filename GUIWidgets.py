@@ -433,13 +433,19 @@ class newBarChart():
                 if idx == 0:
                     continue
                 tempset << x
-            self.series.append(tempset) 
+            self.series.append(tempset)
 
         axis = QBarCategoryAxis()
         axis.append(categories)
         self.chart.createDefaultAxes()
-        self.chart.setAxisX(axis, self.series)
+        #self.chart.setAxisX(axis, self.series)
+        self.chart.addAxis(axis, Qt.AlignBottom)
+        #self.chart.addAxis(self.series, Qt.AlignLeft)
         self.chart.addSeries(self.series)
+        axisY = QValueAxis()
+        self.chart.addAxis(axisY, Qt.AlignLeft)
+        self.series.attachAxis(axisY)
+        axisY.setRange(0,50)
     
     def viewChart(self, window,x,y,size):
         self.chartview = QChartView(self.chart, window)
