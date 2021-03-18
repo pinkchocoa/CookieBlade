@@ -15,6 +15,8 @@
 #   - access to PyQt5 bar and pie chart plotting fuctions
 # - pyqtgraph external library (pip install pyqtgraph)
 #   - access to graph plotting functions
+# - functools standard library
+#   - tools to work with high order functions
 
 #Imports
 import sys

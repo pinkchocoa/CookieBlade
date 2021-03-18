@@ -4,11 +4,17 @@
 #
 # @section libraries_main Libraries/Modules
 # - GUIWidgets (local) 
-#   - access to widget classes
+#   - access to GUIWidget classes
 # - windowGen (local)
-#   - access to windowGen class to generate widgets
+#   - access to windowGen classes
+# - twitter (local)
+#   - access to twitter crawler class
+# - database (local)
+#   - access to database functions
 # - twitterGraph
 #   - access to twitterGraph function to retrieve data for twitter graph
+# - twitterDB
+#   - access to database access methods for twitter
 
 # Imports
 from GUIWidgets import *
@@ -48,6 +54,7 @@ class window(object):
 
     numberOfTweets = 10
 
+    #Widget page navigation
     def mainToUser(self):
         """! switches the widgets from main menu to widgets from user menu
         """ 
@@ -59,14 +66,20 @@ class window(object):
         self.stackedWidget.setCurrentWidget(self.mainM.window)
     
     def mainToTopic(self):
+        """! switches the widgets from main menu to widgets from topic menu
+        """
         self.stackedWidget.setCurrentWidget(self.topicM.window)
     
     def topicToMain(self):
+        """! switches the widgets from topic menu to widgets from main menu
+        """
         self.stackedWidget.setCurrentWidget(self.mainM.window)
 
     def userToSns(self):
+        """! switches the widgets from user menu to widgets from sns menu
+        """
         self.prev = "user"
-
+        #Retrieve user inputs from textbox
         self.ytlink = self.ytTextBox.returnText()
         self.tlink = self.tTextBox.returnText()
 
@@ -82,12 +95,18 @@ class window(object):
         self.stackedWidget.setCurrentWidget(test.window)
         
     def snsBack(self):
+        """! switches the widgets from sns menu to widgets from either user or topic menu
+        """
         if self.prev == "user":
             self.stackedWidget.setCurrentWidget(self.userM.window)
         if self.prev == "topic":
             self.stackedWidget.setCurrentWidget(self.topicM.window)
 
+    #UI setup
     def setupUi(self, window):
+        """! create base window and call menu functions to create window widgets
+        @param window on which the widgets will be displayed
+        """
         window.setWindowIcon("CookieIcon.png")
         self.centralwidget = QtWidgets.QWidget(window.QWin)
         self.stackedWidget = newStackWidget(self.centralwidget, 0,0, 1080, 720)
@@ -107,15 +126,20 @@ class window(object):
         self.statusbar = QtWidgets.QStatusBar(window.QWin)
         window.QWin.setStatusBar(self.statusbar)
 
-        self.retranslateUi(window.QWin)
+        # self.retranslateUi(window.QWin)
         QtCore.QMetaObject.connectSlotsByName(window.QWin)
 
     def addToStack(self):
+        """! add widget pages into stack widget
+        """
         self.stackedWidget.addWidget(self.mainM.window.page)
         self.stackedWidget.addWidget(self.userM.window.page)
         self.stackedWidget.addWidget(self.topicM.window.page)
         
     def setTwitterGraphs(self, window):
+        """! create bar chart with data crawled from twitter
+        @param window on which the bar chart will be displayed
+        """
         # a = ["a",1,42,13,64]
         # b = ["b",12,2,33,14]
         # c = ["c",15,23,31,14]
@@ -129,9 +153,15 @@ class window(object):
         window.setBarChart(rtData, favData, 100, 100, 500, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
+        """! create bar chart with data crawled from youtube
+        @param window on which the bar chart will be displayed
+        """
         pass
 
     def setTwitterTopics(self, window):
+        """! create pie chart with topics crawled from twitter
+        @param window on which the pie chart will be displayed
+        """
         # t = Twitter()
         # #data = t.trendingTopics()
         # data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
@@ -141,7 +171,8 @@ class window(object):
         window.setPieChart(data, "tesT", 500, 30)
 
     def setupMainMenu(self):
-
+        """! create widgets for the main menu page
+        """
         #Start of mainMenu
         self.mainM = windowGen()
         self.mainM.setLabel(self.logoX, self.logoY, self.logoWidth, self.logoHeight,"", "GUIMainLogo.PNG","","","",True)
@@ -151,7 +182,8 @@ class window(object):
         self.mainM.setPush(self.pushX+250, self.pushY, self.pushWidth, self.pushHeight, self.mainToTopic, "Topic")
         
     def setupUserMenu(self):
-
+        """! create widgets for the user menu page
+        """
         #Start of userMenu
         self.userM = windowGen()
         #userLogo
@@ -180,7 +212,8 @@ class window(object):
 
 
     def setupTopicMenu(self):
-
+        """! create widgets for the topic menu page
+        """
         #Start of topicMenu
         self.topicM = windowGen()
         #topicLogo
@@ -201,7 +234,8 @@ class window(object):
         self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
         
     def setupSnsMenu(self):
-
+        """! create widgets for the sns menu page
+        """
         #Start of snsMenu
         snsM = windowGen()
         self.setYoutubeGraphs(snsM) 
@@ -237,9 +271,9 @@ class window(object):
 
         
 
-    def retranslateUi(self, window):
-        _translate = QtCore.QCoreApplication.translate
-        window.setWindowTitle(_translate("window", "Cookie Crawler"))
+    # def retranslateUi(self, window):
+    #     _translate = QtCore.QCoreApplication.translate
+    #     window.setWindowTitle(_translate("window", "Cookie Crawler"))
 
 
 # if __name__ == "__main__":

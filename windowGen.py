@@ -1,3 +1,12 @@
+## @file windowGen.py
+#
+# @brief this file contain windowGen class
+#
+# @section libraries_main Libraries/Modules
+# - GUIWidgets (local)
+#   - access to classes from GUIWidgets.py
+
+# Imports
 from GUIWidgets import * #contain class from GUIwidgets.py.
 
 def emptyFn(): #dun remove this.
