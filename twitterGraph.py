@@ -11,7 +11,7 @@
 
 #imports
 from twitter import Twitter, TUser, TTweet #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
-import twitterDB #contains methods of twitterDB
+from twitterDB import *                    #contains methods of twitterDB
 
 ## Documentation for twitterGraph Method
 # This method return tweets stats in a list.
