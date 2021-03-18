@@ -13,6 +13,8 @@
 # Imports
 from GUIWidgets import *
 from windowGen import windowGen
+from twitter import Twitter
+from database import database
 import twitterGraph
 import twitterDB
 
