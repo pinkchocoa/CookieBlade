@@ -5,6 +5,7 @@ from windowGen import windowGen
 import twitterGraph
 from twitter import Twitter
 from database import database
+import twitterDB
 
 class window(object):
 
@@ -107,7 +108,8 @@ class window(object):
         # data = [a,b,c,d]
         # cat = ["jan", "feb", "mar", "apr"]
 
-        rtData,favData,dateData = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        rtData,favData,dateData=twitterDB.getTwitterGraphDB(self.tlink)
         print(rtData)
         print(favData)
         print(dateData)

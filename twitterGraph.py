@@ -5,10 +5,13 @@
 # @section libraries_main Libraries/Modules
 # - twitter (local)
 #   - access to twitter classes and methods.
+# - twitterDB(local)
+#   - access to twitterDB methods.
 
 
 #imports
 from twitter import Twitter, TUser, TTweet #contain class: Twitter(), Tuser(), TTweet() #twitter crawler.
+import twitterDB #contains methods of twitterDB
 
 ## Documentation for twitterGraph Method
 # This method return tweets stats in a list.
@@ -16,9 +19,6 @@ def twitterGraph(amount,URL_or_Username = ""):
     """! get details of tweets by user.
     @param amount; amount of tweet to retrieve.
     @param URL_or_Username; By url or username.
-    @return rtList; Return list in the following format list = [[RTCountperDay] * last x days]
-    @return likesList; Return list in the following format list = [[LikesperDay] * last x days]
-    @return datelist; Return list of dates. with most recent to oldest date.
     """
 
     likesList = []
@@ -53,8 +53,9 @@ def twitterGraph(amount,URL_or_Username = ""):
                 if counter == amount:
                     rtList.append(RTcount)
                     likesList.append(Likes)
-                    dateList.pop()
-                    return rtList,likesList,dateList
+                    if len(dateList) >1:
+                        dateList.pop()
+                    break
                 counter = counter + 1
 
             else:
@@ -64,5 +65,6 @@ def twitterGraph(amount,URL_or_Username = ""):
                 RTcount = tTweet.RTCount()
                 Likes = tTweet.favCount()
                 counter = counter + 1
-    dateList.pop()
-    return rtList,likesList,dateList
+    if len(dateList) > 1:
+        dateList.pop()
+    twitterDB.setTwitterGraphDB(URL_or_Username,rtList,likesList,dateList)
