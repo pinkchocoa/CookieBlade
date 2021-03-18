@@ -1,4 +1,4 @@
-from GUIWidgets import * #contain class from GUI.py and GUIwidgets.py.
+from GUIWidgets import * #contain class from GUIwidgets.py.
 
 def emptyFn(): #dun remove this.
     pass
@@ -83,9 +83,9 @@ class windowGen():
             #Enable image scaling to fit Label size
             label.setScaledContents(True)
         if fontStyle and fontSize:
-            label.setFont(QFont(fontStyle, fontSize))
+            label.setFont(QtGui.QFont(fontStyle, fontSize))
         else:
-            label.setFont(QFont("Arial", 10))
+            label.setFont(QtGui.QFont("Arial", 10))
         if functionName:
             label.mousePressEvent = functionName
         if scaled:
@@ -108,7 +108,7 @@ class windowGen():
         if text:
             textbox.setPlaceholderText(text)
         if fontStyle and fontSize:
-            textbox.setFont(QFont(fontStyle,int(fontSize)))
+            textbox.setFont(QtGui.QFont(fontStyle,int(fontSize)))
         self.nText+=1
 
     def addNewPush(self):
@@ -128,9 +128,9 @@ class windowGen():
         if text:
             pushButton.setText(text)
         if fontStyle and fontSize:
-            pushButton.setFont(QFont(fontStyle,int(fontSize)))
+            pushButton.setFont(QtGui.QFont(fontStyle,int(fontSize)))
         else:
-            pushButton.setFont(QFont("Arial", 10))
+            pushButton.setFont(QtGui.QFont("Arial", 10))
         self.nPush+=1
     
     def addNewBrowser(self):
