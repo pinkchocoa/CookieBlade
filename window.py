@@ -61,6 +61,10 @@ class window(object):
     def topicToMain(self):
         self.stackedWidget.setCurrentWidget(self.mainM.window)
     
+    def topicToSns(self):
+        self.prev = "topic"
+        self.stackedWidget.setCurrentWidget(self.snsM.window)
+
     def userToSns(self):
         self.prev = "user"
 
@@ -68,22 +72,17 @@ class window(object):
         self.tlink = self.tTextBox.returnText()
 
         #Begin Crawl logic.
-        if (self.ytlink and self.tlink == ""):
-            #assign random link to twitter and youtube
-            pass
-        elif (self.ytlink == ""):
-            #assign random link to youtube
-            pass
-        elif (self.tlink == ""):
+        if (self.ytlink == ""):
+            self.ytlink = "https://www.youtube.com/user/LilyPichu"
+        if (self.tlink == ""):
             #assign random link to twitter
-            pass
+            self.tlink = "lilypichu"
         
         test = self.setupSnsMenu()
         
         self.stackedWidget.addWidget(test.window.page)
         self.stackedWidget.setCurrentWidget(test.window)
             
-    def topicToSns(self):
         self.prev = "topic"
         self.stackedWidget.setCurrentWidget(self.topicM.window)
         
