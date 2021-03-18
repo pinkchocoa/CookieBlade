@@ -78,7 +78,7 @@ def setTwitterTrendDB(trendData):
     """
     data = []
     data.append(str(datetime.date.today()))
-    data.append(str(trenddata))
+    data.append(str(trendData))
     db = database('twitter')
     db.createTable('trends','date','dict')
     db.insertTable(list(data),'trends','date','dict')
