@@ -21,8 +21,8 @@ def twitterGraph(amount,URL_or_Username = ""):
     @return datelist; Return list of dates. with most recent to oldest date.
     """
 
-    likesList = ["Like Count"]
-    rtList = ["RT Count"]
+    likesList = []
+    rtList = []
     dateList = []
     RTcount = 0
     Likes = 0
