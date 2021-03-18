@@ -228,6 +228,13 @@ class messageBox:
     Defines the message box object to display error messages
     """
     def __init__(self, winTitle="", text="", winIcon="" ,show=True,icon="Critical"):
+        """! messageBox class initializer
+        @param winTitle used to set the messagebox window title
+        @param text string value will be displayed in message box
+        @param winIcon contains the image name used to set the window icon of message box
+        @param show value set to true to show message box, false to hide message box
+        @param icon used to determine which icon to be displayed with message box text
+        """
         self.msgBox = QMessageBox()
         msgBox = self.msgBox
         if winTitle:
@@ -327,10 +334,11 @@ class newWebBrowser():
     
     def showWeb(self):
         """! showWeb method
-        Used to show browser
+        Used to show the browser
         """
         self.webEngine.show()
     
+#Class to create new pie chart
 class newPieChart():
     def __init__(self):
         self.chart = QChart()

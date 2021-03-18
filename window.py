@@ -147,11 +147,11 @@ class window(object):
 
 
         #ytlabel
-        self.userM.setLabel(self.labelX, self.labelY, self.labelWidth, self.labelHeight, "YouTube Link:")
+        self.userM.setLabel(self.labelX-22, self.labelY, self.labelWidth, self.labelHeight, "YouTube Link:")
         #tLabel
-        self.userM.setLabel(self.labelX+12, self.labelY+50, self.labelWidth, self.labelHeight, "Twitter Link:")
+        self.userM.setLabel(self.labelX-6, self.labelY+50, self.labelWidth, self.labelHeight, "Twitter Link:")
         #userNoteLabel
-        self.userM.setLabel(self.labelX+85, self.labelY+80, self.labelWidth+100, self.labelHeight, "Leave fields empty for a random generation.")
+        self.userM.setLabel(self.labelX+85, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.")
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.pushY-29, self.pushWidth, self.pushHeight, self.userToSns, "Crawl!")
         #userBackPush
@@ -169,15 +169,17 @@ class window(object):
         #topicbackpush
         self.topicM.setPush(self.pushX+250, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Back")
         #topictextbox
-        self.topicM.setTextbox(self.textX+200, self.textY, self.textWidth, self.textHeight, "Enter Topic:")
+        self.topicText = self.topicM.setTextbox(self.textX+200, self.textY, self.textWidth, self.textHeight, "Enter Topic:")
         #countrytextbox
-        self.topicM.setTextbox(self.textX+200, self.textY+50, self.textWidth, self.textHeight, "Enter Country:")
+        self.countryText = self.topicM.setTextbox(self.textX+200, self.textY+50, self.textWidth, self.textHeight, "Enter Country:")
         #topiclabel
-        self.topicM.setLabel(self.labelX+248, self.labelY, self.labelWidth, self.labelHeight, "Topic:")
+        self.topicM.setLabel(self.labelX+238, self.labelY, self.labelWidth, self.labelHeight, "Topic:")
         #countrylaebl
-        self.topicM.setLabel(self.labelX+233, self.labelY+50, self.labelWidth, self.labelHeight, "Country:")
+        self.topicM.setLabel(self.labelX+218, self.labelY+50, self.labelWidth, self.labelHeight, "Country:")
         #topicnotelabel
-        self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+100, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
+        self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
+        self.topicText = self.topicM.textList[0].textbox
+        self.topicText2 = self.topicM.textList[1].textbox
         
     def setupSnsMenu(self):
 
