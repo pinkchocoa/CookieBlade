@@ -68,3 +68,8 @@ def twitterGraph(amount,URL_or_Username = ""):
     if len(dateList) > 1:
         dateList.pop()
     twitterDB.setTwitterGraphDB(URL_or_Username,rtList,likesList,dateList)
+
+def twitterTrend():
+    pass
+
+twitterTrend()
