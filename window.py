@@ -3,6 +3,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from GUIWidgets import *
 from windowGen import windowGen
 import twitterGraph
+from twitter import Twitter
 
 class window(object):
 
@@ -105,17 +106,22 @@ class window(object):
         data = [a,b,c,d]
         cat = ["jan", "feb", "mar", "apr"]
 
-        #data,cat = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
+        data,data2,cat = twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
         print(data)
+        print(data2)
         print(cat)
-        window.setBarChart(data, cat, 100, 100, 500, "User's Fav and RT Count")
+        window.setBarChart([data,data2], cat, 100, 100, 500, "User's Fav and RT Count")
     
+
     def setYoutubeGraphs(self, window):
-        #t = Twitter()
-        #data = t.trendingTopics()
-        data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
+        pass
+
+    def setTwitterTopics(self, window):
+        t = Twitter()
+        data = t.trendingTopics()
+        #data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
         print(data)
-        window.setPieChart(data, "tesT", 500, 30)
+        window.setPieChart(data, "tesT", 700, 30)
 
 
 
@@ -183,8 +189,8 @@ class window(object):
 
         #Start of snsMenu
         snsM = windowGen()
-        #self.setYoutubeGraphs(snsM) 
-        #self.setTwitterGraphs(snsM) 
+        self.setYoutubeGraphs(snsM) 
+        self.setTwitterGraphs(snsM) 
 
         #ytlogo
         snsM.setLabel(self.logoX-320, self.logoY-137, self.logoWidth-270, self.logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
