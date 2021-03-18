@@ -35,9 +35,7 @@ def twitterGraph(amount,URL_or_Username = ""):
     if URL_or_Username == "":
         return 'Empty URL/UserName'
     elif "twitter" in URL_or_Username:
-        u = UrlExtraction()
-        uid = u.getUniqueID(URL_or_Username)
-        tUser = TUser.byID(uid)
+        tUser = TUser.byURL(URL_or_Username)
     else:
         tUser = TUser.byID(URL_or_Username)
 
