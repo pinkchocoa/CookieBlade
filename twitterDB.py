@@ -10,8 +10,8 @@
 
 
 #imports
-from database import database
-import itertools
+from database import database #contain database class and its methods
+import itertools #contain itertools method like chain.
 
 ## Documentation for setTwitterGraphDB Method
 # This method store data retive from crawler into the database.
