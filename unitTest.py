@@ -103,11 +103,14 @@ class Testing(unittest.TestCase):
     def testDomain(self):
         """! Domain Test method.
         """
-        get_domain_name("https://twitter.com/BarackObama")
-        get_sub_domain_name("https://twitter.com/BarackObama")
+        assert get_domain_name("https://twitter.com/BarackObama")
+        assert get_sub_domain_name("https://twitter.com/BarackObama")
 
     def testfileIO(self):
-        assert fileExist("Test") == False
+        data = []
+        assert fileExist("FalseTest") == False
+        createDir('UnitTest')
+        writeNewFile(data)
 
     def testGeneral(self):
         pass
