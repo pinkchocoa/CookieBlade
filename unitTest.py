@@ -102,6 +102,7 @@ class Testing(unittest.TestCase):
 
         #twitterGraph() also invoke setTwitterGraphDB() and checkTableTwitterGraph()
         twitterGraph(10,"https://twitter.com/BarackObama")
+        
         getTwitterGraphDB("https://twitter.com/BarackObama")
         getTwitterTrendDB()
 
