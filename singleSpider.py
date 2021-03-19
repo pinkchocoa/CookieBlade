@@ -40,13 +40,13 @@ class spiderWorker:
         url = self.queue.get()
         Spider.crawl_page("1", url)
 
-def spidey(filterList="", topic=""):
+def spidey(filterList="", topic="", numResults=3):
     delete_file_contents(QUEUE_FILE)
     delete_file_contents(CRAWLED_FILE)
     delete_file_contents(RESULT_FILE)
-    while len(Spider.result) < NUMBER_OF_RESULTS:
+    while len(Spider.result) < numResults:
         spiderWorker(filterList,topic)
+    return Spider.result
 
-spidey(['articles'],"covid test")
-
-print("test")
+#print(spidey(['articles'],"covid test", 3))
+#print("test")
