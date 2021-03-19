@@ -127,7 +127,6 @@ class window(object):
         self.statusbar = QtWidgets.QStatusBar(window.QWin)
         window.QWin.setStatusBar(self.statusbar)
 
-        # self.retranslateUi(window.QWin)
         QtCore.QMetaObject.connectSlotsByName(window.QWin)
 
     def addToStack(self):
@@ -139,61 +138,48 @@ class window(object):
         
     def setTwitterGraphs(self, window):
         """! create bar chart with data crawled from twitter
-        @param window on which the bar chart will be displayed
+        @param widget on which the bar chart will be displayed on
         """
-        # a = ["a",1,42,13,64]
-        # b = ["b",12,2,33,14]
-        # c = ["c",15,23,31,14]
-        # d = ["d",11,12,32,42]
-        # e = ["e",19,24,35,42]
-        # data = [a,b,c,d]
-        # cat = ["jan", "feb", "mar", "apr"]
-
-        twitterGraph.twitterGraph(self.numberOfTweets, self.tlink)
-        rt,fav,date = twitterDB.getTwitterGraphDB(self.tlink)
-        print(rt)
-        print(fav)
-        print(date)
-        window.setBarChart([rt,fav], date, 100, 100, 500, "User's Fav and RT Count")
-
-        # likesList = ["Like Count"]
-        # rtList = ["RT Count"]
-        # dateList = []
-        # RTcount = 0
-        # Likes = 0
-        # amount =10
-        # counter = 1
-        # if "twitter" in self.tlink:
-        #     tUser = TUser.byURL(self.tlink)
-        # else:
-        #     tUser = TUser.byID(self.tlink)
-
-        # tweets = tUser.userTweets(amount)
-        # for x in tweets:
-        #     tid = x[0]
-        #     date = x[1]
-        #     fav = x[2]
-        #     rt = x[3]
-        #     if date in dateList:
-        #         RTcount = RTcount + rt
-        #         Likes = Likes + fav
-        #         if counter == amount:
-        #             rtList.append(RTcount)
-        #             likesList.append(Likes)
-        #             if len(dateList) >1:
-        #                 #dateList.pop()
-        #                 break
-        #         counter = counter + 1
-
-        #     else:
-        #         dateList.append(date)
         #         rtList.append(RTcount)
-        #         likesList.append(Likes)
-        #         RTcount = rt
-        #         Likes = fav
-        #         counter = counter + 1
-
-        # window.setBarChart([rtList,likesList], dateList, 100, 100, 500, "User's Fav and RT Count")
+        favList = ["Fav Count"]
+        rtList = ["RT Count"]
+        dateList = []
+        totalRTCount=0
+        totalFavCount=0
+        amount = 100
+        totalDates = 7
+        if "twitter" in self.tlink:
+            tUser = TUser.byURL(self.tlink)
+        else:
+            tUser = TUser.byID(self.tlink)
+        tweets = tUser.userTweets(amount)
+        print(tweets)
+        for idx, x in enumerate(tweets):
+            tid = x[0]
+            date = x[1]
+            fav = x[2]
+            rt = x[3]
+            if len(dateList) >= 7:
+                print(idx, " tweets crawled for 7 days of data")
+                favList.append(totalFavCount)
+                rtList.append(totalRTCount)
+                break
+            if date in dateList:
+                totalFavCount+=fav
+                totalRTCount+=rt
+            elif not dateList:#first tweet
+                dateList.append(date)
+            elif dateList:
+                favList.append(totalFavCount)
+                rtList.append(totalRTCount)
+                dateList.append(date) #append new date
+                totalRTCount=totalFavCount=0 #reset count
+        favList.append(totalFavCount)
+        rtList.append(totalRTCount)
+        print(favList)
+        print(rtList)
+        print(dateList)
+        window.setBarChart([rtList,favList], dateList, 100, 100, 500, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
@@ -207,11 +193,7 @@ class window(object):
         """
         t = Twitter()
         data = t.trendingTopics()
-        # data = {'WIN5': 18956, 'ギベオン': 19344, '#14MartTıpBayramı': 21399, '#SoloistROSÉonINKIGAYO': 157042, 'taeyong': 201317, 'ホワイトデー': 583881}
-        # print(data)
-        #twitterGraph.twitterTrend()
-        #data = twitterDB.getTwitterTrendDB()
-        window.setPieChart(data, "tesT", 500, 30)
+        window.setPieChart(data, "Current trending topics", 500, 30)
 
     def setupMainMenu(self):
         """! create widgets for the main menu page

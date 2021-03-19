@@ -247,13 +247,17 @@ class TUser(Twitter):
 
         return fav
 
-    def userTweets(self, num=100):
+    def userTweets(self, num=100,startDate="2020-01-01", endDate="2021-01-01"):
         """! get user's tweets
         @param self instance of the object that we are calling from
         @return returns a list of tweets that the user have tweeted [ ['username', 'content', 'images if any'], [...] ]
         """
         tweets=[]
-        for tweet in tweepy.Cursor(self.api.user_timeline, id=self.username, 
+        for tweet in tweepy.Cursor(self.api.user_timeline, 
+            q=" -filter:retweets",
+            Since=startDate,
+            Until=endDate,
+            id=self.username, 
             lang="en", wait_on_rate_limit=True,
             tweet_mode="extended").items(num):
             images = []
@@ -263,12 +267,7 @@ class TUser(Twitter):
                     images.append(files_location)
             date = str(tweet.created_at)
             date = date.split(" ",1)[0]
-            templist = []
-            templist.append(tweet.id)
-            templist.append(date)
-            templist.append(tweet.favorite_count)
-            templist.append(tweet.retweet_count)
-            tweets.append(templist)
+            tweets.append([tweet.id, date, tweet.favorite_count, tweet.retweet_count])
 
         return tweets
 
