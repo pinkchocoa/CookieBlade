@@ -55,7 +55,7 @@ class database(mkFolder):
         try:
             db = sqlite3.connect(arg)
         except:
-            print("database creation failed.")
+            print("__createDB: database creation failed.")
         db.close() #close database
         return arg #return database location
 
@@ -70,7 +70,7 @@ class database(mkFolder):
             connect = sqlite3.connect(self.arg)
             db = connect.cursor()
         except:
-            print("failed to connect to database.")
+            print("createTable: failed to connect to database.")
 
         #Custom Argument string phrase and execute
         try:
@@ -80,24 +80,23 @@ class database(mkFolder):
                 tableArg = tableArg + argument[i] + ' text, ' #append till 2nd last argument.
             tableArg = tableArg + argument[last-1] + ' text)' #add last argument.
         except:
-            print("tableArg string failed.")
+            print("createTable: tableArg string failed.")
 
         try:
             db.execute(tableArg)
         except:
-            print("db.execute() failed. createTable")
+            print("createTable: db.execute() failed.")
 
         try:
             #Create Unqiue index for replace function of SQLite3
             tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' + argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
             db.execute(tableArg)
         except:
-            print("Unqiue index creation failed.")
+            print("createTable: Unqiue index creation failed.")
         
         connect.commit() #save database
         db.close() #close database
         connect.close()
-
 
     #insert data into table in database #12/3/21
     def insertTable(self, data, *argument):
@@ -110,7 +109,7 @@ class database(mkFolder):
             connect = sqlite3.connect(self.arg)
             db = connect.cursor()
         except:
-            print("failed to connect to database.")
+            print("insertTable: failed to connect to database.")
 
         #Append tableArg according to *argument
         try:
@@ -123,18 +122,17 @@ class database(mkFolder):
                 tableArg = tableArg + '?, '
             tableArg = tableArg + '?)'
         except:
-            print("tableArg string failed.")
+            print("insertTable: tableArg string failed.")
 
         #Pass string argurment with data to insert into database.
         try:
             db.execute(tableArg,(data))
         except:
-            print("db.execute() failed. insertTable")
+            print("insertTable: db.execute() failed.")
 
         connect.commit()    #save database
         db.close()          #close database
         connect.close()
-
 
     #retrieve user data from database. #good but user need remember the table style inforamtion. #11/3/21
     def getTableData(self, tableName, argCol='*', argWhere = ''):
@@ -149,13 +147,13 @@ class database(mkFolder):
             connect = sqlite3.connect(self.arg)
             db = connect.cursor()
         except:
-            print("failed to connect to database")
+            print("getTableData: failed to connect to database")
 
         #String Argurment to retrieve data from database.
         try:
             tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + "'" + argWhere + "'"
         except:
-            print("tableArg string failed.")
+            print("getTableData: tableArg string failed.")
         
         try:
             db.execute(tableArg)     
@@ -163,7 +161,7 @@ class database(mkFolder):
             for row in rows:
                 templist.append(list(row))
         except:
-            print("db.execute() failed. getTableData")
+            print("getTableData: db.execute() failed./Table not exist.")
             
         db.close()
         connect.close()
@@ -182,4 +180,4 @@ class database(mkFolder):
             db.close()
             connect.close()
         except:
-            print("Table Delete failed.")
+            print("deleteTable: Table Delete failed./Table does not Exist.")
