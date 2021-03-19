@@ -20,7 +20,7 @@ from datetime import datetime
 
 class Youtube:
 
-    api_key = 'AIzaSyA42oZrSFPExOVxltmdNudSABf1B9dp9Do'
+    api_key = 'AIzaSyDytuNd9zKhqSjMdczuKch-RlDnRhTCZwE'
     youtube = build('youtube', 'v3', developerKey=api_key)
 
 class youtubeVid(Youtube):
@@ -69,7 +69,8 @@ class youtubeVid(Youtube):
             TrendVidsInfoList = [(v) for k, v in TrendVidsInfo.items()]
             TrendVidsInfoList.insert(0, i)
             tuser.insertTable(TrendVidsInfoList, 'TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
-
+        return TrendVidsInfoList
+        
     # Function to crawl for top trending videos for a list of countries
     def scrapData(self):
         """! class method that crawls for top trending videos on youtube

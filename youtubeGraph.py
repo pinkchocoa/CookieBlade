@@ -21,9 +21,10 @@ def setYoutubeChannelStats(channelUrl):
     """! Get youtube channel information and save to database
     @param channelUrl;
     """
+    yt = Channel()
     data = []
     data.append(str(datetime.date.today()))
-    temp = getChannelStats(channelUrl)
+    temp = yt.searchurl(channelUrl)
     for i in range(len(temp)):
         data.append(temp[i])
     db = database('youtube')
@@ -36,17 +37,24 @@ def setYoutubeChannelStats(channelUrl):
 def getYoutubeChannelStats(channelUrl):
     """! Get youtube channel information from database
     @param channelUrl;
-    @return data; youtube channel stats
+    @return data; youtube channel stats. Date created, Vidcount, Subcount, TotalViews
     """
     db = database('youtube')
     uid = db.getUniqueID(channelUrl)
     data = db.getTableData(uid)
-    print("test")
-    print(data)
-    return data[len(data)-1] #return latest channel stats.
-
-def setYoutubeChannelRevenue(channelUrl):
-    pass
+    data = data[len(data)-1]
+    data.pop(0)
+    return data #return latest channel stats.
 
 def getYoutubeChannelRevenue(channelUrl):
-    pass
+    #yt = Channel()
+    #data = yt.getRevenueData(channelUrl)
+    data.pop(0)
+    print(data)
+
+def getYoutubeTrend():
+    yt = youtubeVid()
+    data = yt.getTrendingVideo()
+    return data
+
+print(getYoutubeTrend())

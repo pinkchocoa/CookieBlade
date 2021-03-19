@@ -45,6 +45,7 @@ class Testing(unittest.TestCase):
             test.insertTable(data[x],'test','key','C1','C2')
         test.getTableData('test')
 
+        #Exception testing
         test.createTable()
         test.insertTable(data)
         test.getTableData("")
@@ -122,12 +123,11 @@ class Testing(unittest.TestCase):
     def testGeneral(self):
         """! General.py Test
         """
-        data = [1,2,3]
         create_project_dir('testGeneral')
         create_data_files('testGeneral', 'www.google.com')
-        create_file('./testGeneral')
-        write_file('./testGeneral/queue.txt',data)
-        append_to_file('./testGeneral/queue.txt', data)
+        create_file('testResult.txt')
+        write_file('./testGeneral/queue.txt','test')
+        append_to_file('./testGeneral/queue.txt', 'test')
         file_to_set('./testGeneral/queue.txt')
         set_to_file('https://twitter.com/BarackObama', './testGeneral/queue.txt')
         delete_file_contents('./testGeneral/queue.txt')
