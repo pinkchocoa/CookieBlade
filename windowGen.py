@@ -30,7 +30,6 @@ class windowGen():
         self.nText = 0
         self.nPush = 0
         self.nLGraph = 0
-        self.nBrowser = 0
         self.nPieChart = 0
         self.nBarChart = 0
 
@@ -39,7 +38,6 @@ class windowGen():
         self.totalNPush = 0
         self.totalnLGraph = 0
         self.totalNPieChart = 0
-        self.totalNBrowser = 0
         self.totalNBarChart = 0
 
         self.labelList = []
@@ -48,7 +46,6 @@ class windowGen():
         self.lineGraphList = []
         self.pieChartList = []
         self.barChartList = []
-        self.browserList = []
 
 
     def addNewLineGraph(self):
@@ -216,24 +213,6 @@ class windowGen():
         """
         self.browserList.append(newWebBrowser(0, 0,))
         self.totalNBrowser+=1
-
-    def setBrowser(self, lenX, lenY, link):
-        """! set properties of the webbrowser widget
-        @param lenX determines the width of the webbrowser
-        @param lenY determines the height of the webbrowser
-        @param link determines the webpage to be displayed by the webbrowser
-        """
-        if self.nBrowser >= self.totalNBrowser:
-            self.addNewBrowser()
-        webBrowser = self.browserList[self.nBrowser].webEngine
-        webBrowser = QWebEngineView(self.window.page)
-        webBrowser.resize(lenX,lenY)
-        webBrowser.setWindowTitle(link)
-        webBrowser.load(QtCore.QUrl(link))
-        webBrowser.show()
-        self.nBrowser+=1
-        return self.browserList[self.nBrowser-1]
-
 
     def addNewPieChart(self):
         """! initialize a new piechart widget

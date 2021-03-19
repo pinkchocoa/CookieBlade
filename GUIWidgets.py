@@ -9,8 +9,6 @@
 #   - access to PyQt5 GUI functions
 # - PyQt5.QtWidgets external library
 #   - access to PyQt5 UI Widgets
-# - PyQt5.QtWebEngineWidgets external library (pip install PyQtWebEngine)
-#   - access to PyQt5 web browser functions
 # - PyQt5.QtChart external library (pip inststall PyQtChart)
 #   - access to PyQt5 bar and pie chart plotting fuctions
 # - pyqtgraph external library (pip install pyqtgraph)
@@ -324,35 +322,6 @@ class newGraph:
         storeAxis = self.Graph.getAxis(axisLabel)
         getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
         storeAxis.setTicks([getValues, []])
-
-#Class to create new bowser
-class newWebBrowser():
-    """! newWebBrowser class
-    Defines the web browser object to display webpage
-    """
-    def __init__(self, lenX, lenY):
-        """! newWebBrowser class initializer
-        @param lenX used to set the horizontal length of the browser
-        @param lenY used to set the vertical height of the browser
-        """
-        self.webEngine = QWebEngineView()
-        #Set web browser window size
-        self.webEngine.resize(lenX, lenY)
-    
-    def openURL(self, link):
-        """! takes in link input and open link with web browser
-        @param link used to determine which webpage to display/set as window name
-        """
-        #Set window title of web browser to link address
-        self.webEngine.setWindowTitle(link)
-        #Loads the web browser with link address
-        self.webEngine.load(QtCore.QUrl(link))
-    
-    def showWeb(self):
-        """! set the web browser to be visible
-        Used to show the browser
-        """
-        self.webEngine.show()
     
 #Class to create new pie chart
 class newPieChart():

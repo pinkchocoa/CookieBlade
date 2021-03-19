@@ -15,6 +15,8 @@
 #   - access to twitterGraph function to retrieve data for twitter graph
 # - twitterDB
 #   - access to database access methods for twitter
+# - webbrower standard library
+#   - access to webbrowser
 
 # Imports
 from GUIWidgets import *
@@ -325,19 +327,19 @@ class window(object):
 
     def goToUrl0(self):
         results = list(file_to_set('result.txt'))
-        webbrowser.open(results[0], new=0, autoraise=True)
+        webbrowser.open_new(results[0])
         print(results[0])
         pass
 
     def goToUrl1(self):
         results = list(file_to_set('result.txt'))
-        webbrowser.open(results[1], new=0, autoraise=True)
+        webbrowser.open_new(results[1])
         print(results[1])
         pass
 
     def goToUrl2(self):
         results = list(file_to_set('result.txt'))
-        webbrowser.open(results[2], new=0, autoraise=True)
+        webbrowser.open_new(results[2])
         print(results[2])
         pass
 
