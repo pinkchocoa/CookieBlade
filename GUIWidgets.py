@@ -538,3 +538,4 @@ class newBarChart():
         test.setWidth(size)
         test.moveTo(posX,posY)#This move the pi chart without the label.
         self.chart.setPlotArea(test)
+        self.chartview.resize(1000,800)
