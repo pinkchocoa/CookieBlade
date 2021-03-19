@@ -61,8 +61,9 @@ class database(mkFolder):
 
     #Create a table with custom tablename, primary key and variable column names and amount.
     def createTable(self, *argument):
-        """! Create custom table based on *argument
+        """!    Create custom table based on *argument
         @param *argument; tablename, primary key, variable column names and amount.
+            E.g., createTable('tablename','key','column name')
         """
 
         #connect to DB
@@ -103,6 +104,7 @@ class database(mkFolder):
         """! insert data into table based on userid and site.
         @param data; 1D python list.
         @param *argument;  tablename, primary key, variable column names and amount.
+            E.g., insertTable(data,'tablename','key','column name')
         """
 
         try:
@@ -141,6 +143,7 @@ class database(mkFolder):
         @param tableName;
         @param argCol; E.g., '<Column or Primary Key name.>'
         @param argWhere; E.g., 'WHERE <Column or Primary Key name.> = <Matching value/text>'
+                E.g., getTableData('tableName','*','WHERE key = #')
         @return data; 2D python list.
         """
         data = []
