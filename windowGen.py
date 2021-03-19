@@ -102,6 +102,7 @@ class windowGen():
         if axis:
             Graph.setAxisIntervalTo1(axisLabel, axis)
         self.nLGraph+=1
+        return Graph
 
     def addnewLabel(self):
         """! initialize a new label widget
@@ -145,8 +146,8 @@ class windowGen():
             label.mousePressEvent = functionName
         if scaled:
             label.setScaledContents(scaled)
-
         self.nLabel+=1
+        return self.labelList[self.nLabel-1]
 
     def addnewTextBox(self):
         """! initialize a new textbox widget
@@ -167,8 +168,6 @@ class windowGen():
         if self.nText >= self.totalNText:
             self.addnewTextBox()
         textbox = self.textList[self.nText].textbox
-        #Initialize new instance of TextBox UI
-        textbox = QLineEdit(self.window.page)
         #Set TextBox x & y position and size
         textbox.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         if text:
@@ -176,6 +175,7 @@ class windowGen():
         if fontStyle and fontSize:
             textbox.setFont(QtGui.QFont(fontStyle,int(fontSize)))
         self.nText+=1
+        return self.textList[self.nText-1]
 
     def addNewPush(self):
         """! initialize a new pushbutton widget
@@ -209,6 +209,7 @@ class windowGen():
         else:
             pushButton.setFont(QtGui.QFont("Arial", 10))
         self.nPush+=1
+        return self.pushList[self.nPush-1]
     
     def addNewBrowser(self):
         """! initialize a new webbrowser widget
@@ -231,6 +232,7 @@ class windowGen():
         webBrowser.load(QtCore.QUrl(link))
         webBrowser.show()
         self.nBrowser+=1
+        return self.browserList[self.nBrowser-1]
 
 
     def addNewPieChart(self):
@@ -255,11 +257,13 @@ class windowGen():
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
         pieChart.viewChart(self.window.page)
+        pieChart.setwindowGenObj(self)
         pieChart.setPos(posX,posY,width,height)
         pieChart.addData(data)
         pieChart.setTitle(title)
         
         self.nPieChart+=1
+        return pieChart
 
     def addNewBarChart(self):
         """! initialize a new barchart widget
@@ -287,6 +291,7 @@ class windowGen():
         barChart.viewChart(self.window.page,posX,posY,size)
         barChart.setTitle(title)
         self.nBarChart+=1
+        return barChart
 
     def show(self):
         """! set widget page to be visible

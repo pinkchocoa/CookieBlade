@@ -84,6 +84,10 @@ class window(object):
         self.ytlink = self.ytTextBox.returnText()
         self.tlink = self.tTextBox.returnText()
 
+        print("test")
+        print(self.ytlink)
+        print(self.tlink)
+
         #Begin Crawl logic.
         if (self.ytlink == ""): #assign random youtube link
             self.ytlink = "https://www.youtube.com/user/LilyPichu"
@@ -224,14 +228,11 @@ class window(object):
         #userLogo
         self.userM.setLabel(self.logoX, self.logoY-79, self.logoWidth, self.logoHeight, "", "GUIMainLogo.PNG", "","","",True)
 
-        self.ytTextBox = newTextBox(self.userM.window.page, self.textX, self.textY, self.textWidth*2, self.textHeight)
-        self.tTextBox = newTextBox(self.userM.window.page, self.textX, self.textY+50, self.textWidth*2, self.textHeight)
-
         #ytTextbox
-        #self.userM.setTextbox(140, 178, 800, 40, "Enter Youtube channel URL:")
+        self.ytTextBox = self.userM.setTextbox(140, 178, 800, 40, "Enter Youtube channel URL:")
 
         #tTextBox
-        #self.userM.setTextbox(140, 228, 800, 40, "Enter Twitter User URL:")
+        self.tTextBox = self.userM.setTextbox(140, 228, 800, 40, "Enter Twitter User URL:")
 
 
         #ytlabel
@@ -304,12 +305,6 @@ class window(object):
         #snsBackPush
         snsM.setPush(self.pushX+580, self.pushY+223, self.pushWidth, self.pushHeight, self.snsBack, "Back")
         return snsM
-
-        
-
-    # def retranslateUi(self, window):
-    #     _translate = QtCore.QCoreApplication.translate
-    #     window.setWindowTitle(_translate("window", "Cookie Crawler"))
 
 
 # if __name__ == "__main__":
