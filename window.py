@@ -25,6 +25,7 @@ import twitterGraph
 import twitterDB
 import time
 from general import file_to_set
+import webbrowser
 
 ## Documentation for window Class
 # The window class intialize the different menus and their corresponding widgets
@@ -324,16 +325,19 @@ class window(object):
 
     def goToUrl0(self):
         results = list(file_to_set('result.txt'))
+        webbrowser.open(results[0], new=0, autoraise=True)
         print(results[0])
         pass
 
     def goToUrl1(self):
         results = list(file_to_set('result.txt'))
+        webbrowser.open(results[1], new=0, autoraise=True)
         print(results[1])
         pass
 
     def goToUrl2(self):
         results = list(file_to_set('result.txt'))
+        webbrowser.open(results[2], new=0, autoraise=True)
         print(results[2])
         pass
 
