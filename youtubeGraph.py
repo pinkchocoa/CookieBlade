@@ -41,7 +41,9 @@ def getYoutubeChannelStats(channelUrl):
     db = database('youtube')
     uid = db.getUniqueID(channelUrl)
     data = db.getTableData(uid)
-    return data[len(data)] #return latest channel stats.
+    print("test")
+    print(data)
+    return data[len(data)-1] #return latest channel stats.
 
 def setYoutubeChannelRevenue(channelUrl):
     pass

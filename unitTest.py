@@ -1,6 +1,6 @@
 ## @file uniTest.py
 #
-# @brief this file contain the test methods
+# @brief this file contain the test methods for unit testing
 #
 # @section libraries_main Libraries/Modules
 # - All Imports are nesscary to run test.
@@ -22,6 +22,7 @@ from twitterDB import *
 from general import *
 from getLinks import *
 from linkFinder import *
+from youtubeGraph import *
 
 ## Documentation for Testing Class
 # The testing class is called and run allowing us to know which function failed.
@@ -72,7 +73,7 @@ class Testing(unittest.TestCase):
         """! Youtube crawler Test method.
         """
         getChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-        getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg") #Not working
+        getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         getTrendingVideo()
         getDBvids("SG")
 
@@ -80,9 +81,9 @@ class Testing(unittest.TestCase):
         """! UrlExtraction Test method.
         """
         test = UrlExtraction()
-        test.getUniqueID("https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A")
+        test.getUniqueID("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         test.getUniqueID("https://twitter.com/BarackObama")
-        test.getSiteName("https://www.youtube.com/channel/UCOmHUn--16B90oW2L6FRR3A")
+        test.getSiteName("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         test.getSiteName("https://twitter.com/BarackObama")
         test.getUniqueID("")
         test.getSiteName("")
@@ -107,20 +108,33 @@ class Testing(unittest.TestCase):
         assert get_sub_domain_name("https://twitter.com/BarackObama")
 
     def testGeneral(self):
-        # create_project_dir('testGeneral')
-        # create_data_files('testGeneral', 'www.google.com')
-        # create_file('./testGeneral')
-        # write_file()
-        pass
+        data = [1,2,3]
+        create_project_dir('testGeneral')
+        create_data_files('testGeneral', 'www.google.com')
+        create_file('./testGeneral')
+        write_file('./testGeneral/queue.txt',data)
+        append_to_file('./testGeneral/queue.txt', data)
+        file_to_set('./testGeneral/queue.txt')
+        set_to_file('https://twitter.com/BarackObama', './testGeneral/queue.txt')
+        delete_file_contents('./testGeneral/queue.txt')
 
     def testGetLinks(self):
-        pass
+        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
+        test.handle_starttag("a","href")
+        test.getLinks()
+        test.error("Unit Test")
 
     def testLinkFinder(self):
-        pass
+        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
+        test.handle_starttag("a","href")
+        test.getLinks()
+        test.error("Unit Test")
 
     def testYoutubeGraph(self):
-        pass
+        setYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        getYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        setYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        getYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
 
     def testSingleSpider(self):
         pass

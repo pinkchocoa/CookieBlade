@@ -75,7 +75,7 @@ class database(mkFolder):
 
         #Custom Argument string phrase and execute
         try:
-            tableArg = 'CREATE TABLE IF NOT EXISTS ' + argument[0] + '(' + argument[1] + ' text PRIMARY KEY, ' #argument[0] = tablename, argument[1] = primary key
+            tableArg = 'CREATE TABLE IF NOT EXISTS ' + "'" + argument[0] + "'" + '(' + argument[1] + ' text PRIMARY KEY, ' #argument[0] = tablename, argument[1] = primary key
             last = len(argument)
             for i in range(2, len(argument)-1):
                 tableArg = tableArg + argument[i] + ' text, ' #append till 2nd last argument.
@@ -90,7 +90,7 @@ class database(mkFolder):
 
         try:
             #Create Unqiue index for replace function of SQLite3
-            tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' + argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
+            tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' +  argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
             db.execute(tableArg)
         except:
             print("createTable: Unqiue index creation failed.")
@@ -116,7 +116,7 @@ class database(mkFolder):
         #Create tableArg string according to *argument
         try:
             last = len(argument)
-            tableArg = 'REPLACE INTO ' + argument[0] + ' ('
+            tableArg = 'REPLACE INTO ' + "'" + argument[0] + "'" + ' ('
             for i in range(1,len(argument)-1):
                 tableArg = tableArg  + argument[i] + ', '
             tableArg = tableArg + argument[last-1] + ') VALUES ('
@@ -155,7 +155,7 @@ class database(mkFolder):
 
         #String Argurment to retrieve data from database.
         try:
-            tableArg = 'SELECT ' + argSELECT + ' FROM ' + tableName + ' ' + "'" + argWHERE + "'"
+            tableArg = 'SELECT ' + argSELECT + ' FROM ' + "'" + tableName + "'" + ' ' + "'" + argWHERE + "'"
         except:
             print("getTableData: tableArg string failed.")
         
