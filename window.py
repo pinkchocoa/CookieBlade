@@ -24,6 +24,7 @@ from database import database
 import twitterGraph
 import twitterDB
 import time
+from general import file_to_set
 
 ## Documentation for window Class
 # The window class intialize the different menus and their corresponding widgets
@@ -140,6 +141,7 @@ class window(object):
         self.stackedWidget.addWidget(self.userM.window.page)
         self.stackedWidget.addWidget(self.topicM.window.page)
     
+
     def crawlTwitterGraph(self):
         favList = ["Fav Count"]
         rtList = ["RT Count"]
@@ -207,7 +209,7 @@ class window(object):
         #uncomment this line to actually crawl
         #data = self.crawlTwitterTopics()
         data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
-        window.setPieChart(data, "Current trending topics", 100, 350)
+        window.setPieChart(data, "Current trending topics", 100, 325)
 
     def setupMainMenu(self):
         """! create widgets for the main menu page
@@ -229,11 +231,9 @@ class window(object):
         self.userM.setLabel(self.logoX, self.logoY-79, self.logoWidth, self.logoHeight, "", "GUIMainLogo.PNG", "","","",True)
 
         #ytTextbox
-        self.ytTextBox = self.userM.setTextbox(140, 178, 800, 40, "Enter Youtube channel URL:")
-
+        self.ytTextBox = self.userM.setTextbox(self.textX, self.textY, self.textWidth*2, self.textHeight, "Enter Youtube channel URL:")
         #tTextBox
-        self.tTextBox = self.userM.setTextbox(140, 228, 800, 40, "Enter Twitter User URL:")
-
+        self.tTextBox = self.userM.setTextbox(self.textX, self.textY+50, self.textWidth*2, self.textHeight,"Enter Twitter User URL:")
 
         #ytlabel
         self.userM.setLabel(self.labelX-22, self.labelY, self.labelWidth, self.labelHeight, "YouTube Link:")
@@ -245,7 +245,6 @@ class window(object):
         self.userM.setPush(self.pushX-125, self.pushY-29, self.pushWidth, self.pushHeight, self.userToSns, "Crawl!")
         #userBackPush
         self.userM.setPush(self.pushX+375, self.pushY-29, self.pushWidth, self.pushHeight, self.userToMain, "Back")
-
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -304,8 +303,37 @@ class window(object):
         #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
         snsM.setPush(self.pushX+580, self.pushY+223, self.pushWidth, self.pushHeight, self.snsBack, "Back")
+
+        #make ure that these labels are the last to be generated
+        x = 10
+        y = 600
+        snsM.setLabel(x, y, 1000, self.labelHeight, "Double click on the piechart for news article links:")
+        for i in range(3):
+            y+=25
+            text = "Article " + str(i+1)
+            snsM.setLabel(x, y, 1000, self.labelHeight, "")
+            if i == 0:
+                snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl0, text)
+            elif i == 1:
+                snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl1, text)
+            elif i == 2:
+                snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl2, text)
         return snsM
 
+    def goToUrl0(self):
+        results = list(file_to_set('result.txt'))
+        print(results[0])
+        pass
+
+    def goToUrl1(self):
+        results = list(file_to_set('result.txt'))
+        print(results[1])
+        pass
+
+    def goToUrl2(self):
+        results = list(file_to_set('result.txt'))
+        print(results[2])
+        pass
 
 # if __name__ == "__main__":
 #     app = QtWidgets.QApplication(sys.argv)

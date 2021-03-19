@@ -7,7 +7,7 @@ NUMBER_OF_RESULTS = 3
 PROJECT_NAME = 'googleNews'
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
 CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
-RESULT_FILE = PROJECT_NAME + '/result.txt'
+RESULT_FILE = 'result.txt'
 
 class spiderWorker:
     alive = True
@@ -55,6 +55,11 @@ def spidey(filterList="", topic="", numResults=3):
     x = spiderWorker(filterList,topic)
     while len(x.spidey.result) < numResults:
         x.create_workers()
+
+    create_file(RESULT_FILE)
+    delete_file_contents(RESULT_FILE)
+    set_to_file(x.spidey.result, RESULT_FILE)
+    
     return x.spidey.result
 
 #print(spidey(['articles'],"covid test", 3))

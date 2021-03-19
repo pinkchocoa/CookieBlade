@@ -19,6 +19,10 @@ def create_data_files(project_name, base_url):
     if not os.path.isfile(result):
         write_file(result, '')
 
+def create_file(path):
+    if not os.path.isfile(path):
+        write_file(path, '')
+        print("file created")
 
 # Create a new file
 def write_file(path, data):

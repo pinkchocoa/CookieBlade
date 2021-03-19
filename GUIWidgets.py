@@ -466,12 +466,8 @@ class newPieChart():
         links = spidey(['articles'],text,3)
         #links = {'https://news.google.com/articles/CAIiEFSOiYliYGuKi2zIiuYHCwsqGAgEKg8IACoHCAowqKTyCTDY83IwpLrsBQ?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CBMiVmh0dHBzOi8vNDExbWFuaWEuY29tL3dyZXN0bGluZy92YXJpb3VzLW5ld3MtbGFuYS1nZXRzLWEtY2hpcm9wcmFjdGljLWFkanVzdG1lbnQtdmlkZW8v0gEA?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CAIiEE5ROMPJsH4t5RDqxWMjYvIqGQgEKhAIACoHCAow8KiRCzCh9qUDMI2c1gY?hl=en-SG&gl=SG&ceid=SG%3Aen'}
         #how to display these links?
-        y = 100
-        for x in links:
-            print(x)
-            self.windowGen.labelList[self.windowGen.totalNLabel-1].label.setText(x)
-            break
-            y+=100
+        for idx, x in enumerate(links):
+            self.windowGen.labelList[self.windowGen.totalNLabel-1-idx].label.setText(x)
 
 
 class newBarChart():
