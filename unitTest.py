@@ -36,10 +36,11 @@ class Testing(unittest.TestCase):
     def testDB(self):
         """! Database Test method.
         """
-        data = ['Key1','1','2']
+        data = [['Key1','1','2'],['key2','1','2']]
         test = database("unitTest")
         test.createTable('test','key','C1','C2')
-        test.insertTable(data,'test','key','C1','C2')
+        for x in range(len(data)):
+            test.insertTable(data[x],'test','key','C1','C2')
         test.getTableData('test')
 
     def testTwitter(self):

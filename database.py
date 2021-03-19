@@ -85,7 +85,7 @@ class database(mkFolder):
         try:
             db.execute(tableArg)
         except:
-            print("db.execute() failed.")
+            print("db.execute() failed. createTable")
 
         try:
             #Create Unqiue index for replace function of SQLite3
@@ -129,10 +129,10 @@ class database(mkFolder):
         try:
             db.execute(tableArg,(data))
         except:
-            print("db.execute() failed.")
+            print("db.execute() failed. insertTable")
 
-        connect.commit() #save database
-        db.close()    #close database
+        connect.commit()    #save database
+        db.close()          #close database
         connect.close()
 
 
@@ -163,8 +163,23 @@ class database(mkFolder):
             for row in rows:
                 templist.append(list(row))
         except:
-            print("db.execute() failed.")
+            print("db.execute() failed. getTableData")
             
         db.close()
         connect.close()
         return templist
+
+    def deleteTable(self,tableName):
+        """! Delete the table given.
+        @param tableName;
+        """
+        try:
+            connect = sqlite3.connect(self.arg)
+            db = connect.cursor()
+            tableArg = 'DROP TABLE ' + tableName
+            db.execute(tableArg)
+            connect.commit()
+            db.close()
+            connect.close()
+        except:
+            print("Table Delete failed.")
