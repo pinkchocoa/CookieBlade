@@ -10,9 +10,9 @@ CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
 RESULT_FILE = PROJECT_NAME + '/result.txt'
 
 class spiderWorker:
-    queue = Queue() #create queue for spider threads
     alive = True
     def __init__(self, filterList, topic=""):
+        self.queue = Queue() #create queue for spider threads
         HOMEPAGE = 'https://news.google.com/search?q='
         DOMAIN_NAME = get_domain_name(HOMEPAGE)
         SUB_DOMAIN = get_sub_domain_name(HOMEPAGE)
@@ -21,9 +21,9 @@ class spiderWorker:
             HOMEPAGE += word
             HOMEPAGE += "+"
             print (HOMEPAGE)
-        Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, SUB_DOMAIN, filterList) #create first spider
+        self.spidey = Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, SUB_DOMAIN, filterList) #create first spider
         self.create_workers()
-        print("end init")
+        #print("end init")
 
     def create_workers(self):
         self.create_jobs()
@@ -31,22 +31,30 @@ class spiderWorker:
 
     # Each queued link is a new job
     def create_jobs(self):
-        print("create_jobs")
-        for link in file_to_set(QUEUE_FILE):
+        #print("create_jobs")
+        for link in self.spidey.queue:
             self.queue.put(link)
+        pass
 
     def work(self):
-        print("work")
+        #print("work")
         url = self.queue.get()
-        Spider.crawl_page("1", url)
+        self.spidey.crawl_page("1", url)
 
 def spidey(filterList="", topic="", numResults=3):
-    delete_file_contents(QUEUE_FILE)
-    delete_file_contents(CRAWLED_FILE)
-    delete_file_contents(RESULT_FILE)
-    while len(Spider.result) < numResults:
-        spiderWorker(filterList,topic)
-    return Spider.result
+    print("crawling")
 
-#print(spidey(['articles'],"covid test", 3))
-#print("test")
+    #delete existing crawls
+    #delete_file_contents(QUEUE_FILE)
+    #delete_file_contents(CRAWLED_FILE)
+    #delete_file_contents(RESULT_FILE)
+
+    x = spiderWorker(filterList,topic)
+    while len(x.spidey.result) < numResults:
+        x.create_workers()
+    return x.spidey.result
+
+print(spidey(['articles'],"covid test", 3))
+print("again")
+print(spidey(['articles'],"banana", 3))
+print("test")

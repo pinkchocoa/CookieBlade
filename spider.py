@@ -26,20 +26,6 @@ class Spider:
     """! Spider class
     Defines the spider object used to crawl through webpages.
     """
-    # any variable that is in a class but outside a method is static
-    # static variables
-    projectName = ''
-    baseUrl = ''
-    domainName = ''
-    subDomain = ''
-    queueFile = ''
-    crawledFile = ''
-    resultFile = ''
-    queue = set()
-    crawled = set()
-    result = set()
-    word = ''
-
     # __init__ is the constructor name for all classes
     def __init__(self, projectName, baseUrl, domainName, subDomain = '', word=[]):
         """! Spider class initializer
@@ -49,63 +35,62 @@ class Spider:
         @return an instance of the Spider class initialized with parameters above
         """
         #since these are static variables, gotta use Spider. instead of self.
-        Spider.projectName = projectName
-        Spider.baseUrl = baseUrl
-        Spider.domainName = domainName
-        Spider.subDomain = subDomain
-        Spider.queueFile = Spider.projectName + '/queue.txt'
-        Spider.crawledFile = Spider.projectName + '/crawled.txt'
-        Spider.resultFile = Spider.projectName + '/result.txt'
-        Spider.word = word
+
+        self.queue = set()
+        self.crawled = set()
+        self.result = set()
+        self.projectName = projectName
+        self.baseUrl = baseUrl
+        self.domainName = domainName
+        self.subDomain = subDomain
+        #self.queueFile = self.projectName + '/queue.txt'
+        #self.crawledFile = self.projectName + '/crawled.txt'
+        #self.resultFile = self.projectName + '/result.txt'
+        self.word = word
         self.boot()
-        self.crawl_page('First spider', Spider.baseUrl)
+        self.crawl_page('First spider', self.baseUrl)
 
     # Creates directory and files for project on first run and starts the spider
-    @staticmethod
-    def boot():
+    def boot(self):
         """! Creates directory and files for project on first run and starts the spider
         """
-        create_project_dir(Spider.projectName)
-        create_data_files(Spider.projectName, Spider.baseUrl)
-        Spider.queue = file_to_set(Spider.queueFile)
-        Spider.crawled = file_to_set(Spider.crawledFile)
-        Spider.result = file_to_set(Spider.resultFile)
-        Spider.add_links_to_queue([Spider.baseUrl])
+        #create_project_dir(self.projectName)
+        #create_data_files(self.projectName, self.baseUrl)
+        #self.queue = file_to_set(self.queueFile)
+        #self.crawled = file_to_set(self.crawledFile)
+        #self.result = file_to_set(self.resultFile)
+        self.add_links_to_queue([self.baseUrl])
 
-    @staticmethod
-    def filter(pageUrl):
+    def filter(self, pageUrl):
         #print("filter")
         test = 0
-        for x in Spider.word:
+        for x in self.word:
             if x in pageUrl:
                 continue
             else:
                 test = 1
         if test == 0:
-            Spider.result.add(pageUrl)
+            self.result.add(pageUrl)
 
     # Updates user display, fills queue and updates files
-    @staticmethod
-    def crawl_page(threadName, pageUrl):
+    def crawl_page(self, threadName, pageUrl):
         """! Updates user display, fills queue and updates files
         @param threadName name of the thread 
         @param pageUrl url link
         """
-        #print("crawl_page")
         # check that it has not already been crawled 
-        if pageUrl not in Spider.crawled:
+        if pageUrl not in self.crawled:
             # print what you are crawling
             #print(threadName + ' now crawling ' + pageUrl)
             #print('Queue ' + str(len(Spider.queue)) + ' | Crawled  ' + str(len(Spider.crawled)))
-            Spider.add_links_to_queue(Spider.gather_links(pageUrl))
-            Spider.queue.remove(pageUrl) #done crawling, remove from set
-            Spider.crawled.add(pageUrl) #move to crawled
-            Spider.filter(pageUrl)
-            Spider.update_files()
+            self.add_links_to_queue(self.gather_links(pageUrl))
+            self.queue.remove(pageUrl) #done crawling, remove from set
+            self.crawled.add(pageUrl) #move to crawled
+            self.filter(pageUrl)
+            #self.update_files()
 
     # Converts raw response data into readable information and checks for proper html formatting
-    @staticmethod
-    def gather_links(pageUrl):
+    def gather_links(self, pageUrl):
         """! Converts raw response data into readable information and checks for proper html formatting
         @param pageUrl url link
         @return a set of links 
@@ -118,7 +103,7 @@ class Spider:
             if 'text/html' in response.getheader('Content-Type'):
                 html_bytes = response.read() # read raw response
                 html_string = html_bytes.decode("utf-8") # convert to readable characters
-            finder = LinkFinder(Spider.baseUrl, pageUrl) # create link finder object
+            finder = LinkFinder(self.baseUrl, pageUrl) # create link finder object
             finder.feed(html_string)
         except Exception as e:
             print(str(e))
@@ -126,28 +111,26 @@ class Spider:
         return finder.page_links()
 
     # Saves queue data to project files
-    @staticmethod
-    def add_links_to_queue(links):
+    def add_links_to_queue(self, links):
         """! Saves queue data to project files
         @param links
         """
         #print("add_links_to_queue")
         for url in links:
-            if (url in Spider.queue) or (url in Spider.crawled):
+            if (url in self.queue) or (url in self.crawled):
                 continue
             # only crawl if url is in the same domain
-            if Spider.domainName != get_domain_name(url):
+            if self.domainName != get_domain_name(url):
                 continue
-            if Spider.subDomain not in url:
+            if self.subDomain not in url:
                 continue
-            Spider.queue.add(url)
+            self.queue.add(url)
 
-    @staticmethod
-    def update_files():
+    def update_files(self):
         """! update sets to files, saves queued and crawled url into a txt file
         """
         #print("update_files")
-        set_to_file(Spider.queue, Spider.queueFile)
-        set_to_file(Spider.crawled, Spider.crawledFile)
-        set_to_file(Spider.result, Spider.resultFile)
+        set_to_file(self.queue, self.queueFile)
+        set_to_file(self.crawled, self.crawledFile)
+        set_to_file(self.result, self.resultFile)
         
