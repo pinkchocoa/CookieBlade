@@ -27,6 +27,7 @@ from PyQt5.QtWebEngineWidgets import * #pip3 install PyQtWebEngine
 from PyQt5.QtChart import * #pip3 install PyQtChart
 from pyqtgraph import PlotWidget, plot, exporters #pip3 install pyqtgraph
 import functools
+from singleSpider import spidey
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -381,11 +382,11 @@ class newPieChart():
         @param width used to set the width of pie chart
         @param height used to set the height of pie chart
         """
-        test = QtCore.QRectF()
-        test.setHeight(width)
-        test.setWidth(height)
-        test.moveTo(posX,posY)#This move the pi chart without the label.
-        self.chart.setPlotArea(test)
+        pos = QtCore.QRectF()
+        pos.setHeight(width)
+        pos.setWidth(height)
+        pos.moveTo(posX,posY)#This move the pi chart without the label.
+        self.chart.setPlotArea(pos)
 
     def setSize(self, width, height):
         """! sets the area where the pie chart can be displayed
@@ -405,6 +406,9 @@ class newPieChart():
         @param series a list of values to be displayed on the pie chart
         """
         self.chart.addSeries(series)
+
+    def setwindowGenObj(self, window):
+        self.windowGen = window
 
     #data is a dictionary
     def addData(self, data):
@@ -438,7 +442,6 @@ class newPieChart():
         """
         self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
-        #window.setCentralWidget(self.chartview)
 
     def explodeSlice(self, exploded, slice_):
         """! called when mouse hover is detected to perform pie slice movement
@@ -446,7 +449,11 @@ class newPieChart():
         @param slice_ used to determine which slice to move
         """
         if exploded:
-            self.chart.setToolTip(str(int(slice_.value())))
+            text = str(slice_.label())
+            text += ": "
+            text += str(int(slice_.value()))
+            text += " tweets"
+            self.chart.setToolTip(text)
         else:
             self.chart.setToolTip("")
         slice_.setExploded(exploded)
@@ -455,7 +462,15 @@ class newPieChart():
         """! called when mouse double click input is detected
         @param slice_ used to determine which slice to perform action on
         """
-        print("test")
+        text = str(slice_.label())
+        #links = spidey(['articles'],text,3)
+        links = {'https://news.google.com/articles/CAIiEFSOiYliYGuKi2zIiuYHCwsqGAgEKg8IACoHCAowqKTyCTDY83IwpLrsBQ?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CBMiVmh0dHBzOi8vNDExbWFuaWEuY29tL3dyZXN0bGluZy92YXJpb3VzLW5ld3MtbGFuYS1nZXRzLWEtY2hpcm9wcmFjdGljLWFkanVzdG1lbnQtdmlkZW8v0gEA?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CAIiEE5ROMPJsH4t5RDqxWMjYvIqGQgEKhAIACoHCAow8KiRCzCh9qUDMI2c1gY?hl=en-SG&gl=SG&ceid=SG%3Aen'}
+        #how to display these links?
+        y = 100
+        for x in links:
+            print(x)
+            self.windowGen.setLabel(0,y,100,100,x)
+            y+=100
 
 
 class newBarChart():
