@@ -36,7 +36,7 @@ class Testing(unittest.TestCase):
     """
     
     def testDataBase(self):
-        """! Database Test method.
+        """! database.py and mkFolder.py Test
         """
         data = [['Key1','1','2'],['key2','1','2']]
         test = database("unitTest")
@@ -50,7 +50,7 @@ class Testing(unittest.TestCase):
         test.getTableData("")
 
     def testTwitter(self):
-        """! twitter crawler Test method.
+        """! twitter.py Test
         """
         test = Twitter()
         test.searchKeyword("Obama")
@@ -76,7 +76,7 @@ class Testing(unittest.TestCase):
         test.getDate()
 
     def testYoutube(self):
-        """! Youtube crawler Test method.
+        """! Youtube.py Test
         """
         getChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
@@ -84,7 +84,7 @@ class Testing(unittest.TestCase):
         getDBvids("SG")
 
     def testUrlExtraction(self):
-        """! UrlExtraction Test method.
+        """! UrlExtraction.py Test
         """
         test = UrlExtraction()
         test.getUniqueID("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
@@ -95,25 +95,32 @@ class Testing(unittest.TestCase):
         test.getSiteName("")
 
     def testTwitterGraphandDB(self):
-        """! TwitterGraph and TwitterDB Test method.
+        """! TwitterGraph.py & TwitterDB.py Test
         """ 
+        #twitterTrend() also invoke t.trendingTopics() and setTwitterTrendDB
+        twitterTrend()
+
+        #twitterGraph() also invoke setTwitterGraphDB() and checkTableTwitterGraph()
         twitterGraph(10,"https://twitter.com/BarackObama")
         getTwitterGraphDB("https://twitter.com/BarackObama")
+        getTwitterTrendDB()
 
     def testLinkValidation(self):
-        """! LinkValidation Test method
+        """! LinkValidation.py Test
         """
         test = LinkValidation()
         test.UrlValidation("https://twitter.com/BarackObama")
         test.InternetVaild()
 
     def testDomain(self):
-        """! Domain Test method.
+        """! Domain.py Test
         """
         assert get_domain_name("https://twitter.com/BarackObama")
         assert get_sub_domain_name("https://twitter.com/BarackObama")
 
     def testGeneral(self):
+        """! General.py Test
+        """
         data = [1,2,3]
         create_project_dir('testGeneral')
         create_data_files('testGeneral', 'www.google.com')
