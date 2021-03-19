@@ -316,7 +316,7 @@ class window(object):
         for i in range(3):
             y+=25
             text = "Article " + str(i+1)
-            snsM.setLabel(x, y, 1000, self.labelHeight, "")
+            snsM.setLabel(x+self.pushWidth, y, 1000, self.labelHeight, "")
             if i == 0:
                 snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl0, text)
             elif i == 1:
@@ -329,19 +329,19 @@ class window(object):
         results = list(file_to_set('result.txt'))
         webbrowser.open_new(results[0])
         print(results[0])
-        pass
+        
 
     def goToUrl1(self):
         results = list(file_to_set('result.txt'))
         webbrowser.open_new(results[1])
         print(results[1])
-        pass
+        
 
     def goToUrl2(self):
         results = list(file_to_set('result.txt'))
         webbrowser.open_new(results[2])
         print(results[2])
-        pass
+        
 
 # if __name__ == "__main__":
 #     app = QtWidgets.QApplication(sys.argv)
