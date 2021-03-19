@@ -140,7 +140,6 @@ class window(object):
         """! create bar chart with data crawled from twitter
         @param widget on which the bar chart will be displayed on
         """
-        #         rtList.append(RTcount)
         favList = ["Fav Count"]
         rtList = ["RT Count"]
         dateList = []
