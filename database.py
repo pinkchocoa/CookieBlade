@@ -25,7 +25,7 @@ class database(mkFolder):
     This class contains methods specifically related to the database.
     """
 
-    #init
+    #Init
     def __init__(self, dataBaseName):
         """! database class initializer
         @param dataBaseName; any name you want it to be.
@@ -42,7 +42,7 @@ class database(mkFolder):
         date = datetime.date.today()
         return str(date)
 
-    #create DB based on given data base name #double underscore indicates private method. 
+    #Create database based on given name on init.
     def __createDB(self):
         """! create database based on social media sites.
         @return String argument used to create the database.
@@ -59,10 +59,10 @@ class database(mkFolder):
         db.close() #close database
         return arg #return database location
 
-    #create custom table with min arg: tablename, primary key col and atleast 1 col. #Max 2000 col #data stored at text. #11/3/21
+    #Create a table with custom tablename, primary key and variable column names and amount.
     def createTable(self, *argument):
         """! Create custom table based on *argument
-        @param *argument; where ('tablename', 'primary key', '1 col name') MUST BE PROVIDED. 
+        @param *argument; tablename, primary key, variable column names and amount.
         """
 
         #connect to DB
@@ -94,15 +94,15 @@ class database(mkFolder):
         except:
             print("createTable: Unqiue index creation failed.")
         
-        connect.commit() #save database
-        db.close() #close database
+        connect.commit()    #save database
+        db.close()          #close database
         connect.close()
 
-    #insert data into table in database #12/3/21
+    #Save data to table in database. where *argument must match the one provided in createTable.
     def insertTable(self, data, *argument):
         """! insert data into table based on userid and site.
-        @param data; data list to be stored in db
-        @param *argument;  where ('tablename', 'primary key', '1 col name') MUST BE PROVIDED.
+        @param data; 1D python list.
+        @param *argument;  tablename, primary key, variable column names and amount.
         """
 
         try:
@@ -111,7 +111,7 @@ class database(mkFolder):
         except:
             print("insertTable: failed to connect to database.")
 
-        #Append tableArg according to *argument
+        #Create tableArg string according to *argument
         try:
             last = len(argument)
             tableArg = 'REPLACE INTO ' + argument[0] + ' ('
@@ -124,7 +124,7 @@ class database(mkFolder):
         except:
             print("insertTable: tableArg string failed.")
 
-        #Pass string argurment with data to insert into database.
+        #Execute tableArg with data.
         try:
             db.execute(tableArg,(data))
         except:
@@ -134,15 +134,16 @@ class database(mkFolder):
         db.close()          #close database
         connect.close()
 
-    #retrieve user data from database. #good but user need remember the table style inforamtion. #11/3/21
-    def getTableData(self, tableName, argCol='*', argWhere = ''):
+    #Retrieve data from database. With custom SELECT and WHERE arguments supported.
+    #if WHERE argument is used, * needs to be provided in argCol.
+    def getTableData(self, tableName, argSELECT='*', argWHERE = ''):
         """! retrieve data from database based on UserID and site.
-        @param tableName; E.g., 'tableName'
-        @param argCol; E.g., '<Col_name or PRIMARY KEY>' default '*'
-        @param argWhere; E.g., 'WHERE <Col_name or PRIMARY KEY> = <#>' param argCol must be entered if using this parameter.
-        @return templist; where data is in python 2d list format.
+        @param tableName;
+        @param argCol; E.g., '<Column or Primary Key name.>'
+        @param argWhere; E.g., 'WHERE <Column or Primary Key name.> = <Matching value/text>'
+        @return data; 2D python list.
         """
-        templist = []
+        data = []
         try:
             connect = sqlite3.connect(self.arg)
             db = connect.cursor()
@@ -151,7 +152,7 @@ class database(mkFolder):
 
         #String Argurment to retrieve data from database.
         try:
-            tableArg = 'SELECT ' + argCol + ' FROM ' + tableName + ' ' + "'" + argWhere + "'"
+            tableArg = 'SELECT ' + argSELECT + ' FROM ' + tableName + ' ' + "'" + argWHERE + "'"
         except:
             print("getTableData: tableArg string failed.")
         
@@ -165,8 +166,9 @@ class database(mkFolder):
             
         db.close()
         connect.close()
-        return templist
+        return data
 
+    #Delete table in database.
     def deleteTable(self,tableName):
         """! Delete the table given.
         @param tableName;
@@ -181,3 +183,18 @@ class database(mkFolder):
             connect.close()
         except:
             print("deleteTable: Table Delete failed./Table does not Exist.")
+
+    #Execute custom SQL_Statement on table.
+    def customSqlStatement(self,SQL_Statement):
+        """! Execute custom SQL_Statement
+        @param SQL_Statement;
+        """
+        try:
+            connect = sqlite3.connect(self.arg)
+            db = connect.cursor()
+            db.execute(SQL_Statement)
+            connect.commit()
+            db.close()
+            connect.close()
+        except:
+            print("customSqlStatement: db.execute() failed.")
