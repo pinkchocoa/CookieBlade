@@ -143,6 +143,7 @@ class window(object):
     
 
     def crawlTwitterGraph(self):
+        start_time = time.time()
         favList = ["Fav Count"]
         rtList = ["RT Count"]
         dateList = []
@@ -179,6 +180,7 @@ class window(object):
         favList.pop()
         rtList.pop()
         dateList.pop()
+        print("--- %s seconds ---" % (time.time() - start_time))
         return favList, rtList, dateList
 
     def setTwitterGraphs(self, window):
