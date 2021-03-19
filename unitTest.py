@@ -139,11 +139,7 @@ class Testing(unittest.TestCase):
         getYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
 
     def testSingleSpiderandSpider(self):
-        spidey(['articles'],"covid test", 3) #This use the spiderWorker class as well.
-
-    def testSpider(self):
-        pass
-
+        spidey(['articles'],"covid test", 3) #This use the spiderWorker and Spider class as well.
 
 if __name__ == '__main__':
     unittest.main()
