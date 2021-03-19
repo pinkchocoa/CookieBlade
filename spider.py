@@ -74,7 +74,7 @@ class Spider:
 
     @staticmethod
     def filter(pageUrl):
-        print("filter")
+        #print("filter")
         test = 0
         for x in Spider.word:
             if x in pageUrl:
@@ -91,12 +91,12 @@ class Spider:
         @param threadName name of the thread 
         @param pageUrl url link
         """
-        print("crawl_page")
+        #print("crawl_page")
         # check that it has not already been crawled 
         if pageUrl not in Spider.crawled:
             # print what you are crawling
-            print(threadName + ' now crawling ' + pageUrl)
-            print('Queue ' + str(len(Spider.queue)) + ' | Crawled  ' + str(len(Spider.crawled)))
+            #print(threadName + ' now crawling ' + pageUrl)
+            #print('Queue ' + str(len(Spider.queue)) + ' | Crawled  ' + str(len(Spider.crawled)))
             Spider.add_links_to_queue(Spider.gather_links(pageUrl))
             Spider.queue.remove(pageUrl) #done crawling, remove from set
             Spider.crawled.add(pageUrl) #move to crawled
@@ -110,7 +110,7 @@ class Spider:
         @param pageUrl url link
         @return a set of links 
         """
-        print("gather_links")
+        #print("gather_links")
         html_string = ''
         try:
             response = urlopen(pageUrl)
@@ -131,7 +131,7 @@ class Spider:
         """! Saves queue data to project files
         @param links
         """
-        print("add_links_to_queue")
+        #print("add_links_to_queue")
         for url in links:
             if (url in Spider.queue) or (url in Spider.crawled):
                 continue
@@ -146,7 +146,7 @@ class Spider:
     def update_files():
         """! update sets to files, saves queued and crawled url into a txt file
         """
-        print("update_files")
+        #print("update_files")
         set_to_file(Spider.queue, Spider.queueFile)
         set_to_file(Spider.crawled, Spider.crawledFile)
         set_to_file(Spider.result, Spider.resultFile)
