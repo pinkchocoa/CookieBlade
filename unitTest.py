@@ -23,6 +23,8 @@ from general import *
 from getLinks import *
 from linkFinder import *
 from youtubeGraph import *
+from singleSpider import *
+from spider import *
 
 ## Documentation for Testing Class
 # The testing class is called and run allowing us to know which function failed.
@@ -136,8 +138,8 @@ class Testing(unittest.TestCase):
         setYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         getYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
 
-    def testSingleSpider(self):
-        pass
+    def testSingleSpiderandSpider(self):
+        spidey(['articles'],"covid test", 3) #This use the spiderWorker class as well.
 
     def testSpider(self):
         pass
