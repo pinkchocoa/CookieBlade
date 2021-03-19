@@ -19,7 +19,6 @@ from twitter import *
 from youtube import *
 from domain import *
 from twitterDB import *
-from fileIO import *
 from general import *
 from getLinks import *
 from linkFinder import *
@@ -33,7 +32,7 @@ class Testing(unittest.TestCase):
     For Testing for class files and running python unit test.
     """
     
-    def testDB(self):
+    def testDataBase(self):
         """! Database Test method.
         """
         data = [['Key1','1','2'],['key2','1','2']]
@@ -91,7 +90,7 @@ class Testing(unittest.TestCase):
     def testTwitterGraphandDB(self):
         """! TwitterGraph and TwitterDB Test method.
         """ 
-        #twitterGraph(1,"https://twitter.com/BarackObama") # Run this if you really need to as API call is slow, this include calling setTwitterGraphDB()
+        twitterGraph(10,"https://twitter.com/BarackObama")
         getTwitterGraphDB("https://twitter.com/BarackObama")
 
     def testLinkValidation(self):
@@ -107,13 +106,11 @@ class Testing(unittest.TestCase):
         assert get_domain_name("https://twitter.com/BarackObama")
         assert get_sub_domain_name("https://twitter.com/BarackObama")
 
-    def testfileIO(self):
-        data = []
-        assert fileExist("FalseTest") == False
-        createDir('UnitTest')
-        writeNewFile('Fail',data)
-
     def testGeneral(self):
+        # create_project_dir('testGeneral')
+        # create_data_files('testGeneral', 'www.google.com')
+        # create_file('./testGeneral')
+        # write_file()
         pass
 
     def testGetLinks(self):

@@ -163,7 +163,7 @@ class database(mkFolder):
             db.execute(tableArg)     
             rows = db.fetchall()
             for row in rows:
-                templist.append(list(row))
+                data.append(list(row))
         except:
             print("getTableData: db.execute() failed./Table not exist.")
             
