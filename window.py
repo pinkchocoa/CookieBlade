@@ -135,11 +135,8 @@ class window(object):
         self.stackedWidget.addWidget(self.mainM.window.page)
         self.stackedWidget.addWidget(self.userM.window.page)
         self.stackedWidget.addWidget(self.topicM.window.page)
-        
-    def setTwitterGraphs(self, window):
-        """! create bar chart with data crawled from twitter
-        @param widget on which the bar chart will be displayed on
-        """
+    
+    def crawlTwitterGraph(self):
         favList = ["Fav Count"]
         rtList = ["RT Count"]
         dateList = []
@@ -158,7 +155,7 @@ class window(object):
             date = x[1]
             fav = x[2]
             rt = x[3]
-            if len(dateList) >= 7:
+            if len(dateList) > 7:
                 print(idx, " tweets crawled for 7 days of data")
                 favList.append(totalFavCount)
                 rtList.append(totalRTCount)
@@ -173,11 +170,20 @@ class window(object):
                 rtList.append(totalRTCount)
                 dateList.append(date) #append new date
                 totalRTCount=totalFavCount=0 #reset count
-        favList.append(totalFavCount)
-        rtList.append(totalRTCount)
-        print(favList)
-        print(rtList)
-        print(dateList)
+        favList.pop()
+        rtList.pop()
+        dateList.pop()
+        return favList, rtList, dateList
+
+    def setTwitterGraphs(self, window):
+        """! create bar chart with data crawled from twitter
+        @param widget on which the bar chart will be displayed on
+        """
+        #uncomment this line to actually crawl
+        #favList, rtList, dateList = self.crawlTwitterGraph()
+        favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
+        rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
+        dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
         window.setBarChart([rtList,favList], dateList, 100, 100, 500, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
@@ -186,12 +192,17 @@ class window(object):
         """
         pass
 
+    def crawlTwitterTopics(self):
+        t = Twitter()
+        return t.trendingTopics()
+
     def setTwitterTopics(self, window):
         """! create pie chart with topics crawled from twitter
         @param window on which the pie chart will be displayed
         """
-        t = Twitter()
-        data = t.trendingTopics()
+        #uncomment this line to actually crawl
+        #data = self.crawlTwitterTopics()
+        data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         window.setPieChart(data, "Current trending topics", 500, 30)
 
     def setupMainMenu(self):
