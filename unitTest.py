@@ -45,6 +45,10 @@ class Testing(unittest.TestCase):
             test.insertTable(data[x],'test','key','C1','C2')
         test.getTableData('test')
 
+        test.createTable()
+        test.insertTable(data)
+        test.getTableData("")
+
     def testTwitter(self):
         """! twitter crawler Test method.
         """
