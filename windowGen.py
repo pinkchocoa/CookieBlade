@@ -254,7 +254,6 @@ class windowGen():
         if self.nPieChart >= self.totalNPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
-        #pieChart.setSize(width,height)
         pieChart.viewChart(self.window.page)
         pieChart.setPos(posX,posY,width,height)
         pieChart.addData(data)
