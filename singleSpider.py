@@ -49,12 +49,15 @@ def spidey(filterList="", topic="", numResults=3):
     #delete_file_contents(CRAWLED_FILE)
     #delete_file_contents(RESULT_FILE)
 
+    topic = topic.replace("#", "")
+    print("topic: ", topic)
+
     x = spiderWorker(filterList,topic)
     while len(x.spidey.result) < numResults:
         x.create_workers()
     return x.spidey.result
 
-print(spidey(['articles'],"covid test", 3))
-print("again")
-print(spidey(['articles'],"banana", 3))
-print("test")
+#print(spidey(['articles'],"covid test", 3))
+#print("again")
+#print(spidey(['articles'],"banana", 3))
+#print("test")
