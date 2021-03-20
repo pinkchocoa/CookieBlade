@@ -59,7 +59,7 @@ class Twitter:
     # ['RBW_MAMAMOO', '[#마마무]\n\n[Special] 2021 MAMAMOO\nFAN MEETING VCR Hidden Clip\n\n🔗 
     # https://t.co/FUfUnGE0K8\n\n#MAMAMOO #무무 #무무투어 https://t.co/psEmDli6nx', ['http://pbs.twimg.com/media/EveC0FwVoAQQSkf.jpg']]
     # https://twitter.com/RBW_MAMAMOO/status/1366704850671525890?s=20
-    def searchKeyword(self, keyword, rType = "recent", getLoc = False, lat=1.3521, lng=103.8198):
+    def searchKeyword(self, keyword, rType = "recent", amt = 3, getLoc = False, lat=1.3521, lng=103.8198):
         """! searches through twitter and returns a list of twitters following the filtered parameters
         @param self instance of the object that we are calling from
         @param keyword what to search for
@@ -90,7 +90,7 @@ class Twitter:
             result_type = rType,
             wait_on_rate_limit=True,
             tweet_mode="extended"
-        ).items(10):
+        ).items(amt):
             images = []
             if 'media' in tweet.entities:
                 for media in tweet.extended_entities['media']:

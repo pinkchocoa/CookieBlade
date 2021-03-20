@@ -26,6 +26,7 @@ from PyQt5.QtChart import * #pip3 install PyQtChart
 from pyqtgraph import PlotWidget, plot, exporters #pip3 install pyqtgraph
 import functools
 from singleSpider import spidey
+from twitter import Twitter
 
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
@@ -431,14 +432,20 @@ class newPieChart():
         """! called when mouse double click input is detected
         @param slice_ used to determine which slice to perform action on
         """
+        index = 3
         text = str(slice_.label())
         links = spidey(['articles'],text,3)
         #links = {'https://news.google.com/articles/CAIiEFSOiYliYGuKi2zIiuYHCwsqGAgEKg8IACoHCAowqKTyCTDY83IwpLrsBQ?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CBMiVmh0dHBzOi8vNDExbWFuaWEuY29tL3dyZXN0bGluZy92YXJpb3VzLW5ld3MtbGFuYS1nZXRzLWEtY2hpcm9wcmFjdGljLWFkanVzdG1lbnQtdmlkZW8v0gEA?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CAIiEE5ROMPJsH4t5RDqxWMjYvIqGQgEKhAIACoHCAow8KiRCzCh9qUDMI2c1gY?hl=en-SG&gl=SG&ceid=SG%3Aen'}
         #how to display these links?
         for idx, x in enumerate(links):
             text = "Link " + str(idx+1) + " Generated!"
-            self.windowGen.labelList[self.windowGen.totalNLabel-3+idx].label.setText(text)
-            self.windowGen.pushList[self.windowGen.totalNPush-3+idx].PushButton.setText(text)
+            self.windowGen.labelList[self.windowGen.totalNLabel-index+idx].label.setText(text)
+        #i want to search tweets too
+        search = Twitter()
+        tweets = search.searchKeyword(text)
+        print(tweets)
+
+        
 
 
 class newBarChart():

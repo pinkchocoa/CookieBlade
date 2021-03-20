@@ -315,11 +315,17 @@ class window(object):
         #snsBackPush
         snsM.setPush(self.pushX+580, self.pushY+223, self.pushWidth, self.pushHeight, self.snsBack, "Back")
 
+
         #make sure that these labels are the last to be generated
         x = 50
+        y = 350
+        textWidth = 500
+        snsM.setLabel(x+400, y, textWidth, self.labelHeight, "Recent tweets based on topic:")
+        snsM.setLabel(x+400, y+30, textWidth, self.labelHeight, "1")
+        snsM.setLabel(x+400, y+30*2, textWidth, self.labelHeight, "2")
         y = 580
-        snsM.setLabel(125, y-30, 500, self.labelHeight, "Current twitter trending topics")
-        snsM.setLabel(x, y, 1000, self.labelHeight, "Double click on the piechart for news article links")
+        snsM.setLabel(x+75, y-30, textWidth, self.labelHeight, "Current twitter trending topics")
+        snsM.setLabel(x, y, textWidth, self.labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
             y+=30
             text = "Article " + str(i+1)
@@ -330,6 +336,9 @@ class window(object):
                 snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
                 snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl2, text)
+        
+        
+        
         return snsM
 
     def goToUrl0(self):
