@@ -317,18 +317,18 @@ class window(object):
 
 
         #make sure that these labels are the last to be generated
+        #these are to generate labels for the double click functionality for piechart usage
         x = 50
         y = 350
         textWidth = 500
-        textHeight = 120
-        spaceUserText = 125
+        textHeight = 90
         snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Recent tweets based on topic:")
         for i in range(3):
             y+=30
-            snsM.setLabel(x+400, y, textWidth, 25, "1")
+            snsM.setLabel(x+400, y, textWidth, 20, "1")
             y+=25
-            snsM.setLabel(x+400, y, textWidth, textHeight, "2")
-            y+=textHeight
+            snsM.setLabel(x+400, y, textWidth, textHeight, "2").setAlignmentTop()
+            y+=textHeight-30
 
         y = 580
         snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")

@@ -97,7 +97,7 @@ class Twitter:
                 for media in tweet.extended_entities['media']:
                     files_location = str(media['media_url'])
                     images.append(files_location)
-            searchedTweets.append([tweet.user.screen_name, tweet.full_text, images])
+            searchedTweets.append([tweet.user.screen_name, tweet.full_text, tweet.id, images])
         
         print("returning trends for", place)
 
