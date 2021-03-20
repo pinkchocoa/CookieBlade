@@ -291,7 +291,7 @@ class window(object):
         #ytlogo
         snsM.setLabel(self.logoX-320, self.logoY-137, self.logoWidth-270, self.logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
-        snsM.setLabel(self.logoX-320, self.logoY-17, self.logoWidth-270, self.logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(self.logoX-303, self.logoY-17, self.logoWidth-300, self.logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
         #subcountlabel
         snsM.setLabel(self.labelX+112, self.labelY-168, self.labelWidth, self.labelHeight, "Sub count:")
         #viewcountlabel
