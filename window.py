@@ -97,7 +97,7 @@ class window(object):
 
         #Begin Crawl logic.
         if (self.ytlink == ""): #assign random youtube link
-            self.ytlink = "https://www.youtube.com/user/LilyPichu"
+            self.ytlink = "https://www.youtube.com/channel/UCvWU1K29wCZ8j1NsXsRrKnA"
         if (self.tlink == ""): #assign random twitter link
             self.tlink = "https://www.twitter.com/lilypichu"
         
