@@ -28,6 +28,7 @@ import twitterDB
 import time
 from general import file_to_set, delete_file_contents
 import webbrowser
+import youtubeGraph
 
 RESULT_FILE = 'result.txt'
 
@@ -198,13 +199,31 @@ class window(object):
         favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
         rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
         dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([rtList,favList], dateList, 500, 300, 500, 200, "User's Fav and RT Count")
+        window.setBarChart([rtList,favList], dateList, 500, 500, 500, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
         @param window on which the bar chart will be displayed
         """
-        pass
+        posX = 350
+        posY = 10
+        widthX = 500
+        heightY = 200
+        months = [1,2,3,4,5,6,7,8,9,10,11,12]
+        #youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
+        #revenueData = youtubeGraph.getRevenueData(self.tlink) #this return revenue data from db
+        #revenueData.pop(0) #remove the date string in the list.
+
+        #Testing
+        revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
+        window.setLineGraph(posX, posY, widthX, heightY, 
+            months, revenueData, "g", "o",
+            "00000000",
+            "Revenue Graph", "r", "8pt",
+            "left", "$ Revenue $", "red", "8pt",
+            "bottom", "Months", "red", "8pt",
+            "left", revenueData)
+
 
     def crawlTwitterTopics(self):
         t = Twitter()
