@@ -29,6 +29,7 @@ import time
 from general import file_to_set, delete_file_contents
 import webbrowser
 import youtubeGraph
+from LinkValidation import LinkValidation
 
 RESULT_FILE = 'result.txt'
 
@@ -95,6 +96,11 @@ class window(object):
         print(self.ytlink)
         print(self.tlink)
 
+        #check user input
+        check = LinkValidation()
+        resultYoutubeUrl = check.UrlValidation(self.ytlink) #return True if valid else False.
+        resultTwitterUrl = check.UrlValidation(self.tlink)
+        
         #Begin Crawl logic.
         if (self.ytlink == ""): #assign random youtube link
             self.ytlink = "https://www.youtube.com/channel/UCvWU1K29wCZ8j1NsXsRrKnA"
