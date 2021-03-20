@@ -20,7 +20,6 @@ from youtube import *
 from domain import *
 from twitterDB import *
 from general import *
-from getLinks import *
 from linkFinder import *
 from youtubeGraph import *
 from singleSpider import *
@@ -82,19 +81,6 @@ class Testing(unittest.TestCase):
 
         print("\nEND of test_general_py\n")
 
-    #Failed Test.
-    def test_getLinks_py(self):
-        """! getLinks.py Test
-        """
-        print("\nSTART of test_getLinks_py\n")
-
-        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
-        test.handle_starttag("a","href")
-        test.getLinks()
-        test.error("Unit Test")
-
-        print("\nEND of test_getLinks_py\n")
-
     #Empty - Test by running main.py, Part of Ui
     def test_GUIWidegets_py(self):
         pass
@@ -107,7 +93,6 @@ class Testing(unittest.TestCase):
 
         test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
         test.handle_starttag("a","href")
-        test.getLinks()
         test.error("Unit Test")
 
         print("\nEND of test_linkFinder_py\n")
@@ -210,19 +195,35 @@ class Testing(unittest.TestCase):
     def test_windowGen_py(self):
         pass
 
-    #Needs to be rewritten.
-    def test_youtube_py(self):
-        """! Youtube.py Test
+    #Ok: All class and methods in youtubeGraph.py and youtube.py are fully covered within this test.
+    def test_youtubeGraph_py_youtube_py(self):
+        """! youtubeGraph.py & youtube.py Test
         """
-        pass
+        #This also invokes youtube.py:
+        #Class: Channel() 
+        #Methods: Channel.searchurl()
+        setYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        
+        #This also invokes database.py and its related class and methods.
+        getYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        
+        #This also invokes youtube.py:
+        #Class: youtubeVid(),YouTube() 
+        #Methods: youtubeVid.getTrendingVideo(), youtubeVid.getDBvids() 
+        #youtubeVid.scrapData(), youtubeVid.vidInfo(), youtubeVid.getDict()
+        getYoutubeTrends("SG")
 
-    #Needs to be rewritten.
-    def test_youtubeGraph_py(self):
-        pass
+        #This also invokes youtube.py: 
+        #Class: Channel()
+        #Methods: Channel.getRevenueData()
+        #This easily caps API limit so it is omitted as we tested it once.
+        #setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        
+        #This also invokes database.py and its related class and methods.
+        getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
 
-#To be removed/unUsed files:
-# spiderThreads.py - Kept for reference.
-# getLinks.py - No one using...
+#To be removed/Unused files:
+# spiderThreads.py - Kept for reference. Test not needed.
 
 
 if __name__ == '__main__':
