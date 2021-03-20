@@ -320,26 +320,26 @@ class window(object):
         x = 50
         y = 350
         textWidth = 500
-        snsM.setLabel(x+400, y, textWidth, self.labelHeight, "Recent tweets based on topic:")
-        snsM.setLabel(x+400, y+30, textWidth, self.labelHeight, "")
-        snsM.setLabel(x+400, y+30+20, textWidth, self.labelHeight, "")
-        snsM.setLabel(x+400, y+50*2, textWidth, self.labelHeight, "")
-        snsM.setLabel(x+400, y+50*2+20, textWidth, self.labelHeight, "")
-        snsM.setLabel(x+400, y+70*2, textWidth, self.labelHeight, "")
-        snsM.setLabel(x+400, y+70*2+20, textWidth, self.labelHeight, "")
+        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Recent tweets based on topic:")
+        snsM.setLabel(x+400, y+30, textWidth, self.__labelHeight, "")
+        snsM.setLabel(x+400, y+30+20, textWidth, self.__labelHeight, "")
+        snsM.setLabel(x+400, y+50*2, textWidth, self.__labelHeight, "")
+        snsM.setLabel(x+400, y+50*2+20, textWidth, self.__labelHeight, "")
+        snsM.setLabel(x+400, y+70*2, textWidth, self.__labelHeight, "")
+        snsM.setLabel(x+400, y+70*2+20, textWidth, self.__labelHeight, "")
         y = 580
-        snsM.setLabel(x+60, y-30, textWidth, self.labelHeight, "Current twitter trending topics")
-        snsM.setLabel(x, y, textWidth, self.labelHeight, "Double click on the piechart for news article links")
+        snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
+        snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
-            __y+=30
+            y+=30
             text = "Article " + str(i+1)
-            snsM.setLabel(__x+self.__labelWidth-30, __y, 1000, 25, "Double click on the piechart!")
+            snsM.setLabel(x+self.__labelWidth-30, y, 1000, 25, "Double click on the piechart!")
             if i == 0:
-                snsM.setPush(__x, __y, self.__labelWidth-40, 25, self.goToUrl0, text)
+                snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl0, text)
             elif i == 1:
-                snsM.setPush(__x, __y, self.__labelWidth-40, 25, self.goToUrl1, text)
+                snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
-                snsM.setPush(__x, __y, self.__labelWidth-40, 25, self.goToUrl2, text)
+                snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
         
         
