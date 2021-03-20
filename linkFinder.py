@@ -1,5 +1,5 @@
-from html.parser import HTMLParser
-from urllib import parse
+from html.parser import HTMLParser # https://docs.python.org/3/library/html.parser.html
+from urllib import parse # https://docs.python.org/3/library/urllib.html
 
 # this class inherits from HTMLParser
 class LinkFinder(HTMLParser):
