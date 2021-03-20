@@ -272,7 +272,7 @@ class window(object):
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
-        self.userM.setPush(self.pushX+375, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
+        self.userM.setPush(self.pushX+375, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -284,7 +284,7 @@ class window(object):
         #topicCrawlPush
         self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Crawl!")
         #topicbackpush
-        self.topicM.setPush(self.pushX+250, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
+        self.topicM.setPush(self.pushX+250, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
         self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
@@ -332,7 +332,7 @@ class window(object):
         #seperateLineLabel
         #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
-        snsM.setPush(self.pushX+580, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+        snsM.setPush(self.pushX+580, self.__pushY+480, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
 
         #make sure that these labels are the last to be generated
