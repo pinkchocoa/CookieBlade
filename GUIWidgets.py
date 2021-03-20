@@ -492,7 +492,7 @@ class newBarChart():
         self.series.attachAxis(axisY)
         axisY.setRange(0,50)
     
-    def viewChart(self, window, posX, posY,size):
+    def viewChart(self, window, posX, posY,sizex, sizey):
         """! set bar chart as visible
         @param window used to determine which window the bar chart will appear on
         @param posX used to determine the X coordinate of bar chart
@@ -505,8 +505,8 @@ class newBarChart():
         #need to find the equivalent of this in his stackwidget
         #window.setCentralWidget(self.chartview)
         test = QtCore.QRectF()
-        test.setHeight(size)
-        test.setWidth(size)
+        test.setHeight(sizey)
+        test.setWidth(sizex)
         test.moveTo(posX,posY)#This move the pi chart without the label.
         self.chart.setPlotArea(test)
         self.chartview.resize(1000,800)

@@ -252,7 +252,7 @@ class windowGen():
 
     #data is a list of list
     #categories is a list
-    def setBarChart(self, data, categories, posX=0,posY=0,size=500,title=""):
+    def setBarChart(self, data, categories, posX=0,posY=0,sizex=500,sizey=500,title=""):
         """! set properties of the barchart widget
         @param data
         @param categories
@@ -267,7 +267,7 @@ class windowGen():
             self.addNewBarChart()
         barChart = self.barChartList[self.nBarChart]
         barChart.addData(data, categories)
-        barChart.viewChart(self.window.page,posX,posY,size)
+        barChart.viewChart(self.window.page,posX,posY,sizex, sizey)
         barChart.setTitle(title)
         self.nBarChart+=1
         return barChart
