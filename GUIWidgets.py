@@ -434,6 +434,8 @@ class newPieChart():
         """
         index = 3
         text = str(slice_.label())
+        search = Twitter()
+        tweets = search.searchKeyword(text)
         links = spidey(['articles'],text,3)
         #links = {'https://news.google.com/articles/CAIiEFSOiYliYGuKi2zIiuYHCwsqGAgEKg8IACoHCAowqKTyCTDY83IwpLrsBQ?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CBMiVmh0dHBzOi8vNDExbWFuaWEuY29tL3dyZXN0bGluZy92YXJpb3VzLW5ld3MtbGFuYS1nZXRzLWEtY2hpcm9wcmFjdGljLWFkanVzdG1lbnQtdmlkZW8v0gEA?hl=en-SG&gl=SG&ceid=SG%3Aen', 'https://news.google.com/articles/CAIiEE5ROMPJsH4t5RDqxWMjYvIqGQgEKhAIACoHCAow8KiRCzCh9qUDMI2c1gY?hl=en-SG&gl=SG&ceid=SG%3Aen'}
         #how to display these links?
@@ -441,9 +443,14 @@ class newPieChart():
             text = "Link " + str(idx+1) + " Generated!"
             self.windowGen.labelList[self.windowGen.totalNLabel-index+idx].label.setText(text)
         #i want to search tweets too
-        search = Twitter()
-        tweets = search.searchKeyword(text)
-        print(tweets)
+        #tweets=[['NooriBadat', '“Terrorism-related incidents are down,” #Sitharaman noted informing the #LokSabha that the #Udhampur-#Srinagar-#Baramulla rail link would be completed by December 2022. She said 3,500 MW power was generated in J&amp;K in 70 years.', []], ['johnk4754', "@ManUtdLiveHD You should have 2-3 people at a time working on live streaming links.  So that when 1 is taken down 2 &amp; 3 are okay to be posted.  Once 2 is taken down 3 is up &amp; running while expert 1 has generated a new link that's easy to be posted", []], ['fransklerks67', '@iKSHTH $LTO \n1) top 10 tx blockchain and top 10 fees generated \n2) deflationary supply \n3) working with $link to build DID and SSI for cross chain \n4) Major partnerships and real world companies paying fees to store documents on the LTO blockchain\n5) 7% APY staking \n6) LP on uniswap. https://t.co/GBincOeuNe', ['http://pbs.twimg.com/media/EwyuYbsXEAIpNhQ.jpg']]]
+        index = 11
+        for idx, x in enumerate(tweets):
+            user = x[0]
+            text = x[1]
+            self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2)].label.setText(user)
+            self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
+        #print(tweets)
 
         
 

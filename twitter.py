@@ -72,6 +72,7 @@ class Twitter:
         @param lng longtitude, default value set to singapore's. not in use for worldwide results
         @return a list of tweets in the format of  [ ['username', 'content', 'images if any'], [...] ]
         """
+        print("searching " + keyword)
         searchedTweets = []
         if getLoc:
             loc =  self.api.trends_closest(lat, lng)

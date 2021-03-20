@@ -321,8 +321,12 @@ class window(object):
         y = 350
         textWidth = 500
         snsM.setLabel(x+400, y, textWidth, self.labelHeight, "Recent tweets based on topic:")
-        snsM.setLabel(x+400, y+30, textWidth, self.labelHeight, "1")
-        snsM.setLabel(x+400, y+30*2, textWidth, self.labelHeight, "2")
+        snsM.setLabel(x+400, y+30, textWidth, self.labelHeight, "")
+        snsM.setLabel(x+400, y+30+20, textWidth, self.labelHeight, "")
+        snsM.setLabel(x+400, y+50*2, textWidth, self.labelHeight, "")
+        snsM.setLabel(x+400, y+50*2+20, textWidth, self.labelHeight, "")
+        snsM.setLabel(x+400, y+70*2, textWidth, self.labelHeight, "")
+        snsM.setLabel(x+400, y+70*2+20, textWidth, self.labelHeight, "")
         y = 580
         snsM.setLabel(x+60, y-30, textWidth, self.labelHeight, "Current twitter trending topics")
         snsM.setLabel(x, y, textWidth, self.labelHeight, "Double click on the piechart for news article links")
