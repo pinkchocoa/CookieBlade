@@ -327,20 +327,26 @@ class window(object):
 
     def goToUrl0(self):
         results = list(file_to_set('result.txt'))
-        webbrowser.open_new(results[0])
-        print(results[0])
+        if results and results[0]:
+            webbrowser.open_new(results[0])
+        else:
+            pass
         
 
     def goToUrl1(self):
         results = list(file_to_set('result.txt'))
-        webbrowser.open_new(results[1])
-        print(results[1])
+        if results and results[1]:
+            webbrowser.open_new(results[1])
+        else:
+            pass
         
 
     def goToUrl2(self):
         results = list(file_to_set('result.txt'))
-        webbrowser.open_new(results[2])
-        print(results[2])
+        if results and results[2]:
+            webbrowser.open_new(results[2])
+        else:
+            pass
         
 
 # if __name__ == "__main__":
