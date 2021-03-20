@@ -150,44 +150,44 @@ class window(object):
 
     def crawlTwitterGraph(self):
         #start_time = time.time()
-        __favList = ["Fav Count"]
-        __rtList = ["RT Count"]
-        __dateList = []
-        __totalRTCount=0
-        __totalFavCount=0
-        __amount = 100
-        __totalDates = 7
+        favList = ["Fav Count"]
+        rtList = ["RT Count"]
+        dateList = []
+        totalRTCount=0
+        totalFavCount=0
+        amount = 100
+        totalDates = 7
         if "twitter" in self.tlink:
             tUser = TUser.byURL(self.tlink)
         else:
             tUser = TUser.byID(self.tlink)
-        tweets = tUser.userTweets(__amount)
+        tweets = tUser.userTweets(amount)
         print(tweets)
         for idx, x in enumerate(tweets):
-            __tid = x[0]
-            __date = x[1]
+            tid = x[0]
+            date = x[1]
             fav = x[2]
             rt = x[3]
-            if len(__dateList) > 7:
+            if len(dateList) > 7:
                 print(idx, " tweets crawled for 7 days of data")
-                __favList.append(__totalFavCount)
-                __rtList.append(__totalRTCount)
+                favList.append(totalFavCount)
+                rtList.append(totalRTCount)
                 break
-            if __date in __dateList:
-                __totalFavCount+=fav
-                __totalRTCount+=rt
-            elif not __dateList:#first tweet
-                __dateList.append(__date)
-            elif __dateList:
-                __favList.append(__totalFavCount)
-                __rtList.append(__totalRTCount)
-                __dateList.append(__date) #append new date
-                __totalRTCount=__totalFavCount=0 #reset count
-        __favList.pop()
-        __rtList.pop()
-        __dateList.pop()
+            if date in dateList:
+                totalFavCount+=fav
+                totalRTCount+=rt
+            elif not dateList:#first tweet
+                dateList.append(date)
+            elif dateList:
+                favList.append(totalFavCount)
+                rtList.append(totalRTCount)
+                dateList.append(date) #append new date
+                totalRTCount=totalFavCount=0 #reset count
+        favList.pop()
+        rtList.pop()
+        dateList.pop()
         #print("--- %s seconds ---" % (time.time() - start_time))
-        return __favList, __rtList, __dateList
+        return favList, rtList, dateList
 
     def setTwitterGraphs(self, window):
         """! create bar chart with data crawled from twitter
@@ -195,10 +195,10 @@ class window(object):
         """
         #uncomment this line to actually crawl
         #favList, rtList, dateList = self.crawlTwitterGraph()
-        __favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
-        __rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
-        __dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([__rtList,__favList], __dateList, 500, 300, 500, 200, "User's Fav and RT Count")
+        favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
+        rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
+        dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
+        window.setBarChart([rtList,favList], dateList, 500, 300, 500, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
