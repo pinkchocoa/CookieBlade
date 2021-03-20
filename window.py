@@ -97,7 +97,7 @@ class window(object):
 
         #Begin Crawl logic.
         if (self.ytlink == ""): #assign random youtube link
-            self.ytlink = "https://www.youtube.com/user/LilyPichu"
+            self.ytlink = "https://www.youtube.com/channel/UCvWU1K29wCZ8j1NsXsRrKnA"
         if (self.tlink == ""): #assign random twitter link
             self.tlink = "https://www.twitter.com/lilypichu"
         
@@ -211,8 +211,8 @@ class window(object):
         widthX = 600
         heightY = 450
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
-        youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
-        revenueData = youtubeGraph.getRevenueData(self.tlink) #this return revenue data from db
+        #youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
+        revenueData = youtubeGraph.getRevenueData(self.ytlink) #this return revenue data from db
         revenueData.pop(0) #remove the date string in the list.
         print(revenueData)
         #Testing
