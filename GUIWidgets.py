@@ -443,6 +443,7 @@ class newPieChart():
         """
         index = 3
         text = str(slice_.label())
+        recent = "Recent tweets based on " + text + ":"
         #uncomment to actually crawl
         search = Twitter()
         tweets = search.searchKeyword(text)
@@ -459,6 +460,7 @@ class newPieChart():
             user = user + " " + link
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2)].label.setText(user)
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
+        self.windowGen.labelList[self.windowGen.totalNLabel-12].label.setText(recent)
 
 class InteractiveBarItem(BarGraphItem):
     def __init__(self, x, height, width, brush):

@@ -209,6 +209,9 @@ class TUser(Twitter):
         """
         return self.user.statuses_count
 
+    def favTweetCount(self):
+        return self.user.favourites_count
+        
     #returns city, state
     def userLoc(self):
         """! gets user's location (that is set on their profile)
@@ -216,6 +219,9 @@ class TUser(Twitter):
         @return user's location, in the format of "city, state" (should be a string)
         """
         return self.user.location
+
+    def userCreatedAt(self):
+        return self.user.created_at
 
     #gets user's recent followers
     def recentFollows(self):

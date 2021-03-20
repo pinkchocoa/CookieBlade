@@ -101,6 +101,8 @@ class window(object):
         if (self.tlink == ""): #assign random twitter link
             self.tlink = "https://www.twitter.com/lilypichu"
         
+        
+            
         test = self.setupSnsMenu()
         
         self.stackedWidget.addWidget(test.window.page)
@@ -211,12 +213,12 @@ class window(object):
         widthX = 600
         heightY = 450
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
-        youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
-        revenueData = youtubeGraph.getRevenueData(self.tlink) #this return revenue data from db
-        revenueData.pop(0) #remove the date string in the list.
-        print(revenueData)
+        # youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
+        # revenueData = youtubeGraph.getRevenueData(self.tlink) #this return revenue data from db
+        # revenueData.pop(0) #remove the date string in the list.
+        #print(revenueData)
         #Testing
-        #revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
+        revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
         window.setLineGraph(posX, posY, widthX, heightY, 
             months, revenueData, "g", "o",
             "00000000",
@@ -273,7 +275,7 @@ class window(object):
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
-        self.userM.setPush(self.__wWidth-self.__pushWidth-100, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
+        self.userM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -285,7 +287,7 @@ class window(object):
         #topicCrawlPush
         self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Crawl!")
         #topicbackpush
-        self.topicM.setPush(self.__wWidth-self.__pushWidth-100, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
+        self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
         self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
@@ -304,14 +306,14 @@ class window(object):
         snsM = windowGen()
         self.setTwitterGraphs(snsM) 
         self.setTwitterTopics(snsM) 
-        self.setYoutubeGraphs(snsM) 
-
-   
+        self.setYoutubeGraphs(snsM)
 
         #ytlogo
         snsM.setLabel(self.__logoX-320, self.__logoY-137, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
         snsM.setLabel(self.__logoX-303, self.__logoY-17, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
+        
+        
         #subcountlabel
         snsM.setLabel(self.__labelX+112, self.__labelY-168, self.__labelWidth, self.__labelHeight, "Sub count:")
         #viewcountlabel
@@ -321,20 +323,28 @@ class window(object):
         #ytCreatedLabel
         snsM.setLabel(self.__labelX+112, self.__labelY-93, self.__labelWidth, self.__labelHeight, "Created At:")
 
+        if "twitter" in self.tlink:
+            tUser = TUser.byURL(self.tlink)
+        else:
+            tUser = TUser.byID(self.tlink)
+
         #twitter
+        labelW = 300
         #followerCountLabel
-        snsM.setLabel(self.__labelX+112, self.__labelY-48, self.__labelWidth, self.__labelHeight, "Follower Count:")
+        text = "Follower Count: " + str(tUser.followCount())
+        snsM.setLabel(self.__labelX+112, self.__labelY-48, labelW, self.__labelHeight, text)
         #tweetsLikedLabel
-        snsM.setLabel(self.__labelX+112, self.__labelY-23, self.__labelWidth, self.__labelHeight, "Liked tweets:")
+        text = "Total favourited tweets: " + str(tUser.favTweetCount())
+        snsM.setLabel(self.__labelX+112, self.__labelY-23, labelW, self.__labelHeight, text)
         #totalTweetsLabel
-        snsM.setLabel(self.__labelX+112, self.__labelY+2, self.__labelWidth, self.__labelHeight, "Total tweets:")
+        text = "Total tweets: " + str(tUser.tweetCount())
+        snsM.setLabel(self.__labelX+112, self.__labelY+2, labelW, self.__labelHeight, text)
         #tCreatedLabel
-        snsM.setLabel(self.__labelX+112, self.__labelY+27, self.__labelWidth, self.__labelHeight, "Created at:")
+        text = "Created at: " + str(tUser.userCreatedAt())
+        snsM.setLabel(self.__labelX+112, self.__labelY+27, labelW, self.__labelHeight, text)
         #seperateLineLabel
         #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
-        #snsBackPush
-        snsM.setPush(self.__wWidth-self.__pushWidth-100, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
-
+        
 
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for piechart usage
@@ -342,13 +352,16 @@ class window(object):
         y = self.__wHeight - 400
         textWidth = 500
         textHeight = 90
-        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Recent tweets based on topic:")
+        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
         for i in range(3):
             y+=30
-            snsM.setLabel(x+400, y, textWidth, 20, "1")
+            snsM.setLabel(x+400, y, textWidth, 20, "")
             y+=25
-            snsM.setLabel(x+400, y, textWidth, textHeight, "2").setAlignmentTop()
+            snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
+
+        #snsBackPush
+        snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
         y = self.__wHeight - 150
         snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
