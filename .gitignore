@@ -131,3 +131,4 @@ dmypy.json
 reddit/crawled.txt
 reddit/queue.txt
 reddit/result.txt
+result.txt
