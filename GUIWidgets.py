@@ -467,15 +467,16 @@ class InteractiveBarItem(BarGraphItem):
         self.setAcceptHoverEvents(True)
         self.day = day
         y = self.opts.get('height')[0]
-        text = str(self.day) + "'s " + ": " + str(y)
+        text = "value: " + str(y)
         self.setToolTip(text.format(self.boundingRect().y()))
 
     def hoverEnterEvent(self, event):
-            print('hover!')
+            #print('hover!')
+            pass
 
     def mousePressEvent(self, event):
-            print('click!')
-            print(self.day)
+            #print('click!')
+            pass
 
 class newBarChart():
     """! newBarChart class
@@ -487,7 +488,9 @@ class newBarChart():
         self.chart = PlotWidget(window)
         self.chart.setBackground(background=None)
         self.chart.setLabel('left', "RT Count: red, Fav Count: Green", units='')
-        self.chart.setLabel('bottom', "Fav and RT count in the past days", units='day')
+        self.chart.setLabel('bottom', "Days", units='')
+
+        
 
     #data is a list of list
     def addData(self, data, cat):
@@ -508,8 +511,12 @@ class newBarChart():
             for idx, y in enumerate(reversed(a)):
                 if idx == len(a)-1:
                     continue
-                bg = InteractiveBarItem([idx-1+x], [y], width, brush, cat[idx])
+                bg = InteractiveBarItem([idx+x], [y], width, brush, cat[idx])
                 self.chart.addItem(bg)
+        xax = self.chart.getAxis('bottom')
+        ticks = [list(zip(range(len(cat)), (cat)))]
+        print(ticks)
+        xax.setTicks(ticks)
     
     def setSize(self, posX, posY, sizex, sizey):
         """! set bar chart as visible
