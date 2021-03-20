@@ -40,26 +40,26 @@ class window(object):
     Defines the window object which will create the menus and widgets
     """
     #Width and Height values for window and widgets
-    wWidth = 1080 
-    wHeight = 720 
-    logoWidth = 400
-    logoHeight = 90
-    pushWidth = 150
-    pushHeight = 80
-    textWidth = 400
-    textHeight = 40
-    labelWidth = 150
-    labelHeight = 40
+    __wWidth = 1080 
+    __wHeight = 720 
+    __logoWidth = 400
+    __logoHeight = 90
+    __pushWidth = 150
+    __pushHeight = 80
+    __textWidth = 400
+    __textHeight = 40
+    __labelWidth = 150
+    __labelHeight = 40
 
     #X & Y coordinates for widgets
-    logoX = pushX = (wWidth- logoWidth)/2
-    logoY = (wHeight - logoHeight)/4
-    pushY = logoY+200
-    textX = logoX - 200
-    textY = labelY = logoY + 21
-    labelX = textX - 85
+    __logoX = pushX = (__wWidth- __logoWidth)/2
+    __logoY = (__wHeight - __logoHeight)/4
+    __pushY = __logoY+200
+    __textX = __logoX - 200
+    __textY = __labelY = __logoY + 21
+    __labelX = __textX - 85
 
-    numberOfTweets = 10
+    __numberOfTweets = 10
 
     #Widget page navigation
     def mainToUser(self):
@@ -150,44 +150,44 @@ class window(object):
 
     def crawlTwitterGraph(self):
         #start_time = time.time()
-        favList = ["Fav Count"]
-        rtList = ["RT Count"]
-        dateList = []
-        totalRTCount=0
-        totalFavCount=0
-        amount = 100
-        totalDates = 7
+        __favList = ["Fav Count"]
+        __rtList = ["RT Count"]
+        __dateList = []
+        __totalRTCount=0
+        __totalFavCount=0
+        __amount = 100
+        __totalDates = 7
         if "twitter" in self.tlink:
             tUser = TUser.byURL(self.tlink)
         else:
             tUser = TUser.byID(self.tlink)
-        tweets = tUser.userTweets(amount)
+        tweets = tUser.userTweets(__amount)
         print(tweets)
         for idx, x in enumerate(tweets):
-            tid = x[0]
-            date = x[1]
+            __tid = x[0]
+            __date = x[1]
             fav = x[2]
             rt = x[3]
-            if len(dateList) > 7:
+            if len(__dateList) > 7:
                 print(idx, " tweets crawled for 7 days of data")
-                favList.append(totalFavCount)
-                rtList.append(totalRTCount)
+                __favList.append(__totalFavCount)
+                __rtList.append(__totalRTCount)
                 break
-            if date in dateList:
-                totalFavCount+=fav
-                totalRTCount+=rt
-            elif not dateList:#first tweet
-                dateList.append(date)
-            elif dateList:
-                favList.append(totalFavCount)
-                rtList.append(totalRTCount)
-                dateList.append(date) #append new date
-                totalRTCount=totalFavCount=0 #reset count
-        favList.pop()
-        rtList.pop()
-        dateList.pop()
+            if __date in __dateList:
+                __totalFavCount+=fav
+                __totalRTCount+=rt
+            elif not __dateList:#first tweet
+                __dateList.append(__date)
+            elif __dateList:
+                __favList.append(__totalFavCount)
+                __rtList.append(__totalRTCount)
+                __dateList.append(__date) #append new date
+                __totalRTCount=__totalFavCount=0 #reset count
+        __favList.pop()
+        __rtList.pop()
+        __dateList.pop()
         #print("--- %s seconds ---" % (time.time() - start_time))
-        return favList, rtList, dateList
+        return __favList, __rtList, __dateList
 
     def setTwitterGraphs(self, window):
         """! create bar chart with data crawled from twitter
@@ -195,10 +195,10 @@ class window(object):
         """
         #uncomment this line to actually crawl
         #favList, rtList, dateList = self.crawlTwitterGraph()
-        favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
-        rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
-        dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([rtList,favList], dateList, 500, 300, 500, 200, "User's Fav and RT Count")
+        __favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
+        __rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
+        __dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
+        window.setBarChart([__rtList,__favList], __dateList, 500, 300, 500, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
@@ -225,11 +225,11 @@ class window(object):
         """
         #Start of mainMenu
         self.mainM = windowGen()
-        self.mainM.setLabel(self.logoX, self.logoY, self.logoWidth, self.logoHeight,"", "GUIMainLogo.PNG","","","",True)
+        self.mainM.setLabel(self.__logoX, self.__logoY, self.__logoWidth, self.__logoHeight,"", "GUIMainLogo.PNG","","","",True)
         #user push button
-        self.mainM.setPush(self.pushX, self.pushY, self.pushWidth, self.pushHeight, self.mainToUser,"User")
+        self.mainM.setPush(self.pushX, self.__pushY, self.__pushWidth, self.__pushHeight, self.mainToUser,"User")
         #topic push button
-        self.mainM.setPush(self.pushX+250, self.pushY, self.pushWidth, self.pushHeight, self.mainToTopic, "Topic")
+        self.mainM.setPush(self.pushX+250, self.__pushY, self.__pushWidth, self.__pushHeight, self.mainToTopic, "Topic")
         
     def setupUserMenu(self):
         """! create widgets for the user menu page
@@ -237,23 +237,23 @@ class window(object):
         #Start of userMenu
         self.userM = windowGen()
         #userLogo
-        self.userM.setLabel(self.logoX, self.logoY-79, self.logoWidth, self.logoHeight, "", "GUIMainLogo.PNG", "","","",True)
+        self.userM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "","","",True)
 
         #ytTextbox
-        self.ytTextBox = self.userM.setTextbox(self.textX, self.textY, self.textWidth*2, self.textHeight, "Enter Youtube channel URL:")
+        self.ytTextBox = self.userM.setTextbox(self.__textX, self.__textY, self.__textWidth*2, self.__textHeight, "Enter Youtube channel URL:")
         #tTextBox
-        self.tTextBox = self.userM.setTextbox(self.textX, self.textY+50, self.textWidth*2, self.textHeight,"Enter Twitter User URL:")
+        self.tTextBox = self.userM.setTextbox(self.__textX, self.__textY+50, self.__textWidth*2, self.__textHeight,"Enter Twitter User URL:")
 
         #ytlabel
-        self.userM.setLabel(self.labelX-22, self.labelY, self.labelWidth, self.labelHeight, "YouTube Link:")
+        self.userM.setLabel(self.__labelX-22, self.__labelY, self.__labelWidth, self.__labelHeight, "YouTube Link:")
         #tLabel
-        self.userM.setLabel(self.labelX-6, self.labelY+50, self.labelWidth, self.labelHeight, "Twitter Link:")
+        self.userM.setLabel(self.__labelX-6, self.__labelY+50, self.__labelWidth, self.__labelHeight, "Twitter Link:")
         #userNoteLabel
-        self.userM.setLabel(self.labelX+85, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.")
+        self.userM.setLabel(self.__labelX+85, self.__labelY+80, self.__labelWidth+200, self.__labelHeight, "Leave fields empty for a random generation.")
         #userCrawlPush
-        self.userM.setPush(self.pushX-125, self.pushY-29, self.pushWidth, self.pushHeight, self.userToSns, "Crawl!")
+        self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
-        self.userM.setPush(self.pushX+375, self.pushY-29, self.pushWidth, self.pushHeight, self.userToMain, "Back")
+        self.userM.setPush(self.pushX+375, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -261,21 +261,21 @@ class window(object):
         #Start of topicMenu
         self.topicM = windowGen()
         #topicLogo
-        self.topicM.setLabel(self.logoX, self.logoY-79, self.logoWidth, self.logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
+        self.topicM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
         #topicCrawlPush
-        self.topicM.setPush(self.pushX, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Crawl!")
+        self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Crawl!")
         #topicbackpush
-        self.topicM.setPush(self.pushX+250, self.pushY-29, self.pushWidth, self.pushHeight, self.topicToMain, "Back")
+        self.topicM.setPush(self.pushX+250, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
-        self.topicM.setTextbox(self.textX+200, self.textY, self.textWidth, self.textHeight, "Enter Topic:")
+        self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
-        self.topicM.setTextbox(self.textX+200, self.textY+50, self.textWidth, self.textHeight, "Enter Country:")
+        self.topicM.setTextbox(self.__textX+200, self.__textY+50, self.__textWidth, self.__textHeight, "Enter Country:")
         #topiclabel
-        self.topicM.setLabel(self.labelX+238, self.labelY, self.labelWidth, self.labelHeight, "Topic:")
+        self.topicM.setLabel(self.__labelX+238, self.__labelY, self.__labelWidth, self.__labelHeight, "Topic:")
         #countrylaebl
-        self.topicM.setLabel(self.labelX+218, self.labelY+50, self.labelWidth, self.labelHeight, "Country:")
+        self.topicM.setLabel(self.__labelX+218, self.__labelY+50, self.__labelWidth, self.__labelHeight, "Country:")
         #topicnotelabel
-        self.topicM.setLabel(self.labelX+285, self.labelY+80, self.labelWidth+200, self.labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
+        self.topicM.setLabel(self.__labelX+285, self.__labelY+80, self.__labelWidth+200, self.__labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
         
     def setupSnsMenu(self):
         """! create widgets for the sns menu page
@@ -289,53 +289,53 @@ class window(object):
    
 
         #ytlogo
-        snsM.setLabel(self.logoX-320, self.logoY-137, self.logoWidth-270, self.logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-320, self.__logoY-137, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
-        snsM.setLabel(self.logoX-303, self.logoY-17, self.logoWidth-300, self.logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-303, self.__logoY-17, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
         #subcountlabel
-        snsM.setLabel(self.labelX+112, self.labelY-168, self.labelWidth, self.labelHeight, "Sub count:")
+        snsM.setLabel(self.__labelX+112, self.__labelY-168, self.__labelWidth, self.__labelHeight, "Sub count:")
         #viewcountlabel
-        snsM.setLabel(self.labelX+112, self.labelY-143, self.labelWidth, self.labelHeight, "View count:")
+        snsM.setLabel(self.__labelX+112, self.__labelY-143, self.__labelWidth, self.__labelHeight, "View count:")
         #videocountlabel
-        snsM.setLabel(self.labelX+112, self.labelY-118, self.labelWidth, self.labelHeight, "Video count:")
+        snsM.setLabel(self.__labelX+112, self.__labelY-118, self.__labelWidth, self.__labelHeight, "Video count:")
         #ytCreatedLabel
-        snsM.setLabel(self.labelX+112, self.labelY-93, self.labelWidth, self.labelHeight, "Created At:")
+        snsM.setLabel(self.__labelX+112, self.__labelY-93, self.__labelWidth, self.__labelHeight, "Created At:")
 
         #twitter
         #followerCountLabel
-        snsM.setLabel(self.labelX+112, self.labelY-48, self.labelWidth, self.labelHeight, "Follower Count:")
+        snsM.setLabel(self.__labelX+112, self.__labelY-48, self.__labelWidth, self.__labelHeight, "Follower Count:")
         #tweetsLikedLabel
-        snsM.setLabel(self.labelX+112, self.labelY-23, self.labelWidth, self.labelHeight, "Liked tweets:")
+        snsM.setLabel(self.__labelX+112, self.__labelY-23, self.__labelWidth, self.__labelHeight, "Liked tweets:")
         #totalTweetsLabel
-        snsM.setLabel(self.labelX+112, self.labelY+2, self.labelWidth, self.labelHeight, "Total tweets:")
+        snsM.setLabel(self.__labelX+112, self.__labelY+2, self.__labelWidth, self.__labelHeight, "Total tweets:")
         #tCreatedLabel
-        snsM.setLabel(self.labelX+112, self.labelY+27, self.labelWidth, self.labelHeight, "Created at:")
+        snsM.setLabel(self.__labelX+112, self.__labelY+27, self.__labelWidth, self.__labelHeight, "Created at:")
         #seperateLineLabel
         #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
-        snsM.setPush(self.pushX+580, self.pushY+223, self.pushWidth, self.pushHeight, self.snsBack, "Back")
+        snsM.setPush(self.pushX+580, self.__pushY+223, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
 
         #make sure that these labels are the last to be generated
-        x = 50
-        y = 350
-        textWidth = 500
-        snsM.setLabel(x+400, y, textWidth, self.labelHeight, "Recent tweets based on topic:")
-        snsM.setLabel(x+400, y+30, textWidth, self.labelHeight, "1")
-        snsM.setLabel(x+400, y+30*2, textWidth, self.labelHeight, "2")
-        y = 580
-        snsM.setLabel(x+60, y-30, textWidth, self.labelHeight, "Current twitter trending topics")
-        snsM.setLabel(x, y, textWidth, self.labelHeight, "Double click on the piechart for news article links")
+        __x = 50
+        __y = 350
+        __textWidth = 500
+        snsM.setLabel(__x+400, __y, __textWidth, self.__labelHeight, "Recent tweets based on topic:")
+        snsM.setLabel(__x+400, __y+30, __textWidth, self.__labelHeight, "1")
+        snsM.setLabel(__x+400, __y+30*2, __textWidth, self.__labelHeight, "2")
+        __y = 580
+        snsM.setLabel(__x+60, __y-30, __textWidth, self.__labelHeight, "Current twitter trending topics")
+        snsM.setLabel(__x, __y, __textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
-            y+=30
+            __y+=30
             text = "Article " + str(i+1)
-            snsM.setLabel(x+self.labelWidth-30, y, 1000, 25, "Double click on the piechart!")
+            snsM.setLabel(__x+self.__labelWidth-30, __y, 1000, 25, "Double click on the piechart!")
             if i == 0:
-                snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl0, text)
+                snsM.setPush(__x, __y, self.__labelWidth-40, 25, self.goToUrl0, text)
             elif i == 1:
-                snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl1, text)
+                snsM.setPush(__x, __y, self.__labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
-                snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl2, text)
+                snsM.setPush(__x, __y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
         
         
@@ -363,12 +363,3 @@ class window(object):
             webbrowser.open_new(results[2])
         else:
             messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
-        
-
-# if __name__ == "__main__":
-#     app = QtWidgets.QApplication(sys.argv)
-#     MainWindow = QtWidgets.QMainWindow()
-#     ui = Ui_MainWindow()
-#     ui.setupUi(MainWindow)
-#     MainWindow.show()
-#     sys.exit(app.exec_())
