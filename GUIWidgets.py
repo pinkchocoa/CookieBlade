@@ -23,11 +23,11 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
 from PyQt5.QtWebEngineWidgets import * #pip3 install PyQtWebEngine
 from PyQt5.QtChart import * #pip3 install PyQtChart
-from pyqtgraph import PlotWidget, plot, exporters #pip3 install pyqtgraph
+from pyqtgraph import PlotWidget, plot, exporters, BarGraphItem #pip3 install pyqtgraph
 import functools
 from singleSpider import spidey
 from twitter import Twitter
-
+import numpy as np
 ## Documentation for GUIWidgets.py
 # Contains all UI Widget classes
 # We can reuse classes to make different widgets for diffferent purpose
@@ -460,30 +460,34 @@ class newPieChart():
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2)].label.setText(user)
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
 
+class InteractiveBarItem(BarGraphItem):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        y = self.opts.get('height')
+        text = "Value: " + str(y)
+        self.setToolTip(text.format(self.boundingRect().y()))
+        # required in order to receive hoverEnter/Move/Leave events
+        self.setAcceptHoverEvents(True)
+
+    def hoverEnterEvent(self, event):
+            print('hover!')
+            print(self.opts.get('height'))
+            self.setToolTip("")
+
+    def mousePressEvent(self, event):
+            print('click!')
+
 class newBarChart():
     """! newBarChart class
     Defines the bar chart object to display bar charts
     """
-    def __init__(self):
+    def __init__(self, window):
         """! newBarChart class initializer
         """
-        self.chart = QChart()
-        self.chart.setAnimationOptions(QChart.SeriesAnimations)
-        
-        #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
-        #self.chart.mapToPosition(QtCore.QPointF(500,500))
-        self.chart.setBackgroundVisible(False)
-        self.series = QStackedBarSeries()
-        
-        self.chart.legend().setVisible(True)
-        self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
-
-
-    def setTitle(self, title):
-        """! used to set bar chart title
-        @param title used to set title name
-        """
-        self.chart.setTitle(title)
+        self.chart = PlotWidget(window)
+        self.chart.setBackground(background=None)
+        self.chart.setLabel('left', "Count", units='')
+        self.chart.setLabel('bottom', "Fav and RT count in the past 7 days", units='day')
 
     #data is a list of list
     def addData(self, data, categories):
@@ -491,37 +495,25 @@ class newBarChart():
         @param data to be displayed as bar charts
         @param categories used to show what each bar chart represent
         """
-        for a in data:
-            tempset = QBarSet(a[0])
+        for i, a in enumerate(data):
+            if i == 0:
+                brush='r'
+                width = 0.5
+            else:
+                brush = 'g'
+                width = 0.3
             for idx, x in enumerate(a):
                 if idx == 0:
                     continue
-                tempset << x
-            self.series.append(tempset)
-
-        self.chart.addSeries(self.series)
-        axis = QBarCategoryAxis()
-        axis.append(categories)
-        self.chart.createDefaultAxes()
-        self.chart.setAxisX(axis, self.series)
-
-
+                bg = InteractiveBarItem(x=[idx-1], height=[x], width=width, brush=brush)
+                self.chart.addItem(bg)
     
-    def viewChart(self, window, posX, posY,sizex, sizey):
+    def setSize(self, posX, posY, sizex, sizey):
         """! set bar chart as visible
         @param window used to determine which window the bar chart will appear on
         @param posX used to determine the X coordinate of bar chart
         @param posY used to determine the Y coordinate of bar chart
         @param size used to determine the size of the bar chart
         """
-        self.chartview = QChartView(self.chart, window)
-        self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
+        self.chart.setGeometry(posX, posY, sizex, sizey)
 
-        #need to find the equivalent of this in his stackwidget
-        #window.setCentralWidget(self.chartview)
-        test = QtCore.QRectF()
-        test.setHeight(sizey)
-        test.setWidth(sizex)
-        test.moveTo(posX,posY)#This move the pi chart without the label.
-        self.chart.setPlotArea(test)
-        self.chartview.resize(1000,800)

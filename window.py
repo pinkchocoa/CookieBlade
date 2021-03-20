@@ -303,8 +303,8 @@ class window(object):
         #Start of snsMenu
         snsM = windowGen()
         self.setTwitterGraphs(snsM) 
-        self.setTwitterTopics(snsM) 
-        self.setYoutubeGraphs(snsM) 
+        #self.setTwitterTopics(snsM) 
+        #self.setYoutubeGraphs(snsM) 
 
    
 

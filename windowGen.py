@@ -248,7 +248,7 @@ class windowGen():
     def addNewBarChart(self):
         """! initialize a new barchart widget
         """
-        self.barChartList.append(newBarChart())
+        self.barChartList.append(newBarChart(self.window.page))
         self.totalNBarChart+=1
 
     #data is a list of list
@@ -268,8 +268,7 @@ class windowGen():
             self.addNewBarChart()
         barChart = self.barChartList[self.nBarChart]
         barChart.addData(data, categories)
-        barChart.viewChart(self.window.page,posX,posY,sizex, sizey)
-        barChart.setTitle(title)
+        barChart.setSize(posX,posY,sizex, sizey)
         self.nBarChart+=1
         return barChart
 
