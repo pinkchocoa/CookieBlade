@@ -473,7 +473,7 @@ class newBarChart():
         #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
         #self.chart.mapToPosition(QtCore.QPointF(500,500))
         self.chart.setBackgroundVisible(False)
-        self.series = QPercentBarSeries()
+        self.series = QStackedBarSeries()
         
         self.chart.legend().setVisible(True)
         self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
@@ -499,17 +499,13 @@ class newBarChart():
                 tempset << x
             self.series.append(tempset)
 
+        self.chart.addSeries(self.series)
         axis = QBarCategoryAxis()
         axis.append(categories)
         self.chart.createDefaultAxes()
-        #self.chart.setAxisX(axis, self.series)
-        self.chart.addAxis(axis, Qt.AlignBottom)
-        #self.chart.addAxis(self.series, Qt.AlignLeft)
-        self.chart.addSeries(self.series)
-        axisY = QValueAxis()
-        self.chart.addAxis(axisY, Qt.AlignLeft)
-        self.series.attachAxis(axisY)
-        axisY.setRange(0,50)
+        self.chart.setAxisX(axis, self.series)
+
+
     
     def viewChart(self, window, posX, posY,sizex, sizey):
         """! set bar chart as visible
