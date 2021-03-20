@@ -61,8 +61,6 @@ class Testing(unittest.TestCase):
 
         get_domain_name("https://twitter.com/BarackObama")
         get_sub_domain_name("https://twitter.com/BarackObama")
-        get_domain_name()
-        get_sub_domain_name()
 
         print("\nEND of test_domain_py\n")
 
@@ -210,7 +208,7 @@ class Testing(unittest.TestCase):
         #Class: Channel()
         #Methods: Channel.getRevenueData()
         #This easily caps API limit so it is omitted as we tested it once.
-        setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        #setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         
         #This also invokes database.py and its related class and methods.
         getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
