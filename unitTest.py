@@ -59,8 +59,10 @@ class Testing(unittest.TestCase):
         """
         print("\nSTART of test_domain_py\n")
 
-        assert get_domain_name("https://twitter.com/BarackObama")
-        assert get_sub_domain_name("https://twitter.com/BarackObama")
+        get_domain_name("https://twitter.com/BarackObama")
+        get_sub_domain_name("https://twitter.com/BarackObama")
+        get_domain_name()
+        get_sub_domain_name()
 
         print("\nEND of test_domain_py\n")
 
