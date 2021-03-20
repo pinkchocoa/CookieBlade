@@ -20,7 +20,7 @@ from datetime import datetime
 
 class Youtube:
 
-    api_key = 'AIzaSyDytuNd9zKhqSjMdczuKch-RlDnRhTCZwE'
+    api_key = 'AIzaSyB3ely6qW_YfbjHIFVODyufGs9exzVqnM4'
     youtube = build('youtube', 'v3', developerKey=api_key)
 
 class youtubeVid(Youtube):

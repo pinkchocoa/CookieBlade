@@ -313,15 +313,21 @@ class window(object):
         #tLogo
         snsM.setLabel(self.__logoX-303, self.__logoY-17, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
         
-        
+        #Youtube
+        youtubeGraph.setYoutubeChannelStats(self.ytlink)
+        youtubeStats = youtubeGraph.getYoutubeChannelStats(self.ytlink)
         #subcountlabel
-        snsM.setLabel(self.__labelX+112, self.__labelY-168, self.__labelWidth, self.__labelHeight, "Sub count:")
+        text = "Sub count: " + str(youtubeStats[2])
+        snsM.setLabel(self.__labelX+112, self.__labelY-168, self.__labelWidth, self.__labelHeight, text)
         #viewcountlabel
-        snsM.setLabel(self.__labelX+112, self.__labelY-143, self.__labelWidth, self.__labelHeight, "View count:")
+        text = "View count: " + str(youtubeStats[3])
+        snsM.setLabel(self.__labelX+112, self.__labelY-143, self.__labelWidth, self.__labelHeight, text)
         #videocountlabel
-        snsM.setLabel(self.__labelX+112, self.__labelY-118, self.__labelWidth, self.__labelHeight, "Video count:")
+        text = "Video count: " + str(youtubeStats[1])
+        snsM.setLabel(self.__labelX+112, self.__labelY-118, self.__labelWidth, self.__labelHeight, text)
         #ytCreatedLabel
-        snsM.setLabel(self.__labelX+112, self.__labelY-93, self.__labelWidth, self.__labelHeight, "Created At:")
+        text = "Created At: " + str(youtubeStats[0])
+        snsM.setLabel(self.__labelX+112, self.__labelY-93, self.__labelWidth, self.__labelHeight, text)
 
         if "twitter" in self.tlink:
             tUser = TUser.byURL(self.tlink)
