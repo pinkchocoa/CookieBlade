@@ -32,14 +32,14 @@ from spider import *
 # Error statement is autogenenrated in the test.
 class Testing(unittest.TestCase):
     """! Testing class
-    For Testing for class files and running python unit test.
+    For Testing for Classes/Methods files and running python unit test.
     """
     
-    def testDataBase(self):
+    def test_database_py_mkFolder_py(self):
         """! database.py and mkFolder.py Test
         """
         data = [['Key1','1','2'],['key2','1','2']]
-        test = database("unitTest")
+        test = database("unitTest") #Invoking this cause the testing of mkFolder class and its methods as well.
         test.createTable('test','key','C1','C2')
         for x in range(len(data)):
             test.insertTable(data[x],'test','key','C1','C2')
@@ -50,7 +50,55 @@ class Testing(unittest.TestCase):
         test.insertTable(data)
         test.getTableData("")
 
-    def testTwitter(self):
+    def test_domain_py(self):
+        """! Domain.py Test
+        """
+        assert get_domain_name("https://twitter.com/BarackObama")
+        assert get_sub_domain_name("https://twitter.com/BarackObama")
+
+    def test_general_py(self):
+        """! General.py Test
+        """
+        create_project_dir('testGeneral')
+        create_data_files('testGeneral', 'www.google.com')
+        create_file('testResult.txt')
+        write_file('./testGeneral/queue.txt','test')
+        append_to_file('./testGeneral/queue.txt', 'test')
+        file_to_set('./testGeneral/queue.txt')
+        set_to_file('https://twitter.com/BarackObama', './testGeneral/queue.txt')
+        delete_file_contents('./testGeneral/queue.txt')
+
+    def test_getLinks_py(self):
+        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
+        test.handle_starttag("a","href")
+        test.getLinks()
+        test.error("Unit Test")
+
+    #Empty - Test by running main.py, Part of Ui
+    def test_GUIWidegets_py(self):
+        pass
+
+    def test_linkFinder_py(self):
+        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
+        test.handle_starttag("a","href")
+        test.getLinks()
+        test.error("Unit Test")
+ 
+    def test_LinkValidation_py(self):
+        """! LinkValidation.py Test
+        """
+        test = LinkValidation()
+        test.UrlValidation("https://twitter.com/BarackObama")
+        test.InternetVaild()
+
+    #Empty - Test by running main.py. Main Program file.
+    def test_main_py(self):
+        pass
+
+    def test_singleSpider_py_spider_py(self):
+        spidey(['articles'],"covid test", 3) #Invoking this cause the testing of spider class and its methods as well.
+
+    def test_twitter_py(self):
         """! twitter.py Test
         """
         test = Twitter()
@@ -76,15 +124,19 @@ class Testing(unittest.TestCase):
         test.loc()
         test.getDate()
 
-    def testYoutube(self):
-        """! Youtube.py Test
-        """
-        getChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-        getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-        getTrendingVideo()
-        getDBvids("SG")
+    def test_twitterGraph_py_twitterDB_py(self):
+        """! TwitterGraph.py & TwitterDB.py Test
+        """ 
+        #twitterTrend() also invoke t.trendingTopics() and setTwitterTrendDB()
+        twitterTrend()
 
-    def testUrlExtraction(self):
+        #twitterGraph() also invoke setTwitterGraphDB() and checkTableTwitterGraph()
+        twitterGraph(10,"https://twitter.com/BarackObama")
+        
+        getTwitterGraphDB("https://twitter.com/BarackObama")
+        getTwitterTrendDB()
+
+    def test_UrlExtraction_py(self):
         """! UrlExtraction.py Test
         """
         test = UrlExtraction()
@@ -95,63 +147,28 @@ class Testing(unittest.TestCase):
         test.getUniqueID("")
         test.getSiteName("")
 
-    def testTwitterGraphandDB(self):
-        """! TwitterGraph.py & TwitterDB.py Test
-        """ 
-        #twitterTrend() also invoke t.trendingTopics() and setTwitterTrendDB
-        twitterTrend()
+    #Empty - Test by running main.py, Part of Ui
+    def test_window_py(self):
+        pass
 
-        #twitterGraph() also invoke setTwitterGraphDB() and checkTableTwitterGraph()
-        twitterGraph(10,"https://twitter.com/BarackObama")
-        
-        getTwitterGraphDB("https://twitter.com/BarackObama")
-        getTwitterTrendDB()
+    #Empty - Test by running main.py, Part of Ui
+    def test_windowGen_py(self):
+        pass
 
-    def testLinkValidation(self):
-        """! LinkValidation.py Test
+    #Needs to be rewritten.
+    def test_youtube_py(self):
+        """! Youtube.py Test
         """
-        test = LinkValidation()
-        test.UrlValidation("https://twitter.com/BarackObama")
-        test.InternetVaild()
+        pass
 
-    def testDomain(self):
-        """! Domain.py Test
-        """
-        assert get_domain_name("https://twitter.com/BarackObama")
-        assert get_sub_domain_name("https://twitter.com/BarackObama")
+    #Needs to be rewritten.
+    def test_youtubeGraph_py(self):
+        pass
 
-    def testGeneral(self):
-        """! General.py Test
-        """
-        create_project_dir('testGeneral')
-        create_data_files('testGeneral', 'www.google.com')
-        create_file('testResult.txt')
-        write_file('./testGeneral/queue.txt','test')
-        append_to_file('./testGeneral/queue.txt', 'test')
-        file_to_set('./testGeneral/queue.txt')
-        set_to_file('https://twitter.com/BarackObama', './testGeneral/queue.txt')
-        delete_file_contents('./testGeneral/queue.txt')
+#To be removed files:
+# spiderThreads.py
+# linkFinder.py or getLinks.py
 
-    def testGetLinks(self):
-        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
-        test.handle_starttag("a","href")
-        test.getLinks()
-        test.error("Unit Test")
-
-    def testLinkFinder(self):
-        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
-        test.handle_starttag("a","href")
-        test.getLinks()
-        test.error("Unit Test")
-
-    def testYoutubeGraph(self):
-        setYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-        getYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-        setYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-        getYoutubeChannelRevenue("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
-
-    def testSingleSpiderandSpider(self):
-        spidey(['articles'],"covid test", 3) #This use the spiderWorker and Spider class as well.
 
 if __name__ == '__main__':
     unittest.main()
