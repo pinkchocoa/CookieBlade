@@ -42,5 +42,4 @@ class mkFolder(UrlExtraction):
             return sitename
         else:
             os.mkdir(UserUrl)
-            return sitename
-    
+            return sitename    
