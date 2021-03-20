@@ -20,6 +20,9 @@ from PyQt5.QtWidgets import QApplication, QMainWindow
 from GUIWidgets import *
 from window import window
 from youtube import *
+from general import delete_file_contents
+
+RESULT_FILE = 'result.txt'
 
 class UI():
     """! UI class
@@ -43,7 +46,9 @@ class UI():
         """
         self.win.show()
 
+delete_file_contents(RESULT_FILE)
 app = startApp()
 win = UI()
 win.show()
 sys.exit(app.QApp.exec_())
+delete_file_contents(RESULT_FILE)

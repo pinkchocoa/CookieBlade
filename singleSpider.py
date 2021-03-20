@@ -3,10 +3,7 @@ from spider import Spider
 from domain import *
 from general import *
 
-NUMBER_OF_RESULTS = 3
 PROJECT_NAME = 'googleNews'
-QUEUE_FILE = PROJECT_NAME + '/queue.txt'
-CRAWLED_FILE = PROJECT_NAME + '/crawled.txt'
 RESULT_FILE = 'result.txt'
 
 class spiderWorker:
@@ -43,11 +40,6 @@ class spiderWorker:
 
 def spidey(filterList="", topic="", numResults=3):
     print("crawling")
-
-    #delete existing crawls
-    #delete_file_contents(QUEUE_FILE)
-    #delete_file_contents(CRAWLED_FILE)
-    #delete_file_contents(RESULT_FILE)
 
     topic = topic.replace("#", "")
     print("topic: ", topic)

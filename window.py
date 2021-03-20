@@ -26,8 +26,10 @@ from database import database
 import twitterGraph
 import twitterDB
 import time
-from general import file_to_set
+from general import file_to_set, delete_file_contents
 import webbrowser
+
+RESULT_FILE = 'result.txt'
 
 ## Documentation for window Class
 # The window class intialize the different menus and their corresponding widgets
@@ -106,6 +108,7 @@ class window(object):
     def snsBack(self):
         """! switches the widgets from sns menu to widgets from either user or topic menu
         """
+        delete_file_contents(RESULT_FILE)
         if self.prev == "user":
             self.stackedWidget.setCurrentWidget(self.userM.window)
         if self.prev == "topic":
@@ -214,7 +217,8 @@ class window(object):
         #uncomment this line to actually crawl
         #data = self.crawlTwitterTopics()
         data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
-        window.setPieChart(data, "Current trending topics", 100, 325)
+        
+        window.setPieChart(data, "Current trending topics", 50, 275)
 
     def setupMainMenu(self):
         """! create widgets for the main menu page
@@ -282,6 +286,8 @@ class window(object):
         self.setTwitterGraphs(snsM) 
         self.setTwitterTopics(snsM) 
 
+   
+
         #ytlogo
         snsM.setLabel(self.logoX-320, self.logoY-137, self.logoWidth-270, self.logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
@@ -309,20 +315,21 @@ class window(object):
         #snsBackPush
         snsM.setPush(self.pushX+580, self.pushY+223, self.pushWidth, self.pushHeight, self.snsBack, "Back")
 
-        #make ure that these labels are the last to be generated
-        x = 10
-        y = 600
-        snsM.setLabel(x, y, 1000, self.labelHeight, "Double click on the piechart for news article links:")
+        #make sure that these labels are the last to be generated
+        x = 50
+        y = 580
+        snsM.setLabel(125, y-30, 500, self.labelHeight, "Current twitter trending topics")
+        snsM.setLabel(x, y, 1000, self.labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
-            y+=25
+            y+=30
             text = "Article " + str(i+1)
-            snsM.setLabel(x+self.pushWidth, y, 1000, self.labelHeight, "")
+            snsM.setLabel(x+self.labelWidth-30, y, 1000, 25, "Double click on the piechart!")
             if i == 0:
-                snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl0, text)
+                snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl0, text)
             elif i == 1:
-                snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl1, text)
+                snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
-                snsM.setPush(x, y, self.pushWidth, self.pushHeight, self.goToUrl2, text)
+                snsM.setPush(x, y, self.labelWidth-40, 25, self.goToUrl2, text)
         return snsM
 
     def goToUrl0(self):
@@ -330,7 +337,7 @@ class window(object):
         if results and results[0]:
             webbrowser.open_new(results[0])
         else:
-            pass
+            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
         
 
     def goToUrl1(self):
@@ -338,7 +345,7 @@ class window(object):
         if results and results[1]:
             webbrowser.open_new(results[1])
         else:
-            pass
+            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
         
 
     def goToUrl2(self):
@@ -346,7 +353,7 @@ class window(object):
         if results and results[2]:
             webbrowser.open_new(results[2])
         else:
-            pass
+            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
         
 
 # if __name__ == "__main__":
