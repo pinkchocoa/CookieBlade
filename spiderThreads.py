@@ -1,3 +1,6 @@
+#this file is not in use but im keeping it arund bc of threading/ref
+#will not be submitted 
+
 import threading
 from queue import Queue
 from spider import Spider
