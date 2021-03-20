@@ -222,7 +222,7 @@ class Testing(unittest.TestCase):
 
 #To be removed/unUsed files:
 # spiderThreads.py - Kept for reference.
-# linkFinder.py or getLinks.py
+# getLinks.py - No one using...
 
 
 if __name__ == '__main__':
