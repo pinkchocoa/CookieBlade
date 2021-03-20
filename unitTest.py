@@ -220,8 +220,8 @@ class Testing(unittest.TestCase):
     def test_youtubeGraph_py(self):
         pass
 
-#To be removed files:
-# spiderThreads.py
+#To be removed/unUsed files:
+# spiderThreads.py - Kept for reference.
 # linkFinder.py or getLinks.py
 
 
