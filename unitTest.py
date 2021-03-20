@@ -35,9 +35,11 @@ class Testing(unittest.TestCase):
     For Testing for Classes/Methods files and running python unit test.
     """
     
+    #Ok
     def test_database_py_mkFolder_py(self):
         """! database.py and mkFolder.py Test
         """
+        print("\nSTART of test_database_py_mkFolder_py\n")
         data = [['Key1','1','2'],['key2','1','2']]
         test = database("unitTest") #Invoking this cause the testing of mkFolder class and its methods as well.
         test.createTable('test','key','C1','C2')
@@ -50,15 +52,25 @@ class Testing(unittest.TestCase):
         test.insertTable(data)
         test.getTableData("")
 
+        print("\nEND of test_database_py_mkFolder_py\n")
+
+    #Ok
     def test_domain_py(self):
         """! Domain.py Test
         """
+        print("\nSTART of test_domain_py\n")
+
         assert get_domain_name("https://twitter.com/BarackObama")
         assert get_sub_domain_name("https://twitter.com/BarackObama")
 
+        print("\nEND of test_domain_py\n")
+
+    #Ok
     def test_general_py(self):
-        """! General.py Test
+        """! general.py Test
         """
+        print("\nSTART of test_general_py\n")
+
         create_project_dir('testGeneral')
         create_data_files('testGeneral', 'www.google.com')
         create_file('testResult.txt')
@@ -68,39 +80,70 @@ class Testing(unittest.TestCase):
         set_to_file('https://twitter.com/BarackObama', './testGeneral/queue.txt')
         delete_file_contents('./testGeneral/queue.txt')
 
+        print("\nEND of test_general_py\n")
+
+    #Failed Test.
     def test_getLinks_py(self):
+        """! getLinks.py Test
+        """
+        print("\nSTART of test_getLinks_py\n")
+
         test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
         test.handle_starttag("a","href")
         test.getLinks()
         test.error("Unit Test")
+
+        print("\nEND of test_getLinks_py\n")
 
     #Empty - Test by running main.py, Part of Ui
     def test_GUIWidegets_py(self):
         pass
 
+    #Failed Test.
     def test_linkFinder_py(self):
+        """! linkFinder Test
+        """
+        print("\nSTART of test_linkFinder_py\n")
+
         test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
         test.handle_starttag("a","href")
         test.getLinks()
         test.error("Unit Test")
+
+        print("\nEND of test_linkFinder_py\n")
  
+    #Ok
     def test_LinkValidation_py(self):
         """! LinkValidation.py Test
         """
+        print("\nSTART of test_LinkValidation_py\n")
+
         test = LinkValidation()
         test.UrlValidation("https://twitter.com/BarackObama")
         test.InternetVaild()
+
+        print("\nEND of test_LinkValidation_py\n")
 
     #Empty - Test by running main.py. Main Program file.
     def test_main_py(self):
         pass
 
+    #Ok
     def test_singleSpider_py_spider_py(self):
+        """! singleSpider.py and spider.py Test
+        """
+        print("\nSTART of test_singleSpider_py_spider_py\n")
+
         spidey(['articles'],"covid test", 3) #Invoking this cause the testing of spider class and its methods as well.
 
+        print("\nEND of test_singleSpider_py_spider_py\n")
+
+    #Ok
     def test_twitter_py(self):
         """! twitter.py Test
         """
+        print("\nSTART of test_twitter_py\n")
+
         test = Twitter()
         test.searchKeyword("Obama")
         test.trendingTopics()
@@ -124,9 +167,14 @@ class Testing(unittest.TestCase):
         test.loc()
         test.getDate()
 
+        print("\nEND of test_twitter_py\n")
+
+    #Ok
     def test_twitterGraph_py_twitterDB_py(self):
         """! TwitterGraph.py & TwitterDB.py Test
         """ 
+        print("\nSTART of test_twitterGraph_py_twitterDB_py\n")
+
         #twitterTrend() also invoke t.trendingTopics() and setTwitterTrendDB()
         twitterTrend()
 
@@ -135,10 +183,15 @@ class Testing(unittest.TestCase):
         
         getTwitterGraphDB("https://twitter.com/BarackObama")
         getTwitterTrendDB()
+        
+        print("\nEND of test_twitterGraph_py_twitterDB_py\n")
 
+    #Ok
     def test_UrlExtraction_py(self):
         """! UrlExtraction.py Test
         """
+        print("\nSTART of test_UrlExtraction_py\n")
+
         test = UrlExtraction()
         test.getUniqueID("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         test.getUniqueID("https://twitter.com/BarackObama")
@@ -146,6 +199,8 @@ class Testing(unittest.TestCase):
         test.getSiteName("https://twitter.com/BarackObama")
         test.getUniqueID("")
         test.getSiteName("")
+
+        print("\nEND of test_UrlExtraction_py\n")
 
     #Empty - Test by running main.py, Part of Ui
     def test_window_py(self):
@@ -165,9 +220,9 @@ class Testing(unittest.TestCase):
     def test_youtubeGraph_py(self):
         pass
 
-#To be removed files:
-# spiderThreads.py
-# linkFinder.py or getLinks.py
+#To be removed/unUsed files:
+# spiderThreads.py - Kept for reference.
+# getLinks.py - No one using...
 
 
 if __name__ == '__main__':
