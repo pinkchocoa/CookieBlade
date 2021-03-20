@@ -196,6 +196,7 @@ class window(object):
         """
         #uncomment this line to actually crawl
         #favList, rtList, dateList = self.crawlTwitterGraph()
+        
         favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
         rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
         dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
@@ -236,8 +237,8 @@ class window(object):
         #uncomment this line to actually crawl
         #data = self.crawlTwitterTopics()
         data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
-        
-        window.setPieChart(data, "Current trending topics", 50, 275)
+        y = self.__wHeight - 500
+        window.setPieChart(data, "Current trending topics", 50, y)
 
     def setupMainMenu(self):
         """! create widgets for the main menu page
@@ -272,7 +273,7 @@ class window(object):
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
-        self.userM.setPush(self.pushX+375, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
+        self.userM.setPush(self.__wWidth-self.__pushWidth-100, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -284,7 +285,7 @@ class window(object):
         #topicCrawlPush
         self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Crawl!")
         #topicbackpush
-        self.topicM.setPush(self.pushX+250, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
+        self.topicM.setPush(self.__wWidth-self.__pushWidth-100, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
         self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
@@ -332,13 +333,13 @@ class window(object):
         #seperateLineLabel
         #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
-        snsM.setPush(self.pushX+580, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+        snsM.setPush(self.__wWidth-self.__pushWidth-100, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
 
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for piechart usage
         x = 50
-        y = 350
+        y = self.__wHeight - 400
         textWidth = 500
         textHeight = 90
         snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Recent tweets based on topic:")
@@ -349,7 +350,7 @@ class window(object):
             snsM.setLabel(x+400, y, textWidth, textHeight, "2").setAlignmentTop()
             y+=textHeight-30
 
-        y = 580
+        y = self.__wHeight - 150
         snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
