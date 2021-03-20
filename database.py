@@ -186,18 +186,3 @@ class database(mkFolder):
             connect.close()
         except:
             print("deleteTable: Table Delete failed./Table does not Exist.")
-
-    #Execute custom SQL_Statement on table.
-    def customSqlStatement(self,SQL_Statement):
-        """! Execute custom SQL_Statement
-        @param SQL_Statement;
-        """
-        try:
-            connect = sqlite3.connect(self.arg)
-            db = connect.cursor()
-            db.execute(SQL_Statement)
-            connect.commit()
-            db.close()
-            connect.close()
-        except:
-            print("customSqlStatement: db.execute() failed.")

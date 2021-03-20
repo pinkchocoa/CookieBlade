@@ -208,7 +208,7 @@ class Testing(unittest.TestCase):
         #Class: Channel()
         #Methods: Channel.getRevenueData()
         #This easily caps API limit so it is omitted as we tested it once.
-        #setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         
         #This also invokes database.py and its related class and methods.
         getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
