@@ -461,18 +461,16 @@ class newPieChart():
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
 
 class InteractiveBarItem(BarGraphItem):
-    def __init__(self, x, height, width, brush, day):
+    def __init__(self, x, height, width, brush):
         super().__init__(x=x, height=height, width=width, brush=brush)
         # required in order to receive hoverEnter/Move/Leave events
         self.setAcceptHoverEvents(True)
-        self.day = day
-        y = self.opts.get('height')[0]
-        text = "value: " + str(y)
-        self.setToolTip(text.format(self.boundingRect().y()))
 
     def hoverEnterEvent(self, event):
             #print('hover!')
-            pass
+            y = self.opts.get('height')[0]
+            text = "value: " + str(y)
+            self.setToolTip(text)
 
     def mousePressEvent(self, event):
             #print('click!')
@@ -490,8 +488,6 @@ class newBarChart():
         self.chart.setLabel('left', "RT Count: red, Fav Count: Green", units='')
         self.chart.setLabel('bottom', "Days", units='')
 
-        
-
     #data is a list of list
     def addData(self, data, cat):
         """! used to input data into bar chart to be displayed
@@ -502,20 +498,19 @@ class newBarChart():
         for i, a in enumerate(data):
             if i == 0:
                 brush='r'
-                width = 0.3
-                x = 0
+                width = 0.4
+                x = -0.4
             elif i == 1:
                 brush = 'g'
-                width = 0.3
-                x = 0.3
+                width = 0.4
+                x = 0
             for idx, y in enumerate(reversed(a)):
                 if idx == len(a)-1:
                     continue
-                bg = InteractiveBarItem([idx+x], [y], width, brush, cat[idx])
+                bg = InteractiveBarItem([idx+x], [y], width, brush)
                 self.chart.addItem(bg)
         xax = self.chart.getAxis('bottom')
         ticks = [list(zip(range(len(cat)), (cat)))]
-        print(ticks)
         xax.setTicks(ticks)
     
     def setSize(self, posX, posY, sizex, sizey):
