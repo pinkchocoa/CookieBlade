@@ -90,6 +90,7 @@ class windowGen():
         Graph.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         #Enables graph to show grid
         Graph.Graph.showGrid(x = True, y = True)
+        Graph.Graph.setFixedSize(lenX, lenY)
         #Graph.plot(axisX, axisY, pen = lineColor, symbol = points)
         Graph.plotGraph(axisX, axisY, lineColor, points)
         Graph.setBackGroundColor(bgColor)

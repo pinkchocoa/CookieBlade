@@ -287,6 +287,9 @@ class newGraph:
         #Enables graph to show grid
         self.Graph.showGrid(x = True, y = True)
 
+    def setSize(self, x, y):
+        self.Graph.setFixedSize(x,y)
+
     def plotGraph(self, axisX, axisY, color, points):
         """! take in values for X and Y axis, line color and points to plot graph
         @param axisX takes in list to plot the X axis of graph
@@ -295,6 +298,7 @@ class newGraph:
         @param points used to determine symbol used to mark points
         """
         self.Graph.plot(axisX, axisY, pen = color, symbol = points)
+        
         
     def setBackGroundColor(self, color):
         """! sets the background color of the graph
@@ -455,9 +459,6 @@ class newPieChart():
             user = user + " " + link
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2)].label.setText(user)
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
-
-        
-
 
 class newBarChart():
     """! newBarChart class

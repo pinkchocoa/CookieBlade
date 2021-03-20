@@ -29,7 +29,7 @@ class UI():
     Defines the UI object which will create a window and call the window class to load UI
     """
     __wWidth = 1080
-    __wHeight = 720
+    __wHeight = 1080
 
     def __init__(self):
         """! UI class initializer

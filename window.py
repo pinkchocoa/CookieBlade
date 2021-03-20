@@ -42,7 +42,7 @@ class window(object):
     """
     #Width and Height values for window and widgets
     __wWidth = 1080 
-    __wHeight = 720 
+    __wHeight = 1080 
     __logoWidth = 400
     __logoHeight = 90
     __pushWidth = 150
@@ -122,7 +122,7 @@ class window(object):
         """
         window.setWindowIcon("CookieIcon.png")
         self.centralwidget = QtWidgets.QWidget(window.QWin)
-        self.stackedWidget = newStackWidget(self.centralwidget, 0,0, 1080, 720)
+        self.stackedWidget = newStackWidget(self.centralwidget, 0,0, self.__wWidth, self.__wHeight)
 
         self.setupMainMenu()
         self.setupUserMenu()
@@ -207,8 +207,8 @@ class window(object):
         """
         posX = 350
         posY = 10
-        widthX = 500
-        heightY = 200
+        widthX = 450
+        heightY = 450
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
         #youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
         #revenueData = youtubeGraph.getRevenueData(self.tlink) #this return revenue data from db
@@ -332,7 +332,7 @@ class window(object):
         #seperateLineLabel
         #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
         #snsBackPush
-        snsM.setPush(self.pushX+580, self.__pushY+223, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+        snsM.setPush(self.pushX+580, self.__pushY+480, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
 
         #make sure that these labels are the last to be generated
