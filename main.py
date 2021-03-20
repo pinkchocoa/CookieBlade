@@ -28,14 +28,14 @@ class UI():
     """! UI class
     Defines the UI object which will create a window and call the window class to load UI
     """
-    wWidth = 1080
-    wHeight = 720
+    __wWidth = 1080
+    __wHeight = 720
 
     def __init__(self):
         """! UI class initializer
         Creates a new empty window and setup the UI
         """
-        self.win = newWindow("Cookie Crawler", self.wWidth, self.wHeight)
+        self.win = newWindow("Cookie Crawler", self.__wWidth, self.__wHeight)
         self.ui = window()
         self.ui.setupUi(self.win)
         self.ui.stackedWidget.setCurrentWidget(self.ui.mainM.window)
