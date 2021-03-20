@@ -69,7 +69,6 @@ class youtubeVid(Youtube):
             TrendVidsInfoList = [(v) for k, v in TrendVidsInfo.items()]
             TrendVidsInfoList.insert(0, i)
             tuser.insertTable(TrendVidsInfoList, 'TrendVideo', 'key', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10')
-        return TrendVidsInfoList
         
     # Function to crawl for top trending videos for a list of countries
     def scrapData(self):
