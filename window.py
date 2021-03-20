@@ -87,28 +87,28 @@ class window(object):
     def userToSns(self):
         """! switches the widgets from user menu to widgets from sns menu
         """
-        self.prev = "user"
         #Retrieve user inputs from textbox
         self.ytlink = self.ytTextBox.returnText()
         self.tlink = self.tTextBox.returnText()
 
-        print("test")
-        print(self.ytlink)
-        print(self.tlink)
-
-        #check user input
-        check = LinkValidation()
-        resultYoutubeUrl = check.UrlValidation(self.ytlink) #return True if valid else False.
-        resultTwitterUrl = check.UrlValidation(self.tlink)
-        
-        #Begin Crawl logic.
         if (self.ytlink == ""): #assign random youtube link
             self.ytlink = "https://www.youtube.com/channel/UCvWU1K29wCZ8j1NsXsRrKnA"
         if (self.tlink == ""): #assign random twitter link
             self.tlink = "https://www.twitter.com/lilypichu"
+        #check user input
+        check = LinkValidation()
+        if not check.UrlValidation(self.ytlink): #return True if valid else False.
+            messageBox("Alert", "Please enter a valid youtube link or leave it empty.")
+            return
+        if not check.UrlValidation(self.tlink):
+            messageBox("Alert", "Please enter a valid twitter link or leave it empty.")
+            return
+
+        self.prev = "user"
+
+        #Begin Crawl logic.
         
-        
-            
+ 
         test = self.setupSnsMenu()
         
         self.stackedWidget.addWidget(test.window.page)
