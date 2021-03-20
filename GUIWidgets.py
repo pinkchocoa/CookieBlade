@@ -461,19 +461,21 @@ class newPieChart():
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
 
 class InteractiveBarItem(BarGraphItem):
-    def __init__(self, x, height, width, brush):
+    def __init__(self, x, height, width, brush, day):
         super().__init__(x=x, height=height, width=width, brush=brush)
         # required in order to receive hoverEnter/Move/Leave events
         self.setAcceptHoverEvents(True)
+        self.day = day
+        y = self.opts.get('height')[0]
+        text = str(self.day) + "'s " + ": " + str(y)
+        self.setToolTip(text.format(self.boundingRect().y()))
 
     def hoverEnterEvent(self, event):
-            #print('hover!')
-            y = self.opts.get('height')
-            text = "Value: " + str(y)
-            self.setToolTip(text)
+            print('hover!')
 
     def mousePressEvent(self, event):
             print('click!')
+            print(self.day)
 
 class newBarChart():
     """! newBarChart class
@@ -484,28 +486,29 @@ class newBarChart():
         """
         self.chart = PlotWidget(window)
         self.chart.setBackground(background=None)
-        self.chart.setLabel('left', "Count", units='')
-        self.chart.setLabel('bottom', "Fav and RT count in the past 7 days", units='day')
+        self.chart.setLabel('left', "RT Count: red, Fav Count: Green", units='')
+        self.chart.setLabel('bottom', "Fav and RT count in the past days", units='day')
 
     #data is a list of list
-    def addData(self, data, categories):
+    def addData(self, data, cat):
         """! used to input data into bar chart to be displayed
         @param data to be displayed as bar charts
         @param categories used to show what each bar chart represent
         """
+        cat = cat[::-1]
         for i, a in enumerate(data):
             if i == 0:
                 brush='r'
-                width = 0.5
+                width = 0.3
                 x = 0
-            else:
+            elif i == 1:
                 brush = 'g'
                 width = 0.3
-                x = 0.33
-            for idx, y in enumerate(a):
-                if idx == 0:
+                x = 0.3
+            for idx, y in enumerate(reversed(a)):
+                if idx == len(a)-1:
                     continue
-                bg = InteractiveBarItem(x=[idx-1+x], height=[y], width=width, brush=brush)
+                bg = InteractiveBarItem([idx-1+x], [y], width, brush, cat[idx])
                 self.chart.addItem(bg)
     
     def setSize(self, posX, posY, sizex, sizey):
