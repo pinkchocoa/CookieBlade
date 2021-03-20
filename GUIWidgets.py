@@ -461,18 +461,16 @@ class newPieChart():
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
 
 class InteractiveBarItem(BarGraphItem):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        y = self.opts.get('height')
-        text = "Value: " + str(y)
-        self.setToolTip(text.format(self.boundingRect().y()))
+    def __init__(self, x, height, width, brush):
+        super().__init__(x=x, height=height, width=width, brush=brush)
         # required in order to receive hoverEnter/Move/Leave events
         self.setAcceptHoverEvents(True)
 
     def hoverEnterEvent(self, event):
-            print('hover!')
-            print(self.opts.get('height'))
-            self.setToolTip("")
+            #print('hover!')
+            y = self.opts.get('height')
+            text = "Value: " + str(y)
+            self.setToolTip(text)
 
     def mousePressEvent(self, event):
             print('click!')
@@ -499,13 +497,15 @@ class newBarChart():
             if i == 0:
                 brush='r'
                 width = 0.5
+                x = 0
             else:
                 brush = 'g'
                 width = 0.3
-            for idx, x in enumerate(a):
+                x = 0.33
+            for idx, y in enumerate(a):
                 if idx == 0:
                     continue
-                bg = InteractiveBarItem(x=[idx-1], height=[x], width=width, brush=brush)
+                bg = InteractiveBarItem(x=[idx-1+x], height=[y], width=width, brush=brush)
                 self.chart.addItem(bg)
     
     def setSize(self, posX, posY, sizex, sizey):
