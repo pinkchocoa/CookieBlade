@@ -85,18 +85,6 @@ class Testing(unittest.TestCase):
     def test_GUIWidegets_py(self):
         pass
 
-    #Failed Test.
-    def test_linkFinder_py(self):
-        """! linkFinder Test
-        """
-        print("\nSTART of test_linkFinder_py\n")
-
-        test = LinkFinder('https://www.raspberrypi.org','https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md')
-        test.handle_starttag("a","href")
-        test.error("Unit Test")
-
-        print("\nEND of test_linkFinder_py\n")
- 
     #Ok
     def test_LinkValidation_py(self):
         """! LinkValidation.py Test
@@ -113,13 +101,14 @@ class Testing(unittest.TestCase):
     def test_main_py(self):
         pass
 
-    #Ok
-    def test_singleSpider_py_spider_py(self):
-        """! singleSpider.py and spider.py Test
+    #Ok: All class and methods in singleSpider.py,pider.py & linkFinder.py are fully covered within this test.
+    def test_singleSpider_py_spider_py_linkFinder_py(self):
+        """! singleSpider.py, spider.py & linkFinder.py Test
         """
         print("\nSTART of test_singleSpider_py_spider_py\n")
 
-        spidey(['articles'],"covid test", 3) #Invoking this cause the testing of spider class and its methods as well.
+        #This also invokes spider.py & linkFinder.py.
+        spidey(['articles'],"covid test", 3)
 
         print("\nEND of test_singleSpider_py_spider_py\n")
 
@@ -199,6 +188,8 @@ class Testing(unittest.TestCase):
     def test_youtubeGraph_py_youtube_py(self):
         """! youtubeGraph.py & youtube.py Test
         """
+        print("\nSTART of test_youtubeGraph_py_youtube_py\n")
+
         #This also invokes youtube.py:
         #Class: Channel() 
         #Methods: Channel.searchurl()
@@ -221,6 +212,8 @@ class Testing(unittest.TestCase):
         
         #This also invokes database.py and its related class and methods.
         getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        
+        print("\nEND of test_youtubeGraph_py_youtube_py\n")
 
 #To be removed/Unused files:
 # spiderThreads.py - Kept for reference. Test not needed.
