@@ -149,7 +149,7 @@ class window(object):
     
 
     def crawlTwitterGraph(self):
-        start_time = time.time()
+        #start_time = time.time()
         favList = ["Fav Count"]
         rtList = ["RT Count"]
         dateList = []
@@ -186,7 +186,7 @@ class window(object):
         favList.pop()
         rtList.pop()
         dateList.pop()
-        print("--- %s seconds ---" % (time.time() - start_time))
+        #print("--- %s seconds ---" % (time.time() - start_time))
         return favList, rtList, dateList
 
     def setTwitterGraphs(self, window):
@@ -198,7 +198,7 @@ class window(object):
         favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
         rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
         dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([rtList,favList], dateList, 500, 100, 500, 200, "User's Fav and RT Count")
+        window.setBarChart([rtList,favList], dateList, 500, 300, 500, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
