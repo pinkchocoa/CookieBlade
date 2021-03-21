@@ -243,18 +243,18 @@ class window(object):
         @param widget on which the bar chart will be displayed on
         """
         #uncomment this line to actually crawl
-        favList, rtList, dateList = self.crawlTwitterGraph()
-        #favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
-        #rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
-        #dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([rtList,favList], dateList, 400, self.__wHeight - 650, 700, 200, "User's Fav and RT Count")
+        #favList, rtList, dateList = self.crawlTwitterGraph()
+        favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
+        rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
+        dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
+        window.setBarChart([rtList,favList], dateList, 410, self.__wHeight - 650, 600, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create line chart with data crawled from youtube
         @param window on which the line chart will be displayed
         """
         posX = 450
-        posY = 10
+        posY = 15
         widthX = 600
         heightY = 370
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
@@ -342,7 +342,7 @@ class window(object):
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
-        self.userM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
+        self.userM.setPush(self.__wWidth-self.__pushWidth-50, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
         #ytTextbox
         self.ytTextBox = self.userM.setTextbox(self.__textX, self.__textY, self.__textWidth*2, self.__textHeight, "Enter Youtube channel URL:")
         #tTextBox
@@ -358,7 +358,7 @@ class window(object):
         #topicCrawlPush
         self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToSns, "Crawl!")
         #topicbackpush
-        self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
+        self.topicM.setPush(self.__wWidth-self.__pushWidth-50, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topiclabel
         self.topicM.setLabel(self.__labelX+238, self.__labelY, self.__labelWidth, self.__labelHeight, "Topic:")
         #countrylaebl
@@ -381,7 +381,8 @@ class window(object):
         snsM.setLabel(15, 245, 355, 150, "", "Assets/tsmallbox.png", "", "", "", True)
         snsM.setLabel(10, 10, 355, 75, "", "Assets/mainLogo.png", "", "", "", True)
         snsM.setLabel(20, 410, 865, 635, "", "Assets/piechart.png", "", "", "", True)
-        #snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        snsM.setLabel(375,390, 689, 240, "", "Assets/rtfav.png", "", "", "", True)
+        snsM.setLabel(425,0, 656, 400, "", "Assets/ytrev.png", "", "", "", True)
 
         self.setTwitterGraphs(snsM) 
         self.setTwitterTrending(snsM) 
@@ -455,9 +456,6 @@ class window(object):
             snsM.setLabel(x+325, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
 
-        #snsBackPush
-        snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
-        
         y = self.__wHeight - 200
         snsM.setLabel(x+60, y-60, textWidth, self.__labelHeight, "Current twitter trending topics")
         x+=10
@@ -474,6 +472,8 @@ class window(object):
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
 
+        #snsBackPush
+        snsM.setPush(self.__wWidth-self.__pushWidth-50, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
         
         return snsM
 
@@ -482,17 +482,16 @@ class window(object):
         """
         snsM = windowGen()
 
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        snsM.setLabel(10, 10, 355, 75, "", "Assets/mainLogo.png", "", "", "", True)
+        snsM.setLabel(20, 410, 865, 635, "", "Assets/piechart.png", "", "", "", True)
+        snsM.setLabel(400, 0, 670, 640, "", "Assets/topictweets.png", "", "", "", True)
+        snsM.setLabel(50, 100, 300, 300, "", "Assets/globe.png", "", "", "", True)
 
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for chart usage
         #recent tweets display
         x = 450
-        y = 20
+        y = 30
         textWidth = 500
         textHeight = 80
         text = "Recent tweets based on '" + self.topicInput + "' at " + self.locationInput
@@ -518,12 +517,9 @@ class window(object):
             snsM.setLabel(x+325, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
 
-        #snsBackPush
-        snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
-
         y = self.__wHeight - 200
         text = "Current " + self.locationInput + " twitter trending topics"
-        snsM.setLabel(x+60, y-60, textWidth, self.__labelHeight, text)
+        snsM.setLabel(x+30, y-60, textWidth, self.__labelHeight, text)
         x+=10
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
@@ -539,7 +535,8 @@ class window(object):
 
         self.setTwitterTopic(snsM)
         self.setTwitterTrending(snsM, self.worldWide, self.lat, self.lng) 
-        
+        #snsBackPush
+        snsM.setPush(self.__wWidth-self.__pushWidth-50, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
         return snsM
 
     def goToUrl0(self):

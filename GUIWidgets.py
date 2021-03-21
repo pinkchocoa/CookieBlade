@@ -540,7 +540,7 @@ class newBarChart():
         self.chart = PlotWidget(window)
         self.chart.setBackground(background=None)
         self.chart.setLabel('left', "RT Count: red, Fav Count: Green", units='')
-        self.chart.setLabel('bottom', "Days", units='')
+        #self.chart.setLabel('bottom', "Days", units='')
         self.chart.setStyleSheet("background: transparent; background-color: none;")
 
     #data is a list of list
