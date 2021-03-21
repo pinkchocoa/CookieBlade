@@ -1,6 +1,6 @@
-## @file spider.py
+## @file domain.py
 #
-# @brief this file contains the spider class
+# @brief this file contains the functions to extract the domain out of the urls
 #
 # @author Jodie
 #
