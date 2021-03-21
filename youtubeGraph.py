@@ -73,9 +73,11 @@ def setRevenueData(channelUrl):
     youtube = Channel()
     result = youtube.getRevenueData(channelUrl)
     result.pop(0) #get rid of amount of videos in said months.
-    result = list(itertools.chain(*result)) #convert to 1d list
+    result = result[0]
+    print(result)
+    #result = list(itertools.chain(*result)) #convert to 1d list
     for i in range(0,len(result)):
-        data.append(result[i][1])
+        data.append(result[i])
     db.insertTable(data,uid,'Date','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
 
 ##Documenetation for getRevenueData Method
@@ -100,5 +102,3 @@ def getRevenueData(channelUrl):
         result.append(int(float(data[i])))
     print(result)
     return result
-
-getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")

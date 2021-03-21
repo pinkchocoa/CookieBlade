@@ -215,6 +215,7 @@ class Channel(Youtube):
             reply = response.execute()
         except Exception as e:
             print(str(e))
+            return ["YT API Limit Error","YT API Limit Error","YT API Limit Error","YT API Limit Error"]
 
         channelCreateDate = reply["items"][0]["snippet"]["publishedAt"]
         channelCreateDate = channelCreateDate[0:10]
@@ -268,6 +269,7 @@ class Channel(Youtube):
                 nextPageToken = reply.get('nextPageToken')
             except Exception as e:
                 print(str(e))
+                return [[0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0]]
 
             for vidId in reply['items']:
                 resultsList.append(vidId["id"]["videoId"])
@@ -282,6 +284,8 @@ class Channel(Youtube):
                 reply = response.execute()
             except Exception as e:
                 print(str(e))
+                return [[0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0]]
+
             dateMade = reply["items"][0]['snippet']['publishedAt']
             newdateMade = dateMade[0:10]
             datesList.append(newdateMade)
@@ -297,10 +301,13 @@ class Channel(Youtube):
                 part='statistics',
                 id=x[0]
             )
+
             try:
                 reply = response.execute()
             except Exception as e:
                 print(str(e))
+                return [[0,0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0,0]]
+
             viewcount = reply["items"][0]["statistics"]["viewCount"]
             x.append(viewcount)
 
