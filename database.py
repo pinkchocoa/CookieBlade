@@ -115,14 +115,11 @@ class database(mkFolder):
 
         #Execute tableArg with data.
         try:
-            print(tableArg)
             self.db.execute(tableArg,data)
             self.connect.commit()
 
         except:
             print("insertTable: db.execute() failed.")
-
-
 
     #Retrieve data from database. With custom SELECT and WHERE arguments supported.
     #if WHERE argument is used, * needs to be provided in argCol.
@@ -164,18 +161,7 @@ class database(mkFolder):
         except:
             print("deleteTable: Table Delete failed./Table does not Exist.")
 
-
-    def customSqlStatement(self,SQL_Statement):
-        """! Execute custom SQL_Statement
-        @param SQL_Statement;
-        """
-        try:
-            self.db.execute(SQL_Statement)
-            self.connect.commit()
-        except:
-            print("customSqlStatement: db.execute() failed.")
-
-
+    #Close the database.
     def dbClose(self):
         """! Close the database.
         """

@@ -31,11 +31,10 @@ def setYoutubeChannelStats(channelUrl):
     data.append(str(datetime.date.today()))
     temp = youtube.searchurl(channelUrl)
     for i in range(len(temp)):
-        data.append(temp[i])
+        data.append(str(temp[i]))
     db = database('youtube')
     uid = db.getUniqueID(channelUrl)
     db.createTable(uid,'date','created','Vidcount','Subcount','Totalview')
-    print(data)
     db.insertTable(data,uid,'date','created','Vidcount','Subcount','Totalview')
     db.dbClose()
 
@@ -50,7 +49,7 @@ def getYoutubeChannelStats(channelUrl):
     uid = db.getUniqueID(channelUrl)
     data = db.getTableData(uid)
     db.dbClose()
-    data = data[len(data)-1]
+    data = data.pop()
     data.pop(0)
     return data #return latest channel stats.
 
@@ -82,7 +81,7 @@ def setRevenueData(channelUrl):
     result.pop(0) #get rid of amount of videos in said months.
     result = result[0]
     for i in range(0,len(result)):
-        data.append(result[i])
+        data.append(str(result[i]))
     db.insertTable(data,uid,'Date','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
     db.dbClose()
 
@@ -98,13 +97,11 @@ def getRevenueData(channelUrl):
     data = db.getTableData(uid)
     db.dbClose()
     if len(data) > 1:
-        data= data.pop()
+        data = data.pop()
     else:
         data = list(itertools.chain(*data)) #convert to 1d list
-    print(data)
     result = []
     result.append(data[0])
     for i in range(1,len(data)):
         result.append(int(float(data[i])))
-    print(result)
     return result
