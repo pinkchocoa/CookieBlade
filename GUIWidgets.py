@@ -67,7 +67,7 @@ class newWindow:
         self.QWin.setWindowTitle(name)
         #Set Window Size
         self.QWin.resize(lenX,lenY)
-
+        
     #Method to set Window icon image
     def setWindowIcon(self,image):
         """! set the window icon to the image from input parameter
@@ -75,6 +75,12 @@ class newWindow:
         """
         self.QWin.setWindowIcon(QtGui.QIcon(image))
     
+    def setStyleSheet(self, image):
+        style = "background-image: url(./" + image + "); "
+        style += "background-repeat: repeat; background-position: center;"
+        self.QWin.setStyleSheet(style)
+
+
     def show(self):
         """! set window to be visible
         """

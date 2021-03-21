@@ -334,12 +334,6 @@ class window(object):
         self.userM = windowGen()
         #userLogo
         self.userM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "","","",True)
-
-        #ytTextbox
-        self.ytTextBox = self.userM.setTextbox(self.__textX, self.__textY, self.__textWidth*2, self.__textHeight, "Enter Youtube channel URL:")
-        #tTextBox
-        self.tTextBox = self.userM.setTextbox(self.__textX, self.__textY+50, self.__textWidth*2, self.__textHeight,"Enter Twitter User URL:")
-
         #ytlabel
         self.userM.setLabel(self.__labelX-22, self.__labelY, self.__labelWidth, self.__labelHeight, "YouTube Link:")
         #tLabel
@@ -350,6 +344,10 @@ class window(object):
         self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
         self.userM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
+        #ytTextbox
+        self.ytTextBox = self.userM.setTextbox(self.__textX, self.__textY, self.__textWidth*2, self.__textHeight, "Enter Youtube channel URL:")
+        #tTextBox
+        self.tTextBox = self.userM.setTextbox(self.__textX, self.__textY+50, self.__textWidth*2, self.__textHeight,"Enter Twitter User URL:")
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -362,16 +360,16 @@ class window(object):
         self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToSns, "Crawl!")
         #topicbackpush
         self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
-        #topictextbox
-        self.topicTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
-        #countrytextbox
-        self.countryTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY+50, self.__textWidth, self.__textHeight, "Enter Country:")
         #topiclabel
         self.topicM.setLabel(self.__labelX+238, self.__labelY, self.__labelWidth, self.__labelHeight, "Topic:")
         #countrylaebl
         self.topicM.setLabel(self.__labelX+218, self.__labelY+50, self.__labelWidth, self.__labelHeight, "Country:")
         #topicnotelabel
         self.topicM.setLabel(self.__labelX+285, self.__labelY+80, self.__labelWidth+200, self.__labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
+        #topictextbox
+        self.topicTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
+        #countrytextbox
+        self.countryTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY+50, self.__textWidth, self.__textHeight, "Enter Country:")
         
     def setupSnsMenu(self):
         """! create widgets for the sns menu page
