@@ -92,8 +92,8 @@ class window(object):
         """! switches the widgets from user menu to widgets from sns menu
         """
         #Retrieve user inputs from textbox
-        self.ytlink = self.ytTextBox.returnText()
-        self.tlink = self.tTextBox.returnText()
+        self.ytlink = self.ytTextBox.getText()
+        self.tlink = self.tTextBox.getText()
 
         if (self.ytlink == ""): #assign random youtube link
             self.ytlink = "https://www.youtube.com/channel/UCvWU1K29wCZ8j1NsXsRrKnA"
@@ -119,8 +119,8 @@ class window(object):
         self.stackedWidget.setCurrentWidget(userSnsM.window)
     
     def topicToSns(self):
-        self.topicInput = self.topicTextBox.returnText()
-        self.locationInput = self.countryTextBox.returnText()
+        self.topicInput = self.topicTextBox.getText()
+        self.locationInput = self.countryTextBox.getText()
         if (self.topicInput == ""):
             messageBox("Alert", "Please enter a topic.")
             return
