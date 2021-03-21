@@ -2,6 +2,8 @@
 #
 # @brief this file contains the spider class
 #
+# @author Jodie
+#
 # @section libraries_main Libraries/Modules
 # - urllib.request standard library (https://docs.python.org/3/library/urllib.request.html)
 #   - access to urlopen function
@@ -61,6 +63,9 @@ class Spider:
         self.add_links_to_queue([self.baseUrl])
 
     def filter(self, pageUrl):
+        """! filters pages
+        @param pageUrl page url to be filtered
+        """
         #print("filter")
         test = 0
         for x in self.word:
