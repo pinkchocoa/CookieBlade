@@ -365,7 +365,7 @@ class window(object):
         #countrylaebl
         self.topicM.setLabel(self.__labelX+218, self.__labelY+50, self.__labelWidth, self.__labelHeight, "Country:")
         #topicnotelabel
-        self.topicM.setLabel(self.__labelX+285, self.__labelY+80, self.__labelWidth+200, self.__labelHeight, "Leave fields empty for a random generation.", "", "", "", "", True)
+        self.topicM.setLabel(self.__labelX+285, self.__labelY+80, self.__labelWidth+200, self.__labelHeight, "Leave country empty to search for worldwide.", "", "", "", "", True)
         #topictextbox
         self.topicTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
