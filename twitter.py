@@ -139,10 +139,17 @@ class Twitter:
         print("returning trends for", place)
         
         trends = json.loads(json.dumps(allTrends, indent=1))
+        count=0
         for idx, x in enumerate(trends[0]["trends"]):
+            text = x["name"]
+            text = text.encode('ascii', 'ignore').decode()
+            if text != x["name"]:
+                continue
+            print(text)
             if x["tweet_volume"]:
                 topics[x["name"]] = x["tweet_volume"]
-            if idx == limit:
+                count+=1
+            if count >= limit:
                 break
         
         return topics
