@@ -109,10 +109,16 @@ class window(object):
         #Begin Crawl logic.
         
  
-        test = self.setupSnsMenu()
+        userSnsM = self.setupSnsMenu()
         
-        self.stackedWidget.addWidget(test.window.page)
-        self.stackedWidget.setCurrentWidget(test.window)
+        self.stackedWidget.addWidget(userSnsM.window.page)
+        self.stackedWidget.setCurrentWidget(userSnsM.window)
+    
+    def topicToSns(self):
+        self.prev = "topic"
+        topicSnsM = self.setupTopicSnsMenu()
+        self.stackedWidget.addWidget(topicSnsM.window.page)
+        self.stackedWidget.setCurrentWidget(topicSnsM.window)
         
     def snsBack(self):
         """! switches the widgets from sns menu to widgets from either user or topic menu
@@ -208,13 +214,13 @@ class window(object):
         favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
         rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
         dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([rtList,favList], dateList, 500, self.__wHeight - 600, 600, 200, "User's Fav and RT Count")
+        window.setBarChart([rtList,favList], dateList, 400, self.__wHeight - 600, 700, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create bar chart with data crawled from youtube
         @param window on which the bar chart will be displayed
         """
-        posX = 500
+        posX = 450
         posY = 10
         widthX = 600
         heightY = 450
@@ -245,7 +251,7 @@ class window(object):
         #uncomment this line to actually crawl
         #data = self.crawlTwitterTopics()
         data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
-        y = self.__wHeight - 500
+        y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
 
     def setupMainMenu(self):
@@ -281,7 +287,7 @@ class window(object):
         #userCrawlPush
         self.userM.setPush(self.pushX-125, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.userToSns, "Crawl!")
         #userBackPush
-        self.userM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
+        self.userM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.userToMain, "Back")
 
     def setupTopicMenu(self):
         """! create widgets for the topic menu page
@@ -291,9 +297,9 @@ class window(object):
         #topicLogo
         self.topicM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
         #topicCrawlPush
-        self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Crawl!")
+        self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToSns, "Crawl!")
         #topicbackpush
-        self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
+        self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
         self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
@@ -373,9 +379,9 @@ class window(object):
             y+=textHeight-30
 
         #snsBackPush
-        snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-100, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+        snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
-        y = self.__wHeight - 150
+        y = self.__wHeight - 250
         snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
@@ -388,8 +394,6 @@ class window(object):
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
-        
-        
         
         return snsM
 
@@ -415,3 +419,10 @@ class window(object):
             webbrowser.open_new(results[2])
         else:
             messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
+    
+    def setupTopicSnsMenu(self):
+        topicSnsM = windowGen()
+
+        topicSnsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+
+        return topicSnsM

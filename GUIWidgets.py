@@ -21,7 +21,6 @@ import sys
 from PyQt5 import QtCore, QtGui, QtWidgets #pip3 install pyqt5
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import *
-from PyQt5.QtWebEngineWidgets import * #pip3 install PyQtWebEngine
 from PyQt5.QtChart import * #pip3 install PyQtChart
 from pyqtgraph import PlotWidget, plot, exporters, BarGraphItem #pip3 install pyqtgraph
 import functools
