@@ -164,7 +164,6 @@ class window(object):
         if self.prev == "topic":
             self.stackedWidget.setCurrentWidget(self.topicM.window)
 
-    #UI setup
     def setupUi(self, window):
         """! create base window and call menu functions to create window widgets
         @param window on which the widgets will be displayed
@@ -196,7 +195,6 @@ class window(object):
         self.stackedWidget.addWidget(self.mainM.window.page)
         self.stackedWidget.addWidget(self.userM.window.page)
         self.stackedWidget.addWidget(self.topicM.window.page)
-    
 
     def crawlTwitterGraph(self):
         """! crawl user's tweets
@@ -274,7 +272,6 @@ class window(object):
             "bottom", "Months", "red", "8pt",
             "left", revenueData)
 
-
     def crawlTwitterTopic(self, getLoc):
         """! crawl twitter tweets on topic
         @return tweets crawled
@@ -295,9 +292,10 @@ class window(object):
         @param widget on which the tweets will be displayed on
         """
         getLoc = not self.worldWide
-        tweets = self.crawlTwitterTopic(getLoc)
-        #tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
-        index = 22
+        #uncomment this line to actually crawl
+        #tweets = self.crawlTwitterTopic(getLoc)
+        tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
+        index = 27
         for idx, x in enumerate(tweets):
             user = x[0]
             text = x[1]
@@ -311,8 +309,8 @@ class window(object):
         @param window on which the pie chart will be displayed
         """
         #uncomment this line to actually crawl
-        data = self.crawlTwitterTrending(worldWide, lat, lng)
-        #data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
+        #data = self.crawlTwitterTrending(worldWide, lat, lng)
+        data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
 
@@ -385,21 +383,22 @@ class window(object):
         #tLogo
         snsM.setLabel(self.__logoX-303, self.__logoY-17, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
         
+        labelW = 300
         #Youtube
         youtubeGraph.setYoutubeChannelStats(self.ytlink)
         youtubeStats = youtubeGraph.getYoutubeChannelStats(self.ytlink)
         #subcountlabel
         text = "Sub count: " + str(youtubeStats[2])
-        snsM.setLabel(self.__labelX+112, self.__labelY-168, self.__labelWidth, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, self.__labelY-168, labelW, self.__labelHeight, text)
         #viewcountlabel
         text = "View count: " + str(youtubeStats[3])
-        snsM.setLabel(self.__labelX+112, self.__labelY-143, self.__labelWidth, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, self.__labelY-143, labelW, self.__labelHeight, text)
         #videocountlabel
         text = "Video count: " + str(youtubeStats[1])
-        snsM.setLabel(self.__labelX+112, self.__labelY-118, self.__labelWidth, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, self.__labelY-118, labelW, self.__labelHeight, text)
         #ytCreatedLabel
         text = "Created At: " + str(youtubeStats[0])
-        snsM.setLabel(self.__labelX+112, self.__labelY-93, self.__labelWidth, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, self.__labelY-93, labelW, self.__labelHeight, text)
 
         if "twitter" in self.tlink:
             tUser = TUser.byURL(self.tlink)
@@ -407,7 +406,7 @@ class window(object):
             tUser = TUser.byID(self.tlink)
 
         #twitter
-        labelW = 300
+        
         #followerCountLabel
         text = "Follower Count: " + str(tUser.followCount())
         snsM.setLabel(self.__labelX+112, self.__labelY-48, labelW, self.__labelHeight, text)
@@ -455,44 +454,21 @@ class window(object):
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
+
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+
         return snsM
 
-    def goToUrl0(self):
-        """! opens the web browser for the first link
-        """
-        results = list(file_to_set('result.txt'))
-        if results and results[0]:
-            webbrowser.open_new(results[0])
-        else:
-            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
-        
-
-    def goToUrl1(self):
-        """! opens the web browser for the second link
-        """
-        results = list(file_to_set('result.txt'))
-        if results and results[1]:
-            webbrowser.open_new(results[1])
-        else:
-            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
-        
-
-    def goToUrl2(self):
-        """! opens the web browser for the third link
-        """
-        results = list(file_to_set('result.txt'))
-        if results and results[2]:
-            webbrowser.open_new(results[2])
-        else:
-            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
-    
     def setupTopicSnsMenu(self):
         """! create widgets for the topic sns menu page
         """
         snsM = windowGen()
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for chart usage
-
         #recent tweets display
         x = 450
         y = 20
@@ -508,7 +484,6 @@ class window(object):
             snsM.setLabel(x, y, textWidth, textHeight, "2").setAlignmentTop()
             y+=textHeight-30
             
-
         #piechart trend display
         x = 50
         y = self.__wHeight - 400
@@ -540,6 +515,41 @@ class window(object):
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
 
+
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
+
         self.setTwitterTopic(snsM)
         self.setTwitterTrending(snsM, self.worldWide, self.lat, self.lng) 
+        
         return snsM
+
+    def goToUrl0(self):
+        """! opens the web browser for the first link
+        """
+        results = list(file_to_set('result.txt'))
+        if results and results[0]:
+            webbrowser.open_new(results[0])
+        else:
+            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
+        
+    def goToUrl1(self):
+        """! opens the web browser for the second link
+        """
+        results = list(file_to_set('result.txt'))
+        if results and results[1]:
+            webbrowser.open_new(results[1])
+        else:
+            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
+        
+    def goToUrl2(self):
+        """! opens the web browser for the third link
+        """
+        results = list(file_to_set('result.txt'))
+        if results and results[2]:
+            webbrowser.open_new(results[2])
+        else:
+            messageBox("Alert", "Please generate links by double clicking on the pie chart first.")

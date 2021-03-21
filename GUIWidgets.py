@@ -152,7 +152,8 @@ class newLabel:
         #Set alignment of Label text to align center
         self.label.setAlignment(QtCore.Qt.AlignCenter)
         self.label.setWordWrap(True)
-        
+        self.label.setStyleSheet("background: transparent; background-color: none;")
+
     def setAlignmentTop(self):
         """! set the alignment for the label to top
         """
@@ -467,7 +468,7 @@ class newPieChart():
         """! called when mouse double click input is detected
         @param slice_ used to determine which slice to perform action on
         """
-        index = 3
+        index = 8
         text = str(slice_.label())
         recent = "Recent tweets based on " + text + ":"
         #uncomment to actually crawl
@@ -478,7 +479,7 @@ class newPieChart():
             text = "Link " + str(idx+1) + " Generated!"
             self.windowGen.labelList[self.windowGen.totalNLabel-index+idx].label.setText(text)
         #i want to search tweets too
-        index = 11
+        index = 16
         for idx, x in enumerate(tweets):
             user = x[0]
             text = x[1]
