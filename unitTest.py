@@ -128,8 +128,6 @@ class Testing(unittest.TestCase):
         test.followCount()
         test.tweetCount()
         test.userLoc()
-        test.recentFollows()
-        test.recentFriends()
         test.userFav()
         test.userTweets(1)
 
