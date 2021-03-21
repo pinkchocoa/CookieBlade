@@ -109,10 +109,16 @@ class window(object):
         #Begin Crawl logic.
         
  
-        test = self.setupSnsMenu()
+        userSnsM = self.setupSnsMenu()
         
-        self.stackedWidget.addWidget(test.window.page)
-        self.stackedWidget.setCurrentWidget(test.window)
+        self.stackedWidget.addWidget(userSnsM.window.page)
+        self.stackedWidget.setCurrentWidget(userSnsM.window)
+    
+    def topicToSns(self):
+        self.prev = "topic"
+        topicSnsM = self.setupTopicSnsMenu()
+        self.stackedWidget.addWidget(topicSnsM.window.page)
+        self.stackedWidget.setCurrentWidget(topicSnsM.window)
         
     def snsBack(self):
         """! switches the widgets from sns menu to widgets from either user or topic menu
@@ -291,7 +297,7 @@ class window(object):
         #topicLogo
         self.topicM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
         #topicCrawlPush
-        self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToMain, "Crawl!")
+        self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToSns, "Crawl!")
         #topicbackpush
         self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
@@ -389,8 +395,6 @@ class window(object):
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
-        
-        
         return snsM
 
     def goToUrl0(self):
@@ -415,3 +419,10 @@ class window(object):
             webbrowser.open_new(results[2])
         else:
             messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
+    
+    def setupTopicSnsMenu(self):
+        topicSnsM = windowGen()
+
+        topicSnsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+
+        return topicSnsM
