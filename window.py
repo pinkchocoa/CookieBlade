@@ -30,6 +30,10 @@ from general import file_to_set, delete_file_contents
 import webbrowser
 import youtubeGraph
 from LinkValidation import LinkValidation
+from geopy.geocoders import Nominatim
+#pip install geopandas
+#pip install geopy
+
 
 RESULT_FILE = 'result.txt'
 
@@ -115,6 +119,18 @@ class window(object):
         self.stackedWidget.setCurrentWidget(userSnsM.window)
     
     def topicToSns(self):
+        self.topicInput = self.topicTextBox.returnText()
+        self.locationInput = self.countryTextBox.returnText()
+        if (self.topicInput == ""):
+            messageBox("Alert", "Please enter a topic.")
+        elif (self.locationInput == ""):
+            messageBox("Alert", "Please enter a coutnry.")
+
+        geolocator = Nominatim(user_agent="cookieBlade")
+        data = geolocator.geocode(self.locationInput)
+        self.lat = data.raw.get("lat")
+        self.lon = data.raw.get("lon")
+        
         self.prev = "topic"
         topicSnsM = self.setupTopicSnsMenu()
         self.stackedWidget.addWidget(topicSnsM.window.page)
@@ -240,16 +256,20 @@ class window(object):
             "left", revenueData)
 
 
-    def crawlTwitterTopics(self):
+    def crawlTwitterTopic(self, topic, rType = "recent", amt = 3, getLoc = False, lat=1.3521, lng=103.8198):
         t = Twitter()
-        return t.trendingTopics()
+        return t.searchKeyword(topic, rType, amt, getLoc, lat, lng)
 
-    def setTwitterTopics(self, window):
+    def crawlTwitterTrending(self, worldWide, lat, lng):
+        t = Twitter()
+        return t.trendingTopics(worldWide, lat, lng)
+
+    def setTwitterTrending(self, window, worldWide = True, lat=1.3521, lng=103.8198):
         """! create pie chart with topics crawled from twitter
         @param window on which the pie chart will be displayed
         """
         #uncomment this line to actually crawl
-        #data = self.crawlTwitterTopics()
+        data = self.crawlTwitterTrending(worldWide, lat, lng)
         data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
@@ -301,9 +321,9 @@ class window(object):
         #topicbackpush
         self.topicM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.topicToMain, "Back")
         #topictextbox
-        self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
+        self.topicTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY, self.__textWidth, self.__textHeight, "Enter Topic:")
         #countrytextbox
-        self.topicM.setTextbox(self.__textX+200, self.__textY+50, self.__textWidth, self.__textHeight, "Enter Country:")
+        self.countryTextBox = self.topicM.setTextbox(self.__textX+200, self.__textY+50, self.__textWidth, self.__textHeight, "Enter Country:")
         #topiclabel
         self.topicM.setLabel(self.__labelX+238, self.__labelY, self.__labelWidth, self.__labelHeight, "Topic:")
         #countrylaebl
@@ -317,7 +337,7 @@ class window(object):
         #Start of snsMenu
         snsM = windowGen()
         self.setTwitterGraphs(snsM) 
-        self.setTwitterTopics(snsM) 
+        self.setTwitterTrending(snsM) 
         self.setYoutubeGraphs(snsM)
 
         #ytlogo
@@ -421,8 +441,40 @@ class window(object):
             messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
     
     def setupTopicSnsMenu(self):
-        topicSnsM = windowGen()
+        snsM = windowGen()
 
-        topicSnsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+        self.setTwitterGraphs(snsM) 
+        self.setTwitterTrending(snsM, False, self.lat, self.lon) 
 
-        return topicSnsM
+
+        #make sure that these labels are the last to be generated
+        #these are to generate labels for the double click functionality for piechart usage
+        x = 50
+        y = self.__wHeight - 400
+        textWidth = 500
+        textHeight = 90
+        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
+        for i in range(3):
+            y+=30
+            snsM.setLabel(x+400, y, textWidth, 20, "")
+            y+=25
+            snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
+            y+=textHeight-30
+
+        #snsBackPush
+        snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
+
+        y = self.__wHeight - 250
+        snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
+        snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
+        for i in range(3):
+            y+=30
+            text = "Article " + str(i+1)
+            snsM.setLabel(x+self.__labelWidth-30, y, 1000, 25, "Double click on the piechart!")
+            if i == 0:
+                snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl0, text)
+            elif i == 1:
+                snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl1, text)
+            elif i == 2:
+                snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
+        return snsM
