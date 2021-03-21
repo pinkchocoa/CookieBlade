@@ -1,6 +1,8 @@
-## @file testfile.py
+## @file main.py
 #
 # @brief this file generates the window and calls the window class in window.py
+#
+# @author JiaJun
 #
 # @section libraries_main Libraries/Modules
 # - sys standard library (https://docs.python.org/3/library/sys.html)
@@ -28,6 +30,8 @@ from general import delete_file_contents
 from os import environ
 
 def suppress_qt_warnings():
+    """! this method is used to supressed 
+    """
     environ["QT_DEVICE_PIXEL_RATIO"] = "0"
     environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
     environ["QT_SCREEN_SCALE_FACTORS"] = "1"
@@ -35,6 +39,8 @@ def suppress_qt_warnings():
 
 RESULT_FILE = 'result.txt'
 
+## Documentation for a UI Class
+# Defines the UI object which will create a window and call the window class to load UI
 class UI():
     """! UI class
     Defines the UI object which will create a window and call the window class to load UI
@@ -57,6 +63,7 @@ class UI():
         """
         self.win.show()
 
+#start of main
 suppress_qt_warnings()
 delete_file_contents(RESULT_FILE)
 app = startApp()
@@ -64,3 +71,4 @@ win = UI()
 win.show()
 sys.exit(app.QApp.exec_())
 delete_file_contents(RESULT_FILE)
+#end of main
