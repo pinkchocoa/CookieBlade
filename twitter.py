@@ -2,6 +2,8 @@
 #
 # @brief this file uses the twitter API to retrieve wanted data
 #
+# @author Jodie
+#
 # @section libraries_main Libraries/Modules
 # - tweepy (https://docs.tweepy.org/)
 #   - access to twitter API
