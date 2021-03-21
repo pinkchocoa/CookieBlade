@@ -57,10 +57,11 @@ class database(mkFolder):
         #create database if not exist else connect to database.
         try:
             db = sqlite3.connect(arg)
+            db.close()
         except:
             print("__createDB: database creation failed.")
             db.close()
-        db.close() #close database
+
         return arg #return database location
 
     #Create a table with custom tablename, primary key and variable column names and amount.
@@ -100,14 +101,14 @@ class database(mkFolder):
             #Create Unqiue index for replace function of SQLite3
             tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' +  argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
             db.execute(tableArg)
+            connect.commit()    
+            db.close()          
+            connect.close()
         except:
             print("createTable: Unqiue index creation failed.")
             db.close()          
             connect.close()
-        
-        connect.commit()    #save database
-        db.close()          #close database
-        connect.close()
+
 
     #Save data to table in database. where *argument must match the one provided in createTable.
     def insertTable(self, data, *argument):
@@ -141,14 +142,14 @@ class database(mkFolder):
         #Execute tableArg with data.
         try:
             db.execute(tableArg,(data))
+            connect.commit()
+            db.close()          
+            connect.close()
         except:
             print("insertTable: db.execute() failed.")
             db.close()          
             connect.close()
 
-        connect.commit()    #save database
-        db.close()          #close database
-        connect.close()
 
     #Retrieve data from database. With custom SELECT and WHERE arguments supported.
     #if WHERE argument is used, * needs to be provided in argCol.
