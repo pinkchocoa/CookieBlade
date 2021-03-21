@@ -191,7 +191,7 @@ class Testing(unittest.TestCase):
         #This also invokes youtube.py:
         #Class: Channel() 
         #Methods: Channel.searchurl()
-        #setYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        setYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         
         #This also invokes database.py and its related class and methods.
         getYoutubeChannelStats("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
@@ -200,13 +200,13 @@ class Testing(unittest.TestCase):
         #Class: youtubeVid(),YouTube() 
         #Methods: youtubeVid.getTrendingVideo(), youtubeVid.getDBvids() 
         #youtubeVid.scrapData(), youtubeVid.vidInfo(), youtubeVid.getDict()
-        #getYoutubeTrends("SG")
+        getYoutubeTrends("SG")
 
         #This also invokes youtube.py: 
         #Class: Channel()
         #Methods: Channel.getRevenueData()
         #This easily caps API limit so it is omitted as we tested it once.
-        #setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
+        setRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         
         #This also invokes database.py and its related class and methods.
         getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")

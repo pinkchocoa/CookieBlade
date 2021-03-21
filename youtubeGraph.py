@@ -78,6 +78,7 @@ def setRevenueData(channelUrl):
     db.createTable(uid,'Date','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
     youtube = Channel()
     result = youtube.getRevenueData(channelUrl)
+    print(result)
     result.pop(0) #get rid of amount of videos in said months.
     result = result[0]
     for i in range(0,len(result)):
