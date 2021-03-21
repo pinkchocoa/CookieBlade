@@ -2,6 +2,9 @@
 #
 # @brief this file contain windowGen class
 #
+# @author JiaJun(5%)
+# @author Jodie(95%)
+#
 # @section libraries_main Libraries/Modules
 # - GUIWidgets (local)
 #   - access to classes from GUIWidgets.py
@@ -13,7 +16,9 @@ from GUIWidgets import * #contain class from GUIwidgets.py.
 # Contains windowGen class which allows creation of widgets with only a single call for each widget
 # We can reuse classes to make different widgets for diffferent purpose
 
-def emptyFn(): #dun remove this.
+def emptyFn():
+    """! this function is used to initlised push buttons
+    """
     pass
 
 class windowGen():
@@ -46,7 +51,6 @@ class windowGen():
         self.lineGraphList = []
         self.pieChartList = []
         self.barChartList = []
-
 
     def addNewLineGraph(self):
         """! initialize a new graph widget
@@ -91,7 +95,6 @@ class windowGen():
         #Enables graph to show grid
         Graph.Graph.showGrid(x = True, y = True)
         Graph.Graph.setFixedSize(lenX, lenY)
-        #Graph.plot(axisX, axisY, pen = lineColor, symbol = points)
         Graph.plotGraph(axisX, axisY, lineColor, points)
         Graph.setBackGroundColor(bgColor)
         Graph.setGraphTitle(title, titleColor, titleSize)
@@ -115,7 +118,8 @@ class windowGen():
         @param lenX determines the width of the label
         @param lenY determines the height of the label
         @param text determines the text to be displayed by the label widget
-        @param frontStyle determines the front style of text displayed by the label widget
+        @paran image determiens image to be displayed
+        @param fontStyle determines the front style of text displayed by the label widget
         @param fontSize determines the front size of text displayed by the label widget
         @param functionName determines which function to call when a mouse click is detected
         @param scaled set image displayed in label to scale
@@ -160,7 +164,7 @@ class windowGen():
         @param lenX determines the width of the textbox
         @param lenY determines the height of the textbox
         @param text determines the text to be displayed by the textbox widget
-        @param frontStyle determines the front style of text displayed by the textbox widget
+        @param fontStyle determines the front style of text displayed by the textbox widget
         @param fontSize determines the front size of text displayed by the textbox widget
         """
         if self.nText >= self.totalNText:
@@ -188,7 +192,8 @@ class windowGen():
         @param lenX determines the width of the pushbutton
         @param lenY determines the height of the pushbutton
         @param functionName determines which function to call when a mouse click is detected
-        @param frontStyle determines the front style of text displayed by the pushbutton widget
+        @param text determines what text to be displayed on the button
+        @param fontStyle determines the front style of text displayed by the pushbutton widget
         @param fontSize determines the front size of text displayed by the pushbutton widget
         """
         if self.nPush >= self.totalNPush:
@@ -231,8 +236,6 @@ class windowGen():
         @param width determines the width of the piechart
         @param height determines the height of the piechart
         """
-        #missing set x, y
-        #  posX, posY
         if self.nPieChart >= self.totalNPieChart:
             self.addNewPieChart()
         pieChart = self.pieChartList[self.nPieChart]
@@ -259,7 +262,8 @@ class windowGen():
         @param categories
         @param posX determines the X coordinate of the barchart
         @param posY determines the Y coordinate of the barchart
-        @param size determines the size of the barchart
+        @param sizex determines the horizontal size of the barchart
+        @param sizey determines the vertical size of the barchart
         @param title determines the title name of the barchart
         """
         #missing set x, y
