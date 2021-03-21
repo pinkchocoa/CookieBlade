@@ -429,12 +429,12 @@ class window(object):
         y = self.__wHeight - 400
         textWidth = 500
         textHeight = 90
-        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
+        snsM.setLabel(x+300, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
         for i in range(3):
             y+=30
-            snsM.setLabel(x+400, y, textWidth, 20, "")
+            snsM.setLabel(x+300, y, textWidth, 20, "")
             y+=25
-            snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
+            snsM.setLabel(x+300, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
 
         #snsBackPush
@@ -489,12 +489,12 @@ class window(object):
         y = self.__wHeight - 400
         textWidth = 500
         textHeight = 80
-        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
+        snsM.setLabel(x+300, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
         for i in range(3):
             y+=30
-            snsM.setLabel(x+400, y, textWidth, 20, "")
+            snsM.setLabel(x+300, y, textWidth, 20, "")
             y+=25
-            snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
+            snsM.setLabel(x+300, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
 
         #snsBackPush
