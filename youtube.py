@@ -2,6 +2,8 @@
 #
 # @brief this file uses the Youtube API to retrieve wanted data
 #
+# @author Nathaniel
+#
 # @section libraries_main Libraries/Modules
 # - googleapiclient.discovery
 #   - access to youtube API
@@ -11,21 +13,28 @@
 #   - access to urllib to parse certain urls
 # - datetime
 #   - setting the conditions for filtering of data needed
+# - apikey (local)
+#   - this file contains the twitter api token/key
 
 #Imports
 from googleapiclient.discovery import build
-import google.oauth2.credentials
 from database import *
 from urllib import parse
 from datetime import datetime
 import apikey #api keys are stored here
 
+## Documentation for Youtube Class
+# The Youtube class instantiate connection with the Youtube API
 class Youtube:
+    """! Youtube Class does the authentication and instantiation to the Youtube API
+    """
     api_key = apikey.Y_ACCESS_KEY
     API_SERVICE_NAME = 'youtube'
     API_VERSION = 'v3'
     youtube = build(API_SERVICE_NAME, API_VERSION, developerKey=api_key)
 
+## Documentation for youtubeVid Class
+# The youtubeVid class contains methods related to crawling youtube videos
 class youtubeVid(Youtube):
     """! youtubeVid Class inherits the youtube class variables
     This class contains methods related to crawling youtube videos
@@ -241,7 +250,7 @@ class Channel(Youtube):
 
     #Function to return back the revenue and total views per month for the year of 2020
     def getRevenueData(self, input):
-        """! class method that creates a TTweet instance with username
+        """! class that return back the revenue and total views per month for the past year
         @param a youtube url containing a channel id
         @return a list of vids created and ad-revenue earned by the channel in the past 12 months
         """
@@ -375,22 +384,3 @@ class Channel(Youtube):
 
         finalresult = [sortedmonthVids, revList]
         return finalresult
-
-
-#HOW TO USE FOR NOW
-#########################################################################################################
-#Firstly, populate the database with trending vid info by calling the getTrendingVideo() once
-#To test if there's data in the database, install DB Browser (SQLite) to check
-#
-#Functions to usable:
-#getDBvids() assumes that the input to get a particular country's trending vid is a number, which will then return a list
-#searchurl returns back a list of subs, totalviewno, totalvidno and created-at-date from a channel
-#getRevenueData returns back a list containing (1)a list containing the no of list made each month
-#                                              (2)a list containing the total amount of revenue earned for each month
-#
-
-#To note:
-#url must be in this format for now: 'https://www.youtube.com/channel/(replace with own channel id)'
-#Example below:
-# x = Channel().searchurl('UC0NwzCHb8Fg89eTB5eYX17Q')
-# print(x)
