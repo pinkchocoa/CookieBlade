@@ -2,6 +2,8 @@
 #
 # @brief this file contains the spider class
 #
+# @author JunHao
+#
 # @section No imports.
 
 ## Documentation for a Url Extraction Class.

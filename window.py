@@ -15,6 +15,7 @@
 #   - access to twitterGraph function to retrieve data for twitter graph
 # - twitterDB
 #   - access to database access methods for twitter
+# - time
 # - webbrower standard library
 #   - access to webbrowser
 
@@ -25,7 +26,6 @@ from twitter import Twitter, TUser, TTweet
 from database import database
 import twitterGraph
 import twitterDB
-import time
 from general import file_to_set, delete_file_contents
 import webbrowser
 import youtubeGraph

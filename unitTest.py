@@ -2,6 +2,8 @@
 #
 # @brief this file contain the test methods for unit testing
 #
+# @author JunHao
+#
 # @section libraries_main Libraries/Modules
 # - All Imports are nesscary to run test.
 # - unittest
@@ -33,7 +35,6 @@ class Testing(unittest.TestCase):
     """! Testing class
     For Testing for Classes/Methods files and running python unit test.
     """
-    
     #Ok
     def test_database_py_mkFolder_py(self):
         """! database.py and mkFolder.py Test
@@ -211,9 +212,6 @@ class Testing(unittest.TestCase):
         getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
         
         print("\nEND of test_youtubeGraph_py_youtube_py\n")
-
-#To be removed/Unused files:
-# spiderThreads.py - Kept for reference. Test not needed.
 
 
 if __name__ == '__main__':

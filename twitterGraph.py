@@ -2,6 +2,9 @@
 #
 # @brief this file uses the twitter class file classes and methods
 #
+# @author JunHao (20%)
+# @author Jodie(80%)
+#
 # @section libraries_main Libraries/Modules
 # - twitter (local)
 #   - access to twitter classes and methods.
