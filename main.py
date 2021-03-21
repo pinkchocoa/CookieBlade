@@ -13,6 +13,10 @@
 #   - access to the window class
 # - youtube (local)
 #   - access to the youtube crawler
+# - general (local)
+#   - access to delete_file_contents
+# - os external library
+#   - access to environ
 
 # Imports
 import sys

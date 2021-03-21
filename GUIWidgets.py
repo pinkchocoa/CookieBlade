@@ -20,10 +20,10 @@
 #   - access to graph plotting functions
 # - functools standard library
 #   - tools to work with high order functions
-# - singleSpider 
+# - singleSpider (local)
 #   - access to spidey that crawls website links 
 #       for piechart double click function
-# - twitter
+# - twitter (local)
 #   - access to Twitter class that crawls tweets 
 #       based off topics for piechart double click function
 
