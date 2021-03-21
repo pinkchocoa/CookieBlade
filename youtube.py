@@ -250,13 +250,12 @@ class Channel(Youtube):
 
         resultsList = []
         datesList = []
-        mainList = []
 
         # Get a list of the channel's videos and put them into a list
         nextPageToken = None
         for result in range(0, 20):
             response = Youtube.youtube.search().list(
-                part='snippet,statistics',
+                part='snippet',
                 channelId=id,
                 type='video',
                 videoDefinition='any',
@@ -270,18 +269,42 @@ class Channel(Youtube):
             except Exception as e:
                 print(str(e))
 
-            for idx, vidId in enumerate(reply['items']):
+            for vidId in reply['items']:
                 resultsList.append(vidId["id"]["videoId"])
-                #convert the video ids into created date and put them into another list
-                dateMade = reply["items"][idx]['snippet']['publishedAt']
-                newdateMade = dateMade[0:10]
-                datesList.append(newdateMade)
-                viewcount = reply["items"][idx]["statistics"]["viewCount"]
-                mainList[idx].append(viewcount)
-                x.append(datesList[idx])
+
+        #convert the video ids into created date and put them into another list
+        for id in range(0, len(resultsList)):
+            response = Youtube.youtube.videos().list(
+                part='snippet',
+                id=resultsList[id]
+            )
+            try:
+                reply = response.execute()
+            except Exception as e:
+                print(str(e))
+            dateMade = reply["items"][0]['snippet']['publishedAt']
+            newdateMade = dateMade[0:10]
+            datesList.append(newdateMade)
 
         #create a list of list based on the number of videos in the channel
         #3 things in each list inside the list - videoid, no of views, createdAt date
+        mainList = []
+
+        for idx, x in enumerate(mainList):
+            x.append(resultsList[idx])
+
+            response = Youtube.youtube.videos().list(
+                part='statistics',
+                id=x[0]
+            )
+            try:
+                reply = response.execute()
+            except Exception as e:
+                print(str(e))
+            viewcount = reply["items"][0]["statistics"]["viewCount"]
+            x.append(viewcount)
+
+            x.append(datesList[idx])
 
         #Filter out the videos that are made in the past 12 months
         #setting the filter for the months
