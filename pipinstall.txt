@@ -2,4 +2,5 @@ pip install PyQt5 - For Ui
 pip install Tweepy - For Crawler
 pip install pyqtgraph - For Ui
 pip install --upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib - For Crawler
-pip3 install PyQtWebEngine - For Ui
+pip install geopandas
+pip install geopy
