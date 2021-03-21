@@ -1,6 +1,6 @@
 ## @file general.py
 #
-# @brief this file contains the the general functions used for filo i/o purposes
+# @brief this file contains the general functions used for filo i/o purposes
 #
 # @author Jodie
 #
