@@ -380,7 +380,7 @@ class Channel(Youtube):
             "nov" : channelRevByMonth[10],
             "dec" : channelRevByMonth[11]
         }
-        revList = [(k, v) for k, v in revDict.items()]
+        revList = [v for k, v in revDict.items()]
 
         finalresult = [sortedmonthVids, revList]
         return finalresult
