@@ -243,10 +243,10 @@ class window(object):
         @param widget on which the bar chart will be displayed on
         """
         #uncomment this line to actually crawl
-        #favList, rtList, dateList = self.crawlTwitterGraph()
-        favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
-        rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
-        dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
+        favList, rtList, dateList = self.crawlTwitterGraph()
+        #favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
+        #rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
+        #dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
         window.setBarChart([rtList,favList], dateList, 410, self.__wHeight - 650, 600, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
@@ -259,12 +259,12 @@ class window(object):
         heightY = 370
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
         #uncomment
-        #youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
-        #revenueData = youtubeGraph.getRevenueData(self.ytlink) #this return revenue data from db
-        #revenueData.pop(0) #remove the date string in the list.
+        youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
+        revenueData = youtubeGraph.getRevenueData(self.ytlink) #this return revenue data from db
+        revenueData.pop(0) #remove the date string in the list.
         #print(revenueData)
         #Testing
-        revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
+        #revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
         window.setLineGraph(posX, posY, widthX, heightY, 
             months, revenueData, "g", "o",
             "00000000",
@@ -294,8 +294,8 @@ class window(object):
         """
         getLoc = not self.worldWide
         #uncomment this line to actually crawl
-        #tweets = self.crawlTwitterTopic(getLoc)
-        tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
+        tweets = self.crawlTwitterTopic(getLoc)
+        #tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
         index = 22
         for idx, x in enumerate(tweets):
             user = x[0]
@@ -310,8 +310,8 @@ class window(object):
         @param window on which the pie chart will be displayed
         """
         #uncomment this line to actually crawl
-        #data = self.crawlTwitterTrending(worldWide, lat, lng)
-        data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
+        data = self.crawlTwitterTrending(worldWide, lat, lng)
+        #data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
 
@@ -398,9 +398,9 @@ class window(object):
         y = self.__labelY-143
         #Youtube
         #uncomment
-        #youtubeGraph.setYoutubeChannelStats(self.ytlink)
-        #youtubeStats = youtubeGraph.getYoutubeChannelStats(self.ytlink)
-        youtubeStats = ['YT API Limit Error', 'YT API Limit Error', 'YT API Limit Error', 'YT API Limit Error']
+        youtubeGraph.setYoutubeChannelStats(self.ytlink)
+        youtubeStats = youtubeGraph.getYoutubeChannelStats(self.ytlink)
+        #youtubeStats = ['YT API Limit Error', 'YT API Limit Error', 'YT API Limit Error', 'YT API Limit Error']
         #subcountlabel
         text = "Sub count: " + str(youtubeStats[2])
         snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
@@ -427,19 +427,19 @@ class window(object):
         #followerCountLabel
         #uncomment
         y = self.__labelY+2
-        text = "Follower Count: " + "1232123"#+ str(tUser.followCount())
+        text = "Follower Count: " + str(tUser.followCount())
         snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #tweetsLikedLabel
         y+=diff
-        text = "Total favourited tweets: " + "1232123"#+ str(tUser.favTweetCount())
+        text = "Total favourited tweets: " + str(tUser.favTweetCount())
         snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #totalTweetsLabel
         y+=diff
-        text = "Total tweets: " + "1232123"#+ str(tUser.tweetCount())
+        text = "Total tweets: " + str(tUser.tweetCount())
         snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #tCreatedLabel
         y+=diff
-        text = "Created at: " + "1232123"#+ str(tUser.userCreatedAt())
+        text = "Created at: " + str(tUser.userCreatedAt())
         snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         
 
