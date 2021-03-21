@@ -312,6 +312,7 @@ class newGraph:
         self.Graph.setGeometry(QtCore.QRect(posX, posY, lenX, lenY))
         #Enables graph to show grid
         self.Graph.showGrid(x = True, y = True)
+        self.Graph.setStyleSheet("background: transparent; background-color: none;")
 
     def setSize(self, lenX, lenY):
         """! this method sets the size of the line graph
@@ -374,9 +375,10 @@ class newPieChart():
         """
         self.chart = QChart()
         self.chart.setAnimationOptions(QChart.AllAnimations)
-        self.chart.setBackgroundVisible(True)
+        self.chart.setBackgroundVisible(False)
         self.series = QPieSeries()
-        self.chart.legend().setVisible(False)        
+        self.chart.legend().setVisible(False)
+        self.chart.setBackgroundBrush(QtGui.QBrush(QtGui.QColor("transparent")))  
 
     def setPos(self, posX, posY, width, height):
         """! set the position and size of pie chart
@@ -448,6 +450,7 @@ class newPieChart():
         """
         self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
+        self.chartview.setStyleSheet("background: transparent; background-color: none;")
 
     def explodeSlice(self, exploded, slice_):
         """! called when mouse hover is detected to perform pie slice movement
@@ -537,6 +540,7 @@ class newBarChart():
         self.chart.setBackground(background=None)
         self.chart.setLabel('left', "RT Count: red, Fav Count: Green", units='')
         self.chart.setLabel('bottom', "Days", units='')
+        self.chart.setStyleSheet("background: transparent; background-color: none;")
 
     #data is a list of list
     def addData(self, data, cat):

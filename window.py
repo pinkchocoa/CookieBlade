@@ -375,20 +375,22 @@ class window(object):
         """
         #Start of snsMenu
         snsM = windowGen()
+        
+        #graphics
+        snsM.setLabel(15, 100, 355, 150, "", "Assets/ysmallbox.png", "", "", "", True)
+        snsM.setLabel(15, 245, 355, 150, "", "Assets/tsmallbox.png", "", "", "", True)
+        snsM.setLabel(10, 10, 355, 75, "", "Assets/mainLogo.png", "", "", "", True)
+        snsM.setLabel(20, 410, 865, 635, "", "Assets/piechart.png", "", "", "", True)
+        #snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+
         self.setTwitterGraphs(snsM) 
         self.setTwitterTrending(snsM) 
         self.setYoutubeGraphs(snsM)
-
-        snsM.setLabel(15, 100, 355, 150, "", "Assets/ysmallbox.png", "", "", "", True)
-        snsM.setLabel(15, 245, 355, 150, "", "Assets/tsmallbox.png", "", "", "", True)
-        snsM.setLabel(10, 5, 355, 75, "", "Assets/mainLogo.png", "", "", "", True)
-        #snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
-        #snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
-
+        
         #ytlogo
-        snsM.setLabel(self.__logoX-320, self.__logoY-112, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-310, self.__logoY-112, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
-        snsM.setLabel(self.__logoX-303, self.__logoY+25, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-303, self.__logoY+30, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
         
         labelW = 300
         diff = 25
