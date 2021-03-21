@@ -59,6 +59,7 @@ class database(mkFolder):
             db = sqlite3.connect(arg)
         except:
             print("__createDB: database creation failed.")
+            db.close()
         db.close() #close database
         return arg #return database location
 
@@ -85,11 +86,15 @@ class database(mkFolder):
             tableArg = tableArg + argument[last-1] + ' text)' #add last argument.
         except:
             print("createTable: tableArg string failed.")
+            db.close()          
+            connect.close()
 
         try:
             db.execute(tableArg)
         except:
             print("createTable: db.execute() failed.")
+            db.close()          
+            connect.close()
 
         try:
             #Create Unqiue index for replace function of SQLite3
@@ -97,6 +102,8 @@ class database(mkFolder):
             db.execute(tableArg)
         except:
             print("createTable: Unqiue index creation failed.")
+            db.close()          
+            connect.close()
         
         connect.commit()    #save database
         db.close()          #close database
@@ -128,12 +135,16 @@ class database(mkFolder):
             tableArg = tableArg + '?)'
         except:
             print("insertTable: tableArg string failed.")
+            db.close()          
+            connect.close()
 
         #Execute tableArg with data.
         try:
             db.execute(tableArg,(data))
         except:
             print("insertTable: db.execute() failed.")
+            db.close()          
+            connect.close()
 
         connect.commit()    #save database
         db.close()          #close database
@@ -161,6 +172,8 @@ class database(mkFolder):
             tableArg = 'SELECT ' + argSELECT + ' FROM ' + "'" + tableName + "'" + ' ' + "'" + argWHERE + "'"
         except:
             print("getTableData: tableArg string failed.")
+            db.close()          
+            connect.close()
         
         try:
             db.execute(tableArg)     
@@ -169,6 +182,8 @@ class database(mkFolder):
                 data.append(list(row))
         except:
             print("getTableData: db.execute() failed./Table not exist.")
+            db.close()          
+            connect.close()
             
         db.close()
         connect.close()
@@ -189,6 +204,8 @@ class database(mkFolder):
             connect.close()
         except:
             print("deleteTable: Table Delete failed./Table does not Exist.")
+            db.close()          
+            connect.close()
 
     def customSqlStatement(self,SQL_Statement):
         """! Execute custom SQL_Statement
@@ -203,3 +220,5 @@ class database(mkFolder):
             connect.close()
         except:
             print("customSqlStatement: db.execute() failed.")
+            db.close()          
+            connect.close()
