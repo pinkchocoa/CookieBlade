@@ -21,6 +21,13 @@ from GUIWidgets import *
 from window import window
 from youtube import *
 from general import delete_file_contents
+from os import environ
+
+def suppress_qt_warnings():
+    environ["QT_DEVICE_PIXEL_RATIO"] = "0"
+    environ["QT_AUTO_SCREEN_SCALE_FACTOR"] = "1"
+    environ["QT_SCREEN_SCALE_FACTORS"] = "1"
+    environ["QT_SCALE_FACTOR"] = "1"
 
 RESULT_FILE = 'result.txt'
 
@@ -46,6 +53,7 @@ class UI():
         """
         self.win.show()
 
+suppress_qt_warnings()
 delete_file_contents(RESULT_FILE)
 app = startApp()
 win = UI()
