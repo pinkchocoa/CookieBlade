@@ -2,6 +2,8 @@
 #
 # @brief This file contains the mkFolder class
 #
+# @author JunHao
+#
 # @section libraries_main Libraries/Modules
 # - os standard libary (https://docs.python.org/3/library/os.html)
 #   - access to folder creation funtions
@@ -16,12 +18,13 @@ from UrlExtraction import UrlExtraction
 # mkFolder class creates sub folders based on folder existance
 # help organaize the files for the crawler program
 class mkFolder(UrlExtraction):
-
+    """! mkFolder class
+    creates sub folders based on folder existance
+    """
     #Check/create data folder
     def createDirectory(self):
         """! Create data in program source folder.
         """
-
         if os.path.isdir('./data') == False:
             os.mkdir("data")
             pass
@@ -34,7 +37,6 @@ class mkFolder(UrlExtraction):
         @param UserUrl Url link provided by user.
         @return sitename
         """
-
         self.createDirectory()
         sitename = self.getSiteName(UserUrl)
         UserUrl = "./data/" + sitename

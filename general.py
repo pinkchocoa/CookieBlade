@@ -16,7 +16,7 @@ def create_project_dir(directory):
     @param directory directory path
     """
     if not os.path.exists(directory):
-        print('Creating directory ' + directory)
+        #print('Creating directory ' + directory)
         os.makedirs(directory)
 
 def create_file(path):
@@ -25,7 +25,7 @@ def create_file(path):
     """
     if not os.path.isfile(path):
         write_file(path, '')
-        print("file created")
+        #print("file created")
 
 # Create a new file
 def write_file(path, data):
