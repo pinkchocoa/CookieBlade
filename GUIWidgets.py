@@ -195,7 +195,7 @@ class newTextBox:
         """
         self.textbox.setFont(QFont(fontStyle,int(fontSize)))
 
-    def returnText(self):
+    def getText(self):
         """! used to retrieve the user input from textboxes
         """
         return self.textbox.text()
@@ -286,8 +286,8 @@ class newGraph:
         #Enables graph to show grid
         self.Graph.showGrid(x = True, y = True)
 
-    def setSize(self, x, y):
-        self.Graph.setFixedSize(x,y)
+    def setSize(self, lenX, lenY):
+        self.Graph.setFixedSize(lenX,lenY)
 
     def plotGraph(self, axisX, axisY, color, points):
         """! take in values for X and Y axis, line color and points to plot graph
