@@ -35,7 +35,6 @@ class Twitter:
 
     def __init__(self):
         """! Twitter class initializer
-        @return an instance of Twitter class that connects to the twitter API
         """
         auth = tweepy.OAuthHandler(self.CONSUMER_KEY, self.CONSUMER_SECRET)
         auth.set_access_token(self.ACCESS_TOKEN, self.ACCESS_SECRET)
@@ -61,7 +60,6 @@ class Twitter:
     # https://twitter.com/RBW_MAMAMOO/status/1366704850671525890?s=20
     def searchKeyword(self, keyword, rType = "recent", amt = 3, getLoc = False, lat=1.3521, lng=103.8198):
         """! searches through twitter and returns a list of twitters following the filtered parameters
-        @param self instance of the object that we are calling from
         @param keyword what to search for
         @param rType results type
                 "mixed" will include both popular and recent results
@@ -72,7 +70,7 @@ class Twitter:
         @param lng longtitude, default value set to singapore's. not in use for worldwide results
         @return a list of tweets in the format of  [ ['username', 'content', 'images if any'], [...] ]
         """
-        print("searching " + keyword)
+        #print("searching " + keyword)
         searchedTweets = []
         if getLoc:
             loc =  self.api.trends_closest(lat, lng)
@@ -99,15 +97,7 @@ class Twitter:
                     images.append(files_location)
             searchedTweets.append([tweet.user.screen_name, tweet.full_text, tweet.id, images])
         
-        print("returning trends for", place)
-
-        #other information
-        #tweet.user.screen_name
-        #tweet.full_text
-        #tweet.id
-        #tweet.created_at
-        #tweet.retweet_count
-        #tweet.favorite_count
+        #print("returning trends for", place)
 
         return searchedTweets
 
@@ -119,7 +109,6 @@ class Twitter:
     #{'topic that is trending': tweet volume, ...}
     def trendingTopics(self, worldWide = True, lat=1.3521, lng=103.8198, limit=5):
         """! searches through twitter for trending topics
-        @param self instance of the object that we are calling from
         @param worldWide True to search worldwide, False to search by location
         @param lat lattitude, default value set to singapore's. not in use for worldwide results
         @param lng longtitude, default value set to singapore's. not in use for worldwide results
@@ -136,7 +125,7 @@ class Twitter:
             place = "World Wide"
 
         allTrends = self.api.trends_place(loc)
-        print("returning trends for", place)
+        #print("returning trends for", place)
         
         trends = json.loads(json.dumps(allTrends, indent=1))
         count=0
@@ -153,13 +142,6 @@ class Twitter:
         
         return topics
 
-#ENGAGEMENT FUNCTIONS
-#get user most fav tweet
-#get user most engaged tweet
-#get user most engaged friend
-#get user most engaged follower
-#get user most engaged topics
-
 #https://twitter.com/ + username
 #able to parse url to grab the username behind for this class
 #accepts both URL and tweetID
@@ -172,7 +154,6 @@ class TUser(Twitter):
     def __init__(self, username):
         """! TUser class initializer
         @param username username of the twitter account to fetch data of
-        @return an instance of TUser class
         """
         super().__init__()
         self.username = username
@@ -201,7 +182,6 @@ class TUser(Twitter):
     #gets user's current follow count
     def followCount(self):
         """! gets user's current follow count
-        @param self instance of the object that we are calling from
         @return user's follow count (integer)
         """
         return self.user.followers_count
@@ -209,23 +189,27 @@ class TUser(Twitter):
     #gets user's current tweet count
     def tweetCount(self):
         """! gets user's current tweet count
-        @param self instance of the object that we are calling from
         @return user's tweet count (integer)
         """
         return self.user.statuses_count
 
     def favTweetCount(self):
+        """! gets user's current favourite tweet count
+        @return user's favourite tweet count (integer)
+        """
         return self.user.favourites_count
         
     #returns city, state
     def userLoc(self):
         """! gets user's location (that is set on their profile)
-        @param self instance of the object that we are calling from
         @return user's location, in the format of "city, state" (should be a string)
         """
         return self.user.location
 
     def userCreatedAt(self):
+        """! gets user's created_at date
+        @return user's created_at
+        """
         return self.user.created_at
 
     #get user's favourite tweets
@@ -236,7 +220,6 @@ class TUser(Twitter):
     # https://twitter.com/RBW_MAMAMOO/status/1366704850671525890?s=20
     def userFav(self):
         """! get user's favourite tweets
-        @param self instance of the object that we are calling from
         @return returns a list of tweets that the user have favourite/liked in the format of [ ['username', 'content', 'images if any'], [...] ]
         """
         fav=[]
@@ -254,7 +237,6 @@ class TUser(Twitter):
 
     def userTweets(self, num=100,startDate="2020-01-01", endDate="2021-01-01"):
         """! get user's tweets
-        @param self instance of the object that we are calling from
         @return returns a list of tweets that the user have tweeted [ ['username', 'content', 'images if any'], [...] ]
         """
         tweets=[]
@@ -284,11 +266,9 @@ class TTweet(Twitter):
     This class inherits the base Twitter class for API access.
     This class contains methods specifically related to a tweet
     """
-
     def __init__(self, tweetID):
         """! TTweet class initializer
         @param tweetID tweet ID of the tweet to fetch data of
-        @return an instance of TTweet class
         """
         super().__init__()
         self.tweetID = tweetID
@@ -317,7 +297,6 @@ class TTweet(Twitter):
     #gets the favourite count of a tweet
     def favCount(self):
         """! gets the favourite count of a tweet
-        @param self instance of the object that we are calling from
         @return favourite count of a tweet (integer)
         """
         return self.tweet.favorite_count
@@ -325,7 +304,6 @@ class TTweet(Twitter):
     #gets the RT count of a tweet
     def RTCount(self):
         """! gets the RT count of a tweet
-        @param self instance of the object that we are calling from
         @return RT count of a tweet (integer)
         """
         return self.tweet.retweet_count
@@ -333,13 +311,12 @@ class TTweet(Twitter):
     #get tweet location of a tweet
     def loc(self):
         """! get tweet location of a tweet (if available)
-        @param self instance of the object that we are calling from
         @return tweet location of a tweet, in the format of "city, state" (should be a string)
         """
         return self.tweet.place
 
     def getDate(self):
+        """! get created_at of a tweet 
+        @return created_at of a tweet 
+        """
         return self.tweet.created_at
-
-    #get tweet author
-    #get what device is use to tweet this tweet
