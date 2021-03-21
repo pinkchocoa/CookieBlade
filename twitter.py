@@ -228,13 +228,6 @@ class TUser(Twitter):
     def userCreatedAt(self):
         return self.user.created_at
 
-    #gets user's recent followers
-    def recentFollows(self):
-        pass
-
-    def recentFriends(self):
-        pass
-
     #get user's favourite tweets
     #return format: [ ['username', 'content', 'images if any'], [...] ]
     #e.g. 
