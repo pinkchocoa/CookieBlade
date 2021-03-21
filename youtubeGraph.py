@@ -2,7 +2,11 @@
 #
 # @brief this file contains retrival of youtube related information
 #
+# @author JunHao
+#
 # @section libraries_main Libraries/Modules
+# - youtube (local)
+#   - for crawling youtube
 # - database(local)
 #   - access to database class
 # - datetime
