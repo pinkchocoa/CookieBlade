@@ -31,7 +31,7 @@ def setYoutubeChannelStats(channelUrl):
     data.append(str(datetime.date.today()))
     temp = youtube.searchurl(channelUrl)
     for i in range(len(temp)):
-        data.append(str(temp[i]))
+        data.append(temp[i])
     db = database('youtube')
     uid = db.getUniqueID(channelUrl)
     db.createTable(uid,'date','created','Vidcount','Subcount','Totalview')
@@ -81,7 +81,7 @@ def setRevenueData(channelUrl):
     result.pop(0) #get rid of amount of videos in said months.
     result = result[0]
     for i in range(0,len(result)):
-        data.append(str(result[i]))
+        data.append(result[i])
     db.insertTable(data,uid,'Date','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
     db.dbClose()
 
