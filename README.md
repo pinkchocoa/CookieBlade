@@ -2,10 +2,15 @@
 The following pip installation is necessary for the running of the program.
 
 pip install PyQt5 - GUI API
+
 pip install Tweepy - Twitter API
+
 pip install pyqtgraph -GUI API
+
 pip install –upgrade google-api-python-client google-auth-httplib2 google-auth-oauthlib - Youtube API
+
 pip install geopandas - For location data
+
 Pip install geopy - For location data
 
 Create your own apikey.py in the same directory with the following contents:
