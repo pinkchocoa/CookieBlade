@@ -71,7 +71,6 @@ class Testing(unittest.TestCase):
         print("\nSTART of test_general_py\n")
 
         create_project_dir('testGeneral')
-        create_data_files('testGeneral', 'www.google.com')
         create_file('testResult.txt')
         write_file('./testGeneral/queue.txt','test')
         append_to_file('./testGeneral/queue.txt', 'test')
