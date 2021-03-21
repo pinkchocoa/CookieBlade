@@ -425,8 +425,8 @@ class window(object):
         #snsBackPush
         snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
-        y = self.__wHeight - 250
-        snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
+        y = self.__wHeight - 200
+        snsM.setLabel(x+30, y-60, textWidth, self.__labelHeight, "Current twitter trending topics")
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
             y+=30
@@ -470,18 +470,18 @@ class window(object):
         #these are to generate labels for the double click functionality for chart usage
 
         #recent tweets display
-        x = 50
-        y = 50
+        x = 450
+        y = 20
         textWidth = 500
         textHeight = 80
         text = "Recent tweets based on '" + self.topicInput + "' at " + self.locationInput
-        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, text)
+        snsM.setLabel(x, y, textWidth, self.__labelHeight, text)
         
         for i in range(5):
             y+=30
-            snsM.setLabel(x+400, y, textWidth, 20, "1")
+            snsM.setLabel(x, y, textWidth, 20, "1")
             y+=25
-            snsM.setLabel(x+400, y, textWidth, textHeight, "2").setAlignmentTop()
+            snsM.setLabel(x, y, textWidth, textHeight, "2").setAlignmentTop()
             y+=textHeight-30
             
 
@@ -501,9 +501,9 @@ class window(object):
         #snsBackPush
         snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
-        y = self.__wHeight - 250
-        text = "Current " + self.locationInput + "twitter trending topics"
-        snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, text)
+        y = self.__wHeight - 200
+        text = "Current " + self.locationInput + " twitter trending topics"
+        snsM.setLabel(x+30, y-60, textWidth, self.__labelHeight, text)
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
             y+=30
