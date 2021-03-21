@@ -136,6 +136,7 @@ class window(object):
         self.locationInput = geolocator.reverse(text, language='en')
         self.locationInput = str(self.locationInput)
         self.locationInput = self.locationInput.split(',')[-1]
+        self.locationInput = self.locationInput[1:]
         
         self.prev = "topic"
         topicSnsM = self.setupTopicSnsMenu()
