@@ -279,14 +279,14 @@ class window(object):
         getLoc = not self.worldWide
         #tweets = self.crawlTwitterTopic(getLoc)
         tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
-        index = 20
+        index = 22
         for idx, x in enumerate(tweets):
             user = x[0]
             text = x[1]
             link = "www.twitter.com/status/" + str(x[2])
             user = user + " " + link
             window.labelList[window.totalNLabel-index+(idx*2)].label.setText(user)
-            window.labelList[window.totalNLabel-index+(idx*2+1)].label.setText(text)
+            window.labelList[window.totalNLabel-index+(idx*2)+1].label.setText(text)
 
     def setTwitterTrending(self, window, worldWide = True, lat=1.3521, lng=103.8198):
         """! create pie chart with topics crawled from twitter
@@ -473,21 +473,23 @@ class window(object):
         x = 50
         y = 50
         textWidth = 500
-        textHeight = 90
+        textHeight = 80
         text = "Recent tweets based on '" + self.topicInput + "' at " + self.locationInput
         snsM.setLabel(x+400, y, textWidth, self.__labelHeight, text)
+        
         for i in range(5):
             y+=30
-            snsM.setLabel(x+400, y, textWidth, 20, "")
+            snsM.setLabel(x+400, y, textWidth, 20, "1")
             y+=25
-            snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
-            y+=textHeight
+            snsM.setLabel(x+400, y, textWidth, textHeight, "2").setAlignmentTop()
+            y+=textHeight-30
+            
 
         #piechart trend display
         x = 50
         y = self.__wHeight - 400
         textWidth = 500
-        textHeight = 90
+        textHeight = 80
         snsM.setLabel(x+400, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
         for i in range(3):
             y+=30
