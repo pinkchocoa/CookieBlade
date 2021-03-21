@@ -29,6 +29,7 @@ class database(mkFolder):
     def __init__(self, dataBaseName):
         """! database class initializer
         @param dataBaseName; any name you want it to be.
+        @return an instance of database class
         """
         self.__dataBaseName = dataBaseName
         self.__arg = self.__createDB() #Create Database on init.
