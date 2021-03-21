@@ -20,7 +20,6 @@ from datetime import datetime
 import apikey #api keys are stored here
 
 class Youtube:
-
     api_key = apikey.Y_ACCESS_KEY
     youtube = build('youtube', 'v3', developerKey=api_key)
 
@@ -78,42 +77,40 @@ class youtubeVid(Youtube):
         The categories are music, sports, gaming, and news & politics
         @return a list of video details objects
         """
-
         VidList = []
         countryCode = ['SG', 'MY', 'PH']
-        videoCategory = ['10', '17', '20', '25', ]  # 10 - music, 17 - sports, 20 - gaming, 25 - news and politics
+        videoCategory = ['10', '17', '20', '25']  # 10 - music, 17 - sports, 20 - gaming, 25 - news and politics
         nextPageToken = None
         for code in countryCode:
             for types in videoCategory:
-                for pages in range(0, 1):
-                    # request details
-                    request = Youtube.youtube.videos().list(
-                        part='snippet',
-                        maxResults=5,
-                        chart='mostPopular',
-                        regionCode=code,
-                        videoCategoryId=types,
-                        pageToken=nextPageToken
-                    )
+                # request details
+                request = Youtube.youtube.videos().list(
+                    part='snippet',
+                    maxResults=5,
+                    chart='mostPopular',
+                    regionCode=code,
+                    videoCategoryId=types,
+                    pageToken=nextPageToken
+                )
 
-                    # getting a request
-                    try:
-                        response = request.execute()
-                        nextPageToken = response.get('nextPageToken')
-                    except Exception as e:
-                        print(str(e))
-                        break
+                # getting a request
+                try:
+                    response = request.execute()
+                    nextPageToken = response.get('nextPageToken')
+                except Exception as e:
+                    print(str(e))
+                    break
 
-                    # storing the details into each video object
-                    for item in response['items']:
-                        video = youtubeVid()
-                        video.title = item['snippet']['title']
-                        video.videoID = item['id']
-                        video.thumbnail = item['snippet']['thumbnails']['default']['url']
-                        video.channelID = item['snippet']['channelId']
-                        video.publishedAt = item['snippet']['publishedAt']
-                        video.countryTrending = code
-                        VidList.append(video)
+                # storing the details into each video object
+                for item in response['items']:
+                    video = youtubeVid()
+                    video.title = item['snippet']['title']
+                    video.videoID = item['id']
+                    video.thumbnail = item['snippet']['thumbnails']['default']['url']
+                    video.channelID = item['snippet']['channelId']
+                    video.publishedAt = item['snippet']['publishedAt']
+                    video.countryTrending = code
+                    VidList.append(video)
         return VidList
 
     def vidInfo(self, video):
@@ -157,7 +154,6 @@ class youtubeVid(Youtube):
         tuser = database('TrendVideo')
         templist = tuser.getTableData('TrendVideo')
 
-        countryList = [0,20,40]
         if countryCode == "SG":
             x = 0
         elif countryCode == "MY":
@@ -299,25 +295,23 @@ class Channel(Youtube):
 
         #create a list of list based on the number of videos in the channel
         #3 things in each list inside the list - videoid, no of views, createdAt date
-        mainList = [list() for x in range(len(resultsList))]
+        mainList = []
 
-        for i in range(0, len(mainList)):
-            mainList[i].append(resultsList[i])
+        for idx, x in enumerate(mainList):
+            x.append(resultsList[idx])
 
-        for i in range(0, len(mainList)):
             response = Youtube.youtube.videos().list(
                 part='statistics',
-                id=mainList[i][0]
+                id=x[0]
             )
             try:
                 reply = response.execute()
             except Exception as e:
                 print(str(e))
             viewcount = reply["items"][0]["statistics"]["viewCount"]
-            mainList[i].append(viewcount)
+            x.append(viewcount)
 
-        for i in range(0, len(mainList)):
-            mainList[i].append(datesList[i])
+            x.append(datesList[idx])
 
         #Filter out the videos that are made in the past 12 months
         #setting the filter for the months
@@ -328,15 +322,15 @@ class Channel(Youtube):
         for idx, x in enumerate(calendarEndDate):
             dateString1 = str(calendarYear) + '-' + str(idx+1) + '-1'
             dateString2 = str(calendarYear) + '-' + str(idx+1) + '-' + str(x)
-            dateString1 = datetime.strptime(dateString1, '%Y-%m-%d')
-            dateString2 = datetime.strptime(dateString2, '%Y-%m-%d')
+            dateString1 = datetime.date(datetime.strptime(dateString1, '%Y-%m-%d'))
+            dateString2 = datetime.date(datetime.strptime(dateString2, '%Y-%m-%d'))
             calendarDates.append([dateString1,dateString2])
 
         #Converting the list of dates type string into a list of dates type date
-        for d in range(0, len(mainList)):
-            datetimeobject = datetime.strptime(mainList[d][2], '%Y-%m-%d')
+        for x in mainList:
+            datetimeobject = datetime.strptime(x[2], '%Y-%m-%d')
             datetimeobject = datetime.date(datetimeobject)
-            mainList[d][2] = datetimeobject
+            x[2] = datetimeobject
 
         #Filtering done here and returns back a list of filtered dates type string
         #lists for the past 12 months
@@ -351,18 +345,16 @@ class Channel(Youtube):
                     d[2] = str(d[2])
                     monthVids[idx].append(d)
 
-        #Store the number of vids made per month into a list to return
         for i in range(0,12):
+            #Store the number of vids made per month into a list to return
             sortedmonthVids.append(len(monthVids[i]))
-
-        #Store the amount of revenue earned per month into a list to return
-        for i in range(0,12):
+            #Store the amount of revenue earned per month into a list to return
             monthRev = 0
             for j in range(0,len(monthVids[i])):
                 #formula to calculate revenue here
                 monthRev += int(monthVids[i][j][1]) * 0.02
                 monthRev = round(monthRev,2)
-            channelRevByMonth.append(monthRev)
+            channelRevByMonth.append(monthRev) 
 
         #revenue dictionary
         revDict = {
