@@ -123,13 +123,19 @@ class window(object):
         self.locationInput = self.countryTextBox.returnText()
         if (self.topicInput == ""):
             messageBox("Alert", "Please enter a topic.")
+            return
         elif (self.locationInput == ""):
             messageBox("Alert", "Please enter a coutnry.")
+            return
 
         geolocator = Nominatim(user_agent="cookieBlade")
         data = geolocator.geocode(self.locationInput)
         self.lat = data.raw.get("lat")
-        self.lon = data.raw.get("lon")
+        self.lng = data.raw.get("lon")
+        text = str(self.lat) + ", " + str(self.lng)
+        self.locationInput = geolocator.reverse(text)
+        self.locationInput = str(self.locationInput)
+        self.locationInput = self.locationInput.split(',')[-1]
         
         self.prev = "topic"
         topicSnsM = self.setupTopicSnsMenu()
@@ -256,13 +262,25 @@ class window(object):
             "left", revenueData)
 
 
-    def crawlTwitterTopic(self, topic, rType = "recent", amt = 3, getLoc = False, lat=1.3521, lng=103.8198):
+    def crawlTwitterTopic(self):
         t = Twitter()
-        return t.searchKeyword(topic, rType, amt, getLoc, lat, lng)
+        tweets = t.searchKeyword(self.topicInput, "recent", 5, True, self.lat, self.lng)
+        return tweets
 
     def crawlTwitterTrending(self, worldWide, lat, lng):
         t = Twitter()
         return t.trendingTopics(worldWide, lat, lng)
+
+    def setTwitterTopic(self, window):
+        tweets = self.crawlTwitterTopic()
+        index = 20
+        for idx, x in enumerate(tweets):
+            user = x[0]
+            text = x[1]
+            link = "www.twitter.com/status/" + str(x[2])
+            user = user + " " + link
+            window.labelList[window.totalNLabel-index+(idx*2)].label.setText(user)
+            window.labelList[window.totalNLabel-index+(idx*2+1)].label.setText(text)
 
     def setTwitterTrending(self, window, worldWide = True, lat=1.3521, lng=103.8198):
         """! create pie chart with topics crawled from twitter
@@ -270,7 +288,7 @@ class window(object):
         """
         #uncomment this line to actually crawl
         data = self.crawlTwitterTrending(worldWide, lat, lng)
-        data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
+        #data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
 
@@ -442,13 +460,23 @@ class window(object):
     
     def setupTopicSnsMenu(self):
         snsM = windowGen()
-
-        self.setTwitterGraphs(snsM) 
-        self.setTwitterTrending(snsM, False, self.lat, self.lon) 
-
-
         #make sure that these labels are the last to be generated
-        #these are to generate labels for the double click functionality for piechart usage
+        #these are to generate labels for the double click functionality for chart usage
+        x = 50
+        y = 50
+        textWidth = 500
+        textHeight = 90
+        text = "Recent tweets based on " + self.topicInput + " at " + self.locationInput
+        snsM.setLabel(x+400, y, textWidth, self.__labelHeight, text)
+        print("start" + str(snsM.totalNLabel))
+        for i in range(5):
+            y+=30
+            snsM.setLabel(x+400, y, textWidth, 20, "")
+            y+=25
+            snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
+            y+=textHeight-30
+
+
         x = 50
         y = self.__wHeight - 400
         textWidth = 500
@@ -477,4 +505,8 @@ class window(object):
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
+
+        print("end" + str(snsM.totalNLabel))
+        self.setTwitterTopic(snsM)
+        self.setTwitterTrending(snsM, False, self.lat, self.lng) 
         return snsM

@@ -140,7 +140,6 @@ class Twitter:
         
         trends = json.loads(json.dumps(allTrends, indent=1))
         for idx, x in enumerate(trends[0]["trends"]):
-            #might wanna remove the #?
             if x["tweet_volume"]:
                 topics[x["name"]] = x["tweet_volume"]
             if idx == limit:
