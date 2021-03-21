@@ -17,10 +17,11 @@ from googleapiclient.discovery import build
 from database import *
 from urllib import parse
 from datetime import datetime
+import apikey #api keys are stored here
 
 class Youtube:
 
-    api_key = 'AIzaSyB3ely6qW_YfbjHIFVODyufGs9exzVqnM4'
+    api_key = apikey.Y_ACCESS_KEY
     youtube = build('youtube', 'v3', developerKey=api_key)
 
 class youtubeVid(Youtube):
@@ -101,6 +102,7 @@ class youtubeVid(Youtube):
                         nextPageToken = response.get('nextPageToken')
                     except Exception as e:
                         print(str(e))
+                        break
 
                     # storing the details into each video object
                     for item in response['items']:
@@ -154,92 +156,39 @@ class youtubeVid(Youtube):
         datalist = []
         tuser = database('TrendVideo')
         templist = tuser.getTableData('TrendVideo')
-        if countryCode == "SG":  # SG
-            # viewcounts for music
-            for i in range(0, 5):
+
+        countryList = [0,20,40]
+        if countryCode == "SG":
+            x = 0
+        elif countryCode == "MY":
+            x = 20
+        elif countryCode == "PH":
+            x = 40
+
+        for idx, i in enumerate(range(x, 20+x)):
+            if idx < 5: # viewcounts for music
                 totalmusicviews += int(templist[i][7])
-            datalist.append(totalmusicviews)
-            # viewcounts for sports
-            for i in range(5, 10):
+            elif idx < 10: # viewcounts for sports
                 totalsportsviews += int(templist[i][7])
-            datalist.append(totalsportsviews)
-            # viewcounts for gaming
-            for i in range(10, 15):
+            elif idx < 15: # viewcounts for gaming
                 totalgamesviews += int(templist[i][7])
-            datalist.append(totalgamesviews)
-            # viewcounts for news & politics
-            for i in range(15, 20):
+            elif idx < 20: # viewcounts for news & politics
                 totalnewsviews += int(templist[i][7])
-            datalist.append(totalnewsviews)
 
-            # dictionary for dbinfo
-            dbdict = {
-                "totalmusicviews": datalist[0],
-                "totalsportsviews": datalist[1],
-                "totalgamesviews": datalist[2],
-                "totalnewsviews": datalist[3]
-            }
-            dbdatalist = [(k, v) for k, v in dbdict.items()]
+        datalist.append(totalmusicviews)
+        datalist.append(totalsportsviews)
+        datalist.append(totalgamesviews)
+        datalist.append(totalnewsviews)
+        # dictionary for dbinfo
+        dbdict = {
+            "totalmusicviews": datalist[0],
+            "totalsportsviews": datalist[1],
+            "totalgamesviews": datalist[2],
+            "totalnewsviews": datalist[3]
+        }
+        dbdatalist = [(k, v) for k, v in dbdict.items()]
 
-            return dbdatalist
-
-        elif countryCode == "MY":  # MY
-            # viewcounts for music
-            for i in range(20, 25):
-                totalmusicviews += int(templist[i][7])
-            datalist.append(totalmusicviews)
-            # viewcounts for sports
-            for i in range(25, 30):
-                totalsportsviews += int(templist[i][7])
-            datalist.append(totalsportsviews)
-            # viewcounts for gaming
-            for i in range(30, 35):
-                totalgamesviews += int(templist[i][7])
-            datalist.append(totalgamesviews)
-            # viewcounts for news & politics
-            for i in range(35, 40):
-                totalnewsviews += int(templist[i][7])
-            datalist.append(totalnewsviews)
-
-            # dictionary for dbinfo
-            dbdict = {
-                "totalmusicviews": datalist[0],
-                "totalsportsviews": datalist[1],
-                "totalgamesviews": datalist[2],
-                "totalnewsviews": datalist[3]
-            }
-            dbdatalist = [(k, v) for k, v in dbdict.items()]
-
-            return dbdatalist
-
-        elif countryCode == "PH":  # PH
-            # viewcounts for music
-            for i in range(40, 45):
-                totalmusicviews += int(templist[i][7])
-            datalist.append(totalmusicviews)
-            # viewcounts for sports
-            for i in range(45, 50):
-                totalsportsviews += int(templist[i][7])
-            datalist.append(totalsportsviews)
-            # viewcounts for gaming
-            for i in range(50, 55):
-                totalgamesviews += int(templist[i][7])
-            datalist.append(totalgamesviews)
-            # viewcounts for news & politics
-            for i in range(55, 60):
-                totalnewsviews += int(templist[i][7])
-            datalist.append(totalnewsviews)
-
-            # dictionary for dbinfo
-            dbdict = {
-                "totalmusicviews": datalist[0],
-                "totalsportsviews": datalist[1],
-                "totalgamesviews": datalist[2],
-                "totalnewsviews": datalist[3]
-            }
-            dbdatalist = [(k, v) for k, v in dbdict.items()]
-
-            return dbdatalist
+        return dbdatalist
 
 class Channel(Youtube):
     """! Channel Class inherits the variables in the youtube class
