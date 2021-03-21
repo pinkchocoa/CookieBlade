@@ -247,7 +247,7 @@ class window(object):
         #favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
         #rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
         #dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
-        window.setBarChart([rtList,favList], dateList, 400, self.__wHeight - 600, 700, 200, "User's Fav and RT Count")
+        window.setBarChart([rtList,favList], dateList, 400, self.__wHeight - 650, 700, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
         """! create line chart with data crawled from youtube
@@ -256,7 +256,7 @@ class window(object):
         posX = 450
         posY = 10
         widthX = 600
-        heightY = 450
+        heightY = 370
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
         #uncomment
         #youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
@@ -447,19 +447,20 @@ class window(object):
         y = self.__wHeight - 400
         textWidth = 500
         textHeight = 90
-        snsM.setLabel(x+300, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
+        snsM.setLabel(x+325, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
         for i in range(3):
             y+=30
-            snsM.setLabel(x+300, y, textWidth, 20, "")
+            snsM.setLabel(x+325, y, textWidth, 20, "")
             y+=25
-            snsM.setLabel(x+300, y, textWidth, textHeight, "").setAlignmentTop()
+            snsM.setLabel(x+325, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
 
         #snsBackPush
         snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
-
+        
         y = self.__wHeight - 200
-        snsM.setLabel(x+30, y-60, textWidth, self.__labelHeight, "Current twitter trending topics")
+        snsM.setLabel(x+60, y-60, textWidth, self.__labelHeight, "Current twitter trending topics")
+        x+=10
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
             y+=30
@@ -509,12 +510,12 @@ class window(object):
         y = self.__wHeight - 400
         textWidth = 500
         textHeight = 80
-        snsM.setLabel(x+300, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
+        snsM.setLabel(x+325, y, textWidth, self.__labelHeight, "Double click for on the piechart for recent tweets!")
         for i in range(3):
             y+=30
-            snsM.setLabel(x+300, y, textWidth, 20, "")
+            snsM.setLabel(x+325, y, textWidth, 20, "")
             y+=25
-            snsM.setLabel(x+300, y, textWidth, textHeight, "").setAlignmentTop()
+            snsM.setLabel(x+325, y, textWidth, textHeight, "").setAlignmentTop()
             y+=textHeight-30
 
         #snsBackPush
@@ -522,7 +523,8 @@ class window(object):
 
         y = self.__wHeight - 200
         text = "Current " + self.locationInput + " twitter trending topics"
-        snsM.setLabel(x+30, y-60, textWidth, self.__labelHeight, text)
+        snsM.setLabel(x+60, y-60, textWidth, self.__labelHeight, text)
+        x+=10
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
             y+=30

@@ -450,7 +450,8 @@ class newPieChart():
         """
         self.chartview = QChartView(self.chart, window)
         self.chartview.setRenderHint(QtGui.QPainter.Antialiasing)
-        self.chartview.setStyleSheet("background: transparent; background-color: none;")
+        self.chartview.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
+        #self.chartview.setStyleSheet("background: transparent; background-color: none;")
 
     def explodeSlice(self, exploded, slice_):
         """! called when mouse hover is detected to perform pie slice movement
