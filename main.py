@@ -52,7 +52,7 @@ class UI():
         """! UI class initializer
         Creates a new empty window and setup the UI
         """
-        self.win = newWindow("Cookie Crawler", self.__wWidth, self.__wHeight)
+        self.win = newWindow("CookieBlade", self.__wWidth, self.__wHeight)
         self.win.setStyleSheet("Assets/blank.png")
         self.ui = window()
         self.ui.setupUi(self.win)
