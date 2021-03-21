@@ -14,6 +14,7 @@
 
 #Imports
 from googleapiclient.discovery import build
+import google.oauth2.credentials
 from database import *
 from urllib import parse
 from datetime import datetime
@@ -21,7 +22,9 @@ import apikey #api keys are stored here
 
 class Youtube:
     api_key = apikey.Y_ACCESS_KEY
-    youtube = build('youtube', 'v3', developerKey=api_key)
+    API_SERVICE_NAME = 'youtube'
+    API_VERSION = 'v3'
+    youtube = build(API_SERVICE_NAME, API_VERSION, developerKey=api_key)
 
 class youtubeVid(Youtube):
     """! youtubeVid Class inherits the youtube class variables
@@ -99,7 +102,6 @@ class youtubeVid(Youtube):
                     nextPageToken = response.get('nextPageToken')
                 except Exception as e:
                     print(str(e))
-                    break
 
                 # storing the details into each video object
                 for item in response['items']:
@@ -204,8 +206,9 @@ class Channel(Youtube):
         result = [] #list that contains results to return
 
         #Gets the Channel's createAt date and appends it into the list
+        #Gets the Channel's subcount, totalviewno, totalvidno and appends it into the list
         response = Youtube.youtube.channels().list(
-            part='snippet',
+            part="snippet,statistics",
             id=id
         )
         try:
@@ -216,16 +219,6 @@ class Channel(Youtube):
         channelCreateDate = reply["items"][0]["snippet"]["publishedAt"]
         channelCreateDate = channelCreateDate[0:10]
         result.append(channelCreateDate)
-
-        #Gets the Channel's subcount, totalviewno, totalvidno and appends it into the list
-        response = Youtube.youtube.channels().list(
-            part='statistics',
-            id=id
-        )
-        try:
-            reply = response.execute()
-        except Exception as e:
-            print(str(e))
 
         try:
             channelTotalVid = reply["items"][0]["statistics"]["videoCount"]
@@ -375,9 +368,6 @@ class Channel(Youtube):
 
         finalresult = [sortedmonthVids, revList]
         return finalresult
-
-
-
 
 
 #HOW TO USE FOR NOW
