@@ -20,3 +20,5 @@ Y_ACCESS_KEY=<your youtube access key>
 
 Run the program from main.py
 
+Code Documentation (Doxygen): https://pinkchocoa.github.io/CSC1009-Data-Crawl
+Youtube Video: https://www.youtube.com/watch?v=MXbrMevfk0c
