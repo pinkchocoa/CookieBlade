@@ -53,7 +53,7 @@ class UI():
         Creates a new empty window and setup the UI
         """
         self.win = newWindow("Cookie Crawler", self.__wWidth, self.__wHeight)
-        self.win.setStyleSheet("blank.png")
+        self.win.setStyleSheet("Assets/blank.png")
         self.ui = window()
         self.ui.setupUi(self.win)
         self.ui.stackedWidget.setCurrentWidget(self.ui.mainM.window)

@@ -389,9 +389,9 @@ class window(object):
         self.setYoutubeGraphs(snsM)
         
         #ytlogo
-        snsM.setLabel(self.__logoX-310, self.__logoY-112, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-310, self.__logoY-112, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/YouTubeLogo.png", "", "", "", True)
         #tLogo
-        snsM.setLabel(self.__logoX-303, self.__logoY+30, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-303, self.__logoY+30, self.__logoWidth-300, self.__logoHeight+10, "", "Assets/TwitterLogo.png", "", "", "", True)
         
         labelW = 300
         diff = 25
