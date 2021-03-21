@@ -2,6 +2,8 @@
 #
 # @brief this contains the database class.
 #
+# @author JunHao
+#
 # @section libraries_main Libraries/Modules
 # - sqlite3 standard library (https://docs.python.org/3/library/sqlite3.html)
 #   - access to sqlite3 database function
@@ -9,6 +11,7 @@
 #   - access to datetime function
 # - mkFolder (local)
 #   - access to mkFolder function
+#
 
 # Imports
 import sqlite3
@@ -62,9 +65,9 @@ class database(mkFolder):
 
     #Create a table with custom tablename, primary key and variable column names and amount.
     def createTable(self, *argument):
-        """!    Create custom table based on *argument
+        """! Create custom table based on *argument
         @param *argument; tablename, primary key, variable column names and amount.
-            E.g., createTable('tablename','key','column name')
+        E.g., createTable('tablename','key','column name')
         """
 
         #connect to DB

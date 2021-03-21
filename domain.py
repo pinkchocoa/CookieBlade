@@ -1,5 +1,15 @@
-from urllib.parse import urlparse
+## @file spider.py
+#
+# @brief this file contains the spider class
+#
+# @author Jodie
+#
+# @section libraries_main Libraries/Modules
+# - urllib.parse standard library
+#   - access to urlparse function
+#
 
+from urllib.parse import urlparse
 
 # Get domain name (example.com)
 def get_domain_name(url):
