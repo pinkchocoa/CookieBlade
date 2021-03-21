@@ -25,13 +25,13 @@ class database(mkFolder):
     This class contains methods specifically related to the database.
     """
 
-    #Init
+    #Init Constructor
     def __init__(self, dataBaseName):
         """! database class initializer
         @param dataBaseName; any name you want it to be.
         """
-        self.dataBaseName = dataBaseName
-        self.arg = self.__createDB() #Create Database on init.
+        self.__dataBaseName = dataBaseName
+        self.__arg = self.__createDB() #Create Database on init.
        
     #Get current data Format: Year/Month/Day
     def __getDate(self):
@@ -50,7 +50,7 @@ class database(mkFolder):
 
         self.createDirectory() #create data folder if not exist.
         #String Argurment to create database based on site.
-        arg = './data/' + self.dataBaseName + '.db'
+        arg = './data/' + self.__dataBaseName + '.db'
         #create database if not exist else connect to database.
         try:
             db = sqlite3.connect(arg)
@@ -68,7 +68,7 @@ class database(mkFolder):
 
         #connect to DB
         try:
-            connect = sqlite3.connect(self.arg)
+            connect = sqlite3.connect(self.__arg)
             db = connect.cursor()
         except:
             print("createTable: failed to connect to database.")
@@ -108,7 +108,7 @@ class database(mkFolder):
         """
 
         try:
-            connect = sqlite3.connect(self.arg)
+            connect = sqlite3.connect(self.__arg)
             db = connect.cursor()
         except:
             print("insertTable: failed to connect to database.")
@@ -148,7 +148,7 @@ class database(mkFolder):
         """
         data = []
         try:
-            connect = sqlite3.connect(self.arg)
+            connect = sqlite3.connect(self.__arg)
             db = connect.cursor()
         except:
             print("getTableData: failed to connect to database")
@@ -177,7 +177,7 @@ class database(mkFolder):
         @param tableName;
         """
         try:
-            connect = sqlite3.connect(self.arg)
+            connect = sqlite3.connect(self.__arg)
             db = connect.cursor()
             tableArg = 'DROP TABLE ' + tableName
             db.execute(tableArg)
@@ -192,7 +192,7 @@ class database(mkFolder):
         @param SQL_Statement;
         """
         try:
-            connect = sqlite3.connect(self.arg)
+            connect = sqlite3.connect(self.__arg)
             db = connect.cursor()
             db.execute(SQL_Statement)
             connect.commit()
