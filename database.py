@@ -11,7 +11,6 @@
 #   - access to datetime function
 # - mkFolder (local)
 #   - access to mkFolder function
-#
 
 # Imports
 import sqlite3
