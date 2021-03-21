@@ -425,6 +425,7 @@ class window(object):
         #twitter
         
         #followerCountLabel
+        #uncomment
         y = self.__labelY+2
         text = "Follower Count: " + "1232123"#+ str(tUser.followCount())
         snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
@@ -471,7 +472,6 @@ class window(object):
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
-
         #snsBackPush
         snsM.setPush(self.__wWidth-self.__pushWidth-50, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
         
