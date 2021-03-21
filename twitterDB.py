@@ -2,6 +2,8 @@
 #
 # @brief this file contains database access methods for twitter.
 #
+# @author JunHao
+#
 # @section libraries_main Libraries/Modules
 # - database(local)
 #   - access to database class.
