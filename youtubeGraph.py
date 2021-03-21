@@ -88,9 +88,17 @@ def getRevenueData(channelUrl):
     db = database("youtubeRevenue")
     uid = db.getUniqueID(channelUrl)
     data = db.getTableData(uid)
-    data = list(itertools.chain(*data)) #convert to 1d list
+    print(len(data))
+    if len(data) > 1:
+        data= data.pop()
+    else:
+        data = list(itertools.chain(*data)) #convert to 1d list
+    print(data)
     result = []
     result.append(data[0])
     for i in range(1,len(data)):
         result.append(int(float(data[i])))
+    print(result)
     return result
+
+getRevenueData("https://www.youtube.com/channel/UCR1IuLEqb6UEA_zQ81kwXfg")
