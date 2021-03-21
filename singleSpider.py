@@ -42,6 +42,7 @@ def spidey(filterList="", topic="", numResults=3):
     print("crawling")
 
     topic = topic.replace("#", "")
+    topic = topic.encode('ascii', 'ignore').decode()
     print("topic: ", topic)
 
     x = spiderWorker(filterList,topic)
@@ -56,5 +57,5 @@ def spidey(filterList="", topic="", numResults=3):
 
 #print(spidey(['articles'],"covid test", 3))
 #print("again")
-#print(spidey(['articles'],"banana", 3))
+#print(spidey(['articles'],"SeninleyizErdoğan", 3))
 #print("test")
