@@ -319,57 +319,18 @@ class Channel(Youtube):
         for i in range(0, len(mainList)):
             mainList[i].append(datesList[i])
 
-
         #Filter out the videos that are made in the past 12 months
         #setting the filter for the months
-        start_date = datetime.strptime('2020-3-1', '%Y-%m-%d')
-        janstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-3-31', '%Y-%m-%d')
-        janend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-4-1', '%Y-%m-%d')
-        febstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-4-30', '%Y-%m-%d')
-        febend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-5-1', '%Y-%m-%d')
-        marstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-5-31', '%Y-%m-%d')
-        marend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-6-1', '%Y-%m-%d')
-        aprstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-6-30', '%Y-%m-%d')
-        aprend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-7-1', '%Y-%m-%d')
-        maystart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-7-31', '%Y-%m-%d')
-        mayend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-8-1', '%Y-%m-%d')
-        junstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-8-31', '%Y-%m-%d')
-        junend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-9-1', '%Y-%m-%d')
-        julstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-9-30', '%Y-%m-%d')
-        julend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-10-1', '%Y-%m-%d')
-        augstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-10-31', '%Y-%m-%d')
-        augend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-11-1', '%Y-%m-%d')
-        sepstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-11-30', '%Y-%m-%d')
-        sepend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2020-12-1', '%Y-%m-%d')
-        octstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2020-12-31', '%Y-%m-%d')
-        octend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2021-1-1', '%Y-%m-%d')
-        novstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2021-1-31', '%Y-%m-%d')
-        novend_date = datetime.date(end_date)
-        start_date = datetime.strptime('2021-2-1', '%Y-%m-%d')
-        decstart_date = datetime.date(start_date)
-        end_date = datetime.strptime('2021-2-28', '%Y-%m-%d')
-        decend_date = datetime.date(end_date)
+
+        calendarEndDate = [31,28,31,30,31,30,31,31,30,31,30,31]
+        calendarYear = datetime.now().year - 1
+        calendarDates = []
+        for idx, x in enumerate(calendarEndDate):
+            dateString1 = str(calendarYear) + '-' + str(idx+1) + '-1'
+            dateString2 = str(calendarYear) + '-' + str(idx+1) + '-' + str(x)
+            dateString1 = datetime.strptime(dateString1, '%Y-%m-%d')
+            dateString2 = datetime.strptime(dateString2, '%Y-%m-%d')
+            calendarDates.append([dateString1,dateString2])
 
         #Converting the list of dates type string into a list of dates type date
         for d in range(0, len(mainList)):
@@ -385,42 +346,10 @@ class Channel(Youtube):
 
         #sorting the list of dates into their respective months
         for d in mainList:
-            if d[2] >= janstart_date and d[2] <= janend_date:
-                d[2] = str(d[2])
-                monthVids[0].append(d)
-            elif d[2] >= febstart_date and d[2] <= febend_date:
-                d[2] = str(d[2])
-                monthVids[1].append(d)
-            elif d[2] >= marstart_date and d[2] <= marend_date:
-                d[2] = str(d[2])
-                monthVids[2].append(d)
-            elif d[2] >= aprstart_date and d[2] <= aprend_date:
-                d[2] = str(d[2])
-                monthVids[3].append(d)
-            elif d[2] >= maystart_date and d[2] <= mayend_date:
-                d[2] = str(d[2])
-                monthVids[4].append(d)
-            elif d[2] >= junstart_date and d[2] <= junend_date:
-                d[2] = str(d[2])
-                monthVids[5].append(d)
-            elif d[2] >= julstart_date and d[2] <= julend_date:
-                d[2] = str(d[2])
-                monthVids[6].append(d)
-            elif d[2] >= augstart_date and d[2] <= augend_date:
-                d[2] = str(d[2])
-                monthVids[7].append(d)
-            elif d[2] >= sepstart_date and d[2] <= sepend_date:
-                d[2] = str(d[2])
-                monthVids[8].append(d)
-            elif d[2] >= octstart_date and d[2] <= octend_date:
-                d[2] = str(d[2])
-                monthVids[9].append(d)
-            elif d[2] >= novstart_date and d[2] <= novend_date:
-                d[2] = str(d[2])
-                monthVids[10].append(d)
-            elif d[2] >= decstart_date and d[2] <= decend_date:
-                d[2] = str(d[2])
-                monthVids[11].append(d)
+            for idx, x in enumerate(calendarDates):
+                if d[2] >= x[0] and d[2] <= x[1]:
+                    d[2] = str(d[2])
+                    monthVids[idx].append(d)
 
         #Store the number of vids made per month into a list to return
         for i in range(0,12):
