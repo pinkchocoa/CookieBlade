@@ -124,19 +124,22 @@ class window(object):
         if (self.topicInput == ""):
             messageBox("Alert", "Please enter a topic.")
             return
-        elif (self.locationInput == ""):
-            messageBox("Alert", "Please enter a coutnry.")
-            return
-
-        geolocator = Nominatim(user_agent="cookieBlade")
-        data = geolocator.geocode(self.locationInput)
-        self.lat = data.raw.get("lat")
-        self.lng = data.raw.get("lon")
-        text = str(self.lat) + ", " + str(self.lng)
-        self.locationInput = geolocator.reverse(text, language='en')
-        self.locationInput = str(self.locationInput)
-        self.locationInput = self.locationInput.split(',')[-1]
-        self.locationInput = self.locationInput[1:]
+        
+        if (self.locationInput == ""):
+            self.worldWide = True
+            self.lat = 1.3521
+            self.lng=103.8198
+            self.locationInput = "World Wide"
+        else:
+            geolocator = Nominatim(user_agent="cookieBlade")
+            data = geolocator.geocode(self.locationInput)
+            self.lat = data.raw.get("lat")
+            self.lng = data.raw.get("lon")
+            text = str(self.lat) + ", " + str(self.lng)
+            self.locationInput = geolocator.reverse(text, language='en')
+            self.locationInput = str(self.locationInput)
+            self.locationInput = self.locationInput.split(',')[-1]
+            self.locationInput = self.locationInput[1:]
         
         self.prev = "topic"
         topicSnsM = self.setupTopicSnsMenu()
@@ -263,9 +266,9 @@ class window(object):
             "left", revenueData)
 
 
-    def crawlTwitterTopic(self):
+    def crawlTwitterTopic(self, getLoc):
         t = Twitter()
-        tweets = t.searchKeyword(self.topicInput, "recent", 5, True, self.lat, self.lng)
+        tweets = t.searchKeyword(self.topicInput, "recent", 5, getLoc, self.lat, self.lng)
         return tweets
 
     def crawlTwitterTrending(self, worldWide, lat, lng):
@@ -273,7 +276,9 @@ class window(object):
         return t.trendingTopics(worldWide, lat, lng)
 
     def setTwitterTopic(self, window):
-        tweets = self.crawlTwitterTopic()
+        getLoc = not self.worldWide
+        #tweets = self.crawlTwitterTopic(getLoc)
+        tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
         index = 20
         for idx, x in enumerate(tweets):
             user = x[0]
@@ -288,8 +293,8 @@ class window(object):
         @param window on which the pie chart will be displayed
         """
         #uncomment this line to actually crawl
-        data = self.crawlTwitterTrending(worldWide, lat, lng)
-        #data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
+        #data = self.crawlTwitterTrending(worldWide, lat, lng)
+        data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
 
@@ -463,21 +468,22 @@ class window(object):
         snsM = windowGen()
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for chart usage
+
+        #recent tweets display
         x = 50
         y = 50
         textWidth = 500
         textHeight = 90
-        text = "Recent tweets based on " + self.topicInput + " at " + self.locationInput
+        text = "Recent tweets based on '" + self.topicInput + "' at " + self.locationInput
         snsM.setLabel(x+400, y, textWidth, self.__labelHeight, text)
-        print("start" + str(snsM.totalNLabel))
         for i in range(5):
             y+=30
             snsM.setLabel(x+400, y, textWidth, 20, "")
             y+=25
             snsM.setLabel(x+400, y, textWidth, textHeight, "").setAlignmentTop()
-            y+=textHeight-30
+            y+=textHeight
 
-
+        #piechart trend display
         x = 50
         y = self.__wHeight - 400
         textWidth = 500
@@ -494,7 +500,8 @@ class window(object):
         snsM.setPush(self.__wWidth-self.__pushWidth-10, self.__wHeight-150, self.__pushWidth, self.__pushHeight, self.snsBack, "Back")
 
         y = self.__wHeight - 250
-        snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, "Current twitter trending topics")
+        text = "Current " + self.locationInput + "twitter trending topics"
+        snsM.setLabel(x+60, y-30, textWidth, self.__labelHeight, text)
         snsM.setLabel(x, y, textWidth, self.__labelHeight, "Double click on the piechart for news article links")
         for i in range(3):
             y+=30
@@ -507,7 +514,6 @@ class window(object):
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
 
-        print("end" + str(snsM.totalNLabel))
         self.setTwitterTopic(snsM)
-        self.setTwitterTrending(snsM, False, self.lat, self.lng) 
+        self.setTwitterTrending(snsM, self.worldWide, self.lat, self.lng) 
         return snsM
