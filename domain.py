@@ -13,7 +13,7 @@ from urllib.parse import urlparse
 
 # Get domain name (example.com)
 def get_domain_name(url):
-    """ This method extracts the domain name out of the url
+    """! This method extracts the domain name out of the url
     @param url website link
     @return domain name of the url
     """
@@ -26,7 +26,7 @@ def get_domain_name(url):
 
 # Get sub domain name (name.example.com)
 def get_sub_domain_name(url):
-    """ This method extracts the sub domain name out of the url
+    """! This method extracts the sub domain name out of the url
     @param url website link
     @return sub domain name of the url
     """

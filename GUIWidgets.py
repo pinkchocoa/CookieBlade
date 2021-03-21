@@ -1,6 +1,11 @@
 ## @file GUIWidgets.py
 #
 # @brief this file contains GUI Widget Classes
+# Contains all UI Widget classes
+# We can reuse classes to make different widgets for diffferent purpose
+#
+# @author JiaJun (60%)
+# @author Jodie (40%)
 #
 # @section libraries_main Libraries/Modules
 # - sys standard library (https://docs.python.org/3/library/sys.html)
@@ -15,6 +20,12 @@
 #   - access to graph plotting functions
 # - functools standard library
 #   - tools to work with high order functions
+# - singleSpider 
+#   - access to spidey that crawls website links 
+#       for piechart double click function
+# - twitter
+#   - access to Twitter class that crawls tweets 
+#       based off topics for piechart double click function
 
 # Imports
 import sys
@@ -26,17 +37,15 @@ from pyqtgraph import PlotWidget, plot, exporters, BarGraphItem #pip3 install py
 import functools
 from singleSpider import spidey
 from twitter import Twitter
-import numpy as np
-## Documentation for GUIWidgets.py
-# Contains all UI Widget classes
-# We can reuse classes to make different widgets for diffferent purpose
 
+## Documentation for startApp Class
 #Class to initialize a new instance of QApplication module which is required to run PyQt5
 class startApp:
     """! startApp class
     Defines the QApplication object which allows the creation of all QtWidgets
     """
     def __init__(self):
+        
         self.QApp = QApplication(sys.argv)
 
 #Class to create a new Window

@@ -12,7 +12,7 @@
 import os
 
 def create_project_dir(directory):
-    """ This method creates a directory with the user input
+    """! This method creates a directory with the user input
     @param directory directory path
     """
     if not os.path.exists(directory):
@@ -20,7 +20,7 @@ def create_project_dir(directory):
         os.makedirs(directory)
 
 def create_file(path):
-    """ This method creates a file with the user input
+    """! This method creates a file with the user input
     @param path file path
     """
     if not os.path.isfile(path):
@@ -29,7 +29,7 @@ def create_file(path):
 
 # Create a new file
 def write_file(path, data):
-    """ This method writes to a file with the user input
+    """! This method writes to a file with the user input
     @param path file path
     @param data data to be written to the file
     """
@@ -39,7 +39,7 @@ def write_file(path, data):
 
 # Add data onto an existing file
 def append_to_file(path, data):
-    """ This method writes to an existing file with the user input
+    """! This method writes to an existing file with the user input
     @param path file path
     @param data data to be written to the file
     """
@@ -49,7 +49,7 @@ def append_to_file(path, data):
 
 # Delete the contents of a file
 def delete_file_contents(path):
-    """ This method deletes the contents of a file
+    """! This method deletes the contents of a file
     @param path file path
     """
     if  os.path.isfile(path):
@@ -58,7 +58,7 @@ def delete_file_contents(path):
 
 # Read a file and convert each line to set items
 def file_to_set(file_name):
-    """ This method reads a file and convert each line to set items
+    """! This method reads a file and convert each line to set items
     @param file_name file name
     @return set with the file data
     """
@@ -71,7 +71,7 @@ def file_to_set(file_name):
 
 # Iterate through a set, each item will be a line in a file
 def set_to_file(links, file_name):
-    """ This method iterate through a set, each item will be a line in a file
+    """! This method iterate through a set, each item will be a line in a file
     @param links a set of data to be entered into the file
     @param file_name file name
     """
