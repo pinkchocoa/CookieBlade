@@ -39,16 +39,18 @@ from singleSpider import spidey
 from twitter import Twitter
 
 ## Documentation for startApp Class
-#Class to initialize a new instance of QApplication module which is required to run PyQt5
+# Class to initialize a new instance of QApplication module which is required to run PyQt5
 class startApp:
     """! startApp class
     Defines the QApplication object which allows the creation of all QtWidgets
     """
     def __init__(self):
-        
+        """! startApp class initializer
+        """
         self.QApp = QApplication(sys.argv)
 
-#Class to create a new Window
+## Documentation for newWindow class
+# Class to create a new pyqt Window
 class newWindow:
     """! newWindow class
     Defines the window object used to display widgets
@@ -79,7 +81,8 @@ class newWindow:
         #Display window
         self.QWin.show()
 
-#Class to create a stack widget
+## Documentation for newStackWidget class
+# Class to create a stack widget
 class newStackWidget:
     """! newStackWidget class
     Defines the stack widget object used to store and load widget pages
@@ -110,7 +113,8 @@ class newStackWidget:
         """
         self.sWidget.setCurrentWidget(widget.page)
 
-#Class to create a new widget page
+## Documentation for newWidgetPage class
+# Class to create a new widget page
 class newWidgetPage:
     """! newWidgetPage class
     Defines the widget page object used to store multiple widgets to be loaded by stack widget
@@ -120,7 +124,8 @@ class newWidgetPage:
         """
         self.page = QtWidgets.QWidget()
 
-#Class to create a new Label
+## Documentation for newLabel class
+# Class to create a new Label
 class newLabel:
     """! newLabel class
     Defines the label object used to display text label to guide users
@@ -143,6 +148,8 @@ class newLabel:
         self.label.setWordWrap(True)
         
     def setAlignmentTop(self):
+        """! set the alignment for the label to top
+        """
         self.label.setAlignment(QtCore.Qt.AlignTop)
 
     #Method to set Label Text
@@ -171,7 +178,8 @@ class newLabel:
         #Enable image scaling to fit Label size
         self.label.setScaledContents(True)
 
-#Class to create new TextBox
+## Documentation for newTextBox class
+# Class to create new TextBox
 class newTextBox:
     """! newTextBox class
     Defines the textbox object used to retrieve user input
@@ -183,7 +191,6 @@ class newTextBox:
         @param posY used to set the Y coordinate of where the textbox will appear
         @param lenX used to set the horizontal length of the textbox
         @param lenY used to set the vertical height of the textbox
-        @return user input stored in textbox
         """
         #Initialize new instance of TextBox UI
         self.textbox = QtWidgets.QLineEdit(window)
@@ -206,10 +213,12 @@ class newTextBox:
 
     def getText(self):
         """! used to retrieve the user input from textboxes
+        @return user input stored in textbox
         """
         return self.textbox.text()
 
-#Class to create new PushButton
+## Documentation for newPushButton class
+# Class to create new PushButton
 class newPushButton:
     """! newPushButton class
     Defines the PushButton object to recieve button click input
@@ -244,7 +253,8 @@ class newPushButton:
         """
         self.PushButton.setFont(QFont(fontStyle,int(fontSize)))
 
-#Class to create new messagebox object
+## Documentation for messageBox class
+# Class to create new messagebox object
 class messageBox:
     """! messageBox class
     Defines the message box object to display error messages
@@ -277,7 +287,8 @@ class messageBox:
         msgBox = self.msgBox
         msgBox.exec_()
 
-#Class to create new Graph
+## Documentation for newGraph class
+# Class to create new line graph
 class newGraph:
     """! newGraph class
     Defines the Graph object to take in input and display graph
@@ -296,6 +307,10 @@ class newGraph:
         self.Graph.showGrid(x = True, y = True)
 
     def setSize(self, lenX, lenY):
+        """! this method sets the size of the line graph
+        @param lenX used to set the horizontal length of the graph
+        @param lenY used to set the vertical height of the graph
+        """
         self.Graph.setFixedSize(lenX,lenY)
 
     def plotGraph(self, axisX, axisY, color, points):
@@ -326,7 +341,7 @@ class newGraph:
         """! sets the axis label of the graph
         @param position used to determine the position of axis
         @param label used to determine what to display for axis
-        @param labelcolor used to determine the color for axis
+        @param labelColor used to determine the color for axis
         @param labelSize used to determine the font size of axis
         """
         fontstyle = {"color":labelColor, "font-size":labelSize}
@@ -340,8 +355,9 @@ class newGraph:
         storeAxis = self.Graph.getAxis(axisLabel)
         getValues = [(value, str(value)) for value in (range(int(min(axis)), int(max(axis)+1)))]
         storeAxis.setTicks([getValues, []])
-    
-#Class to create new pie chart
+
+## Documentation for newPieChart class
+# Class to create new pie chart
 class newPieChart():
     """! newPieChart class
     Defines the pie chart object to display pie charts
@@ -350,17 +366,10 @@ class newPieChart():
         """! newPieChart class initializer
         """
         self.chart = QChart()
-        #Set chart animation
         self.chart.setAnimationOptions(QChart.AllAnimations)
-        
-        #self.chart.legend().setAlignment(QtCore.Qt.AlignLeft)
-        #self.chart.mapToPosition(QtCore.QPointF(500,500))
         self.chart.setBackgroundVisible(True)
         self.series = QPieSeries()
-        #Set pie chart legend to be non visible
-        self.chart.legend().setVisible(False)
-        #self.chart.legend().setAlignment(QtCore.Qt.AlignBottom)
-        
+        self.chart.legend().setVisible(False)        
 
     def setPos(self, posX, posY, width, height):
         """! set the position and size of pie chart
@@ -395,6 +404,9 @@ class newPieChart():
         self.chart.addSeries(series)
 
     def setwindowGenObj(self, window):
+        """! this function stores a reference to the window object
+        @param window  window object
+        """
         self.windowGen = window
 
     #data is a dictionary
@@ -470,28 +482,49 @@ class newPieChart():
             self.windowGen.labelList[self.windowGen.totalNLabel-index+(idx*2+1)].label.setText(text)
         self.windowGen.labelList[self.windowGen.totalNLabel-12].label.setText(recent)
 
+## Documentation for InteractiveBarItem class
+# Class to create a InteractiveBarItem on the barchart 
 class InteractiveBarItem(BarGraphItem):
+    """! InteractiveBarItem class
+    Create a InteractiveBarItem on the barchart, contains on hover and tooltip settings
+    """
     def __init__(self, x, height, width, brush):
+        """! InteractiveBarItem class initializer
+        @param x x-axis value
+        @param height y-axis value
+        @param width size of bar width
+        @param brush brush for the BarGraphItem
+        """
         super().__init__(x=x, height=height, width=width, brush=brush)
         # required in order to receive hoverEnter/Move/Leave events
         self.setAcceptHoverEvents(True)
 
     def hoverEnterEvent(self, event):
-            #print('hover!')
-            y = self.opts.get('height')[0]
-            text = "value: " + str(y)
-            self.setToolTip(text)
+        """! this method gets called when the bar on the barchart is hovered over
+        it sets the value of the tooltip to reflect the values accordingly
+        @param event hover event
+        """
+        y = self.opts.get('height')[0]
+        text = "value: " + str(y)
+        self.setToolTip(text)
 
     def mousePressEvent(self, event):
-            #print('click!')
-            pass
+        """! this method gets called when the bar on the barchart is clicked on
+        @param event click event
+        """
+        #current do not have anything i want it to do on click
+        #print('click!')
+        pass
 
+## Documentation for newBarChart class
+# Class to create a bar chart
 class newBarChart():
     """! newBarChart class
     Defines the bar chart object to display bar charts
     """
     def __init__(self, window):
         """! newBarChart class initializer
+        @param window window that the barchart will be displayed on
         """
         self.chart = PlotWidget(window)
         self.chart.setBackground(background=None)
@@ -502,7 +535,7 @@ class newBarChart():
     def addData(self, data, cat):
         """! used to input data into bar chart to be displayed
         @param data to be displayed as bar charts
-        @param categories used to show what each bar chart represent
+        @param cat used to show what each bar chart represent
         """
         cat = cat[::-1]
         for i, a in enumerate(data):
@@ -525,10 +558,10 @@ class newBarChart():
     
     def setSize(self, posX, posY, sizex, sizey):
         """! set bar chart as visible
-        @param window used to determine which window the bar chart will appear on
         @param posX used to determine the X coordinate of bar chart
         @param posY used to determine the Y coordinate of bar chart
-        @param size used to determine the size of the bar chart
+        @param sizex used to determine the horizontal size of the bar chart
+        @param sizey used to determine the vertical size of the bar chart
         """
         self.chart.setGeometry(posX, posY, sizex, sizey)
 

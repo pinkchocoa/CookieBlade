@@ -32,7 +32,6 @@ class Spider:
         @param projectName name of the project, used for directory
         @param baseUrl url of the homepage to be crawled
         @param domainName domain name of the url
-        @return an instance of the Spider class initialized with parameters above
         """
         #since these are static variables, gotta use Spider. instead of self.
 
