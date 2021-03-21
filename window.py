@@ -168,7 +168,7 @@ class window(object):
         """! create base window and call menu functions to create window widgets
         @param window on which the widgets will be displayed
         """
-        window.setWindowIcon("CookieIcon.png")
+        window.setWindowIcon("Assets/CookieIcon.png")
         self.centralwidget = QtWidgets.QWidget(window.QWin)
         self.stackedWidget = newStackWidget(self.centralwidget, 0,0, self.__wWidth, self.__wHeight)
 
@@ -258,12 +258,13 @@ class window(object):
         widthX = 600
         heightY = 450
         months = [1,2,3,4,5,6,7,8,9,10,11,12]
-        youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
-        revenueData = youtubeGraph.getRevenueData(self.ytlink) #this return revenue data from db
-        revenueData.pop(0) #remove the date string in the list.
+        #uncomment
+        #youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
+        #revenueData = youtubeGraph.getRevenueData(self.ytlink) #this return revenue data from db
+        #revenueData.pop(0) #remove the date string in the list.
         #print(revenueData)
         #Testing
-        #revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
+        revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]
         window.setLineGraph(posX, posY, widthX, heightY, 
             months, revenueData, "g", "o",
             "00000000",
@@ -295,7 +296,7 @@ class window(object):
         #uncomment this line to actually crawl
         #tweets = self.crawlTwitterTopic(getLoc)
         tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
-        index = 27
+        index = 22
         for idx, x in enumerate(tweets):
             user = x[0]
             text = x[1]
@@ -319,7 +320,7 @@ class window(object):
         """
         #Start of mainMenu
         self.mainM = windowGen()
-        self.mainM.setLabel(self.__logoX, self.__logoY, self.__logoWidth, self.__logoHeight,"", "GUIMainLogo.PNG","","","",True)
+        self.mainM.setLabel(self.__logoX, self.__logoY, self.__logoWidth, self.__logoHeight,"", "Assets/mainLogo.png","","","",True)
         #user push button
         self.mainM.setPush(self.pushX, self.__pushY, self.__pushWidth, self.__pushHeight, self.mainToUser,"User")
         #topic push button
@@ -331,7 +332,7 @@ class window(object):
         #Start of userMenu
         self.userM = windowGen()
         #userLogo
-        self.userM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "","","",True)
+        self.userM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "Assets/mainLogo.png", "","","",True)
         #ytlabel
         self.userM.setLabel(self.__labelX-22, self.__labelY, self.__labelWidth, self.__labelHeight, "YouTube Link:")
         #tLabel
@@ -353,7 +354,7 @@ class window(object):
         #Start of topicMenu
         self.topicM = windowGen()
         #topicLogo
-        self.topicM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "GUIMainLogo.PNG", "", "", "", True)
+        self.topicM.setLabel(self.__logoX, self.__logoY-79, self.__logoWidth, self.__logoHeight, "", "Assets/mainLogo.png", "", "", "", True)
         #topicCrawlPush
         self.topicM.setPush(self.pushX, self.__pushY-29, self.__pushWidth, self.__pushHeight, self.topicToSns, "Crawl!")
         #topicbackpush
@@ -378,27 +379,40 @@ class window(object):
         self.setTwitterTrending(snsM) 
         self.setYoutubeGraphs(snsM)
 
+        snsM.setLabel(15, 100, 355, 150, "", "Assets/ysmallbox.png", "", "", "", True)
+        snsM.setLabel(15, 245, 355, 150, "", "Assets/tsmallbox.png", "", "", "", True)
+        snsM.setLabel(10, 5, 355, 75, "", "Assets/mainLogo.png", "", "", "", True)
+        #snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        #snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+
         #ytlogo
-        snsM.setLabel(self.__logoX-320, self.__logoY-137, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-320, self.__logoY-112, self.__logoWidth-270, self.__logoHeight+10, "", "YouTubeLogo.png", "", "", "", True)
         #tLogo
-        snsM.setLabel(self.__logoX-303, self.__logoY-17, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
+        snsM.setLabel(self.__logoX-303, self.__logoY+25, self.__logoWidth-300, self.__logoHeight+10, "", "TwitterLogo.png", "", "", "", True)
         
         labelW = 300
+        diff = 25
+        y = self.__labelY-143
         #Youtube
-        youtubeGraph.setYoutubeChannelStats(self.ytlink)
-        youtubeStats = youtubeGraph.getYoutubeChannelStats(self.ytlink)
+        #uncomment
+        #youtubeGraph.setYoutubeChannelStats(self.ytlink)
+        #youtubeStats = youtubeGraph.getYoutubeChannelStats(self.ytlink)
+        youtubeStats = ['YT API Limit Error', 'YT API Limit Error', 'YT API Limit Error', 'YT API Limit Error']
         #subcountlabel
         text = "Sub count: " + str(youtubeStats[2])
-        snsM.setLabel(self.__labelX+112, self.__labelY-168, labelW, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #viewcountlabel
+        y+=diff
         text = "View count: " + str(youtubeStats[3])
-        snsM.setLabel(self.__labelX+112, self.__labelY-143, labelW, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #videocountlabel
+        y+=diff
         text = "Video count: " + str(youtubeStats[1])
-        snsM.setLabel(self.__labelX+112, self.__labelY-118, labelW, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #ytCreatedLabel
+        y+=diff
         text = "Created At: " + str(youtubeStats[0])
-        snsM.setLabel(self.__labelX+112, self.__labelY-93, labelW, self.__labelHeight, text)
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
 
         if "twitter" in self.tlink:
             tUser = TUser.byURL(self.tlink)
@@ -408,19 +422,21 @@ class window(object):
         #twitter
         
         #followerCountLabel
-        text = "Follower Count: " + str(tUser.followCount())
-        snsM.setLabel(self.__labelX+112, self.__labelY-48, labelW, self.__labelHeight, text)
+        y = self.__labelY+2
+        text = "Follower Count: " + "1232123"#+ str(tUser.followCount())
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #tweetsLikedLabel
-        text = "Total favourited tweets: " + str(tUser.favTweetCount())
-        snsM.setLabel(self.__labelX+112, self.__labelY-23, labelW, self.__labelHeight, text)
+        y+=diff
+        text = "Total favourited tweets: " + "1232123"#+ str(tUser.favTweetCount())
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #totalTweetsLabel
-        text = "Total tweets: " + str(tUser.tweetCount())
-        snsM.setLabel(self.__labelX+112, self.__labelY+2, labelW, self.__labelHeight, text)
+        y+=diff
+        text = "Total tweets: " + "1232123"#+ str(tUser.tweetCount())
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         #tCreatedLabel
-        text = "Created at: " + str(tUser.userCreatedAt())
-        snsM.setLabel(self.__labelX+112, self.__labelY+27, labelW, self.__labelHeight, text)
-        #seperateLineLabel
-        #snsM.setLabel(-20, 210, 1100, 40, "", "", "Arial", 20)
+        y+=diff
+        text = "Created at: " + "1232123"#+ str(tUser.userCreatedAt())
+        snsM.setLabel(self.__labelX+112, y, labelW, self.__labelHeight, text)
         
 
         #make sure that these labels are the last to be generated
@@ -455,18 +471,20 @@ class window(object):
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
         
 
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-
+        
         return snsM
 
     def setupTopicSnsMenu(self):
         """! create widgets for the topic sns menu page
         """
         snsM = windowGen()
+
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "Assets/CookieIcon.png", "", "", "", True)
+
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for chart usage
         #recent tweets display
@@ -514,13 +532,6 @@ class window(object):
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl1, text)
             elif i == 2:
                 snsM.setPush(x, y, self.__labelWidth-40, 25, self.goToUrl2, text)
-
-
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
-        snsM.setLabel(0,0, self.__logoWidth-270, self.__logoHeight+10, "", "CookieIcon.png", "", "", "", True)
 
         self.setTwitterTopic(snsM)
         self.setTwitterTrending(snsM, self.worldWide, self.lat, self.lng) 

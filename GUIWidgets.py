@@ -468,7 +468,7 @@ class newPieChart():
         """! called when mouse double click input is detected
         @param slice_ used to determine which slice to perform action on
         """
-        index = 8
+        index = 3
         text = str(slice_.label())
         recent = "Recent tweets based on " + text + ":"
         #uncomment to actually crawl
@@ -479,7 +479,7 @@ class newPieChart():
             text = "Link " + str(idx+1) + " Generated!"
             self.windowGen.labelList[self.windowGen.totalNLabel-index+idx].label.setText(text)
         #i want to search tweets too
-        index = 16
+        index = 11
         for idx, x in enumerate(tweets):
             user = x[0]
             text = x[1]
