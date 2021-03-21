@@ -2,6 +2,10 @@
 #
 # @brief this file generates the widgets for the windows
 #
+# @author JiaJun(40%)
+# @author Jodie(59%)
+# @author JunHao(1%)
+#
 # @section libraries_main Libraries/Modules
 # - GUIWidgets (local) 
 #   - access to GUIWidget classes
@@ -15,9 +19,17 @@
 #   - access to twitterGraph function to retrieve data for twitter graph
 # - twitterDB
 #   - access to database access methods for twitter
-# - time
+# - general (local)
+#   - access to delete_file_contents
+#   - access to file_to_set
 # - webbrower standard library
 #   - access to webbrowser
+# - youtubeGraph (local)
+#   - to generate reveneue graph for youtube data
+# - LinkValidation (local)
+#   - used to validate url links
+# - geopy.geocoders
+#   - access to Nominatim to translate between lat and longititude of location
 
 # Imports
 from GUIWidgets import *
@@ -34,13 +46,11 @@ from geopy.geocoders import Nominatim
 #pip install geopandas
 #pip install geopy
 
-
 RESULT_FILE = 'result.txt'
 
 ## Documentation for window Class
 # The window class intialize the different menus and their corresponding widgets
 # this allows us to initialize the UI by calling a single class
-
 class window(object):
     """! window class
     Defines the window object which will create the menus and widgets
@@ -109,16 +119,14 @@ class window(object):
             return
 
         self.prev = "user"
-
-        #Begin Crawl logic.
-        
- 
         userSnsM = self.setupSnsMenu()
         
         self.stackedWidget.addWidget(userSnsM.window.page)
         self.stackedWidget.setCurrentWidget(userSnsM.window)
     
     def topicToSns(self):
+        """! switches the widgets from user topic menu to topic display menu
+        """
         self.topicInput = self.topicTextBox.getText()
         self.locationInput = self.countryTextBox.getText()
         if (self.topicInput == ""):
@@ -190,7 +198,9 @@ class window(object):
     
 
     def crawlTwitterGraph(self):
-        #start_time = time.time()
+        """! crawl user's tweets
+        @return favList, rtList, dateList
+        """
         favList = ["Fav Count"]
         rtList = ["RT Count"]
         dateList = []
@@ -227,7 +237,6 @@ class window(object):
         favList.pop()
         rtList.pop()
         dateList.pop()
-        #print("--- %s seconds ---" % (time.time() - start_time))
         return favList, rtList, dateList
 
     def setTwitterGraphs(self, window):
@@ -235,16 +244,15 @@ class window(object):
         @param widget on which the bar chart will be displayed on
         """
         #uncomment this line to actually crawl
-        #favList, rtList, dateList = self.crawlTwitterGraph()
-        
-        favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
-        rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
-        dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
+        favList, rtList, dateList = self.crawlTwitterGraph()
+        #favList = ['Fav Count', 29530, 19848, 113188, 68611, 38661, 76062, 73379]
+        #rtList = ['RT Count', 806, 291, 21911, 1394, 2644, 7678, 2969]
+        #dateList = ['2021-03-19', '2021-03-18', '2021-03-17', '2021-03-16', '2021-03-15', '2021-03-14', '2021-03-13']
         window.setBarChart([rtList,favList], dateList, 400, self.__wHeight - 600, 700, 200, "User's Fav and RT Count")
     
     def setYoutubeGraphs(self, window):
-        """! create bar chart with data crawled from youtube
-        @param window on which the bar chart will be displayed
+        """! create line chart with data crawled from youtube
+        @param window on which the line chart will be displayed
         """
         posX = 450
         posY = 10
@@ -267,18 +275,27 @@ class window(object):
 
 
     def crawlTwitterTopic(self, getLoc):
+        """! crawl twitter tweets on topic
+        @return tweets crawled
+        """
         t = Twitter()
         tweets = t.searchKeyword(self.topicInput, "recent", 5, getLoc, self.lat, self.lng)
         return tweets
 
     def crawlTwitterTrending(self, worldWide, lat, lng):
+        """! crawl twitter trending topics
+        @return trending topics 
+        """
         t = Twitter()
         return t.trendingTopics(worldWide, lat, lng)
 
     def setTwitterTopic(self, window):
+        """! display tweets 
+        @param widget on which the tweets will be displayed on
+        """
         getLoc = not self.worldWide
-        #tweets = self.crawlTwitterTopic(getLoc)
-        tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
+        tweets = self.crawlTwitterTopic(getLoc)
+        #tweets = [['mindofhalo', '@calamityfairy what seriously no joke i do that w marcy a lot even though he doesn’t notice it at all', 1373505096923848704, []], ['Chikin10DZ', 'If you make clocks, you must have a lot of time on your hands.', 1373505096819040261, []], ['PChaldea', '&gt;&gt;one of the members tell you to head to the bar area and you find Marco sitting on a stool drinking some alcohol from a shot glass. You go closer and after slamming his drink down, Marco turns to face you with a bright smile. "Ah! So you must be the new person! What makes you&gt;&gt;', 1373505096785534976, []], ['porsha_whitmore', '@Retrievals1 Support: 👏👏...you deserve a little boobie for that babe....🥰🥰💕💕  ', 1373505096651317249, []], ['bird_dapper', '@AVI_Parrot a complete nobody like me made it on?', 1373505096307326976, []]]
         index = 22
         for idx, x in enumerate(tweets):
             user = x[0]
@@ -293,8 +310,8 @@ class window(object):
         @param window on which the pie chart will be displayed
         """
         #uncomment this line to actually crawl
-        #data = self.crawlTwitterTrending(worldWide, lat, lng)
-        data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
+        data = self.crawlTwitterTrending(worldWide, lat, lng)
+        #data = {'#JusticeTheAlbum': 90358, '#FalconAndWinterSoldier': 73400, 'Lana': 278975, '#一番プレイ時間長かったゲーム': 16288, 'Justin Bieber': 192695, '#HayırlıCumalar': 21367}
         y = self.__wHeight - 600
         window.setPieChart(data, "Current trending topics", 50, y)
 
@@ -442,6 +459,8 @@ class window(object):
         return snsM
 
     def goToUrl0(self):
+        """! opens the web browser for the first link
+        """
         results = list(file_to_set('result.txt'))
         if results and results[0]:
             webbrowser.open_new(results[0])
@@ -450,6 +469,8 @@ class window(object):
         
 
     def goToUrl1(self):
+        """! opens the web browser for the second link
+        """
         results = list(file_to_set('result.txt'))
         if results and results[1]:
             webbrowser.open_new(results[1])
@@ -458,6 +479,8 @@ class window(object):
         
 
     def goToUrl2(self):
+        """! opens the web browser for the third link
+        """
         results = list(file_to_set('result.txt'))
         if results and results[2]:
             webbrowser.open_new(results[2])
@@ -465,6 +488,8 @@ class window(object):
             messageBox("Alert", "Please generate links by double clicking on the pie chart first.")
     
     def setupTopicSnsMenu(self):
+        """! create widgets for the topic sns menu page
+        """
         snsM = windowGen()
         #make sure that these labels are the last to be generated
         #these are to generate labels for the double click functionality for chart usage
