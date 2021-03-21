@@ -35,7 +35,9 @@ def setYoutubeChannelStats(channelUrl):
     db = database('youtube')
     uid = db.getUniqueID(channelUrl)
     db.createTable(uid,'date','created','Vidcount','Subcount','Totalview')
+    print(data)
     db.insertTable(data,uid,'date','created','Vidcount','Subcount','Totalview')
+    db.dbClose()
 
 ## Documentation for getYoutubeChannelStats Method
 # This method retrive data the database.
@@ -47,6 +49,7 @@ def getYoutubeChannelStats(channelUrl):
     db = database('youtube')
     uid = db.getUniqueID(channelUrl)
     data = db.getTableData(uid)
+    db.dbClose()
     data = data[len(data)-1]
     data.pop(0)
     return data #return latest channel stats.
@@ -81,6 +84,7 @@ def setRevenueData(channelUrl):
     for i in range(0,len(result)):
         data.append(result[i])
     db.insertTable(data,uid,'Date','jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec')
+    db.dbClose()
 
 ##Documenetation for getRevenueData Method
 # This method fetch the latest 12 months revenue data for a channel from the database.
@@ -92,7 +96,7 @@ def getRevenueData(channelUrl):
     db = database("youtubeRevenue")
     uid = db.getUniqueID(channelUrl)
     data = db.getTableData(uid)
-    print(len(data))
+    db.dbClose()
     if len(data) > 1:
         data= data.pop()
     else:

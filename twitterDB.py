@@ -43,6 +43,7 @@ def setTwitterGraphDB(tlink,*argument):
         data.append(rtData[x])
         data.append(favData[x])
         db.insertTable(data,uid,'Date','Rt','Fav')
+    db.dbClose()
    
 ## Documentation for getTwitterGraphDB Method
 # This method retrive twitter data from database.
@@ -65,6 +66,7 @@ def getTwitterGraphDB(tlink):
     for i in range(1,len(favData)):
         favData[i] = int(favData[i])
     dateData.pop(0)
+    db.dbClose()
     return rtData,favData,dateData
 
 ##Documentation for checkTableTwitterGraph Method
@@ -81,6 +83,8 @@ def checkTableTwitterGraph(tlink):
             db.deleteTable(uid)
     except:
         db.deleteTable(uid)
+    db.dbClose()
+
 
 ## Documentation for setTwitterTrendDB Method
 # This method store twitter trend in database.
@@ -94,6 +98,7 @@ def setTwitterTrendDB(trendData):
     db = database('twitter')
     db.createTable('trends','date','dict')
     db.insertTable(list(data),'trends','date','dict')
+    db.dbClose()
 
 ## Documentation for getTwitterTrendDB Method
 # This method retrive twitter trend data from database.
@@ -104,5 +109,6 @@ def getTwitterTrendDB():
     db = database('twitter')
     strArg = "WHERE date = " + str(datetime.date.today())
     data = db.getTableData('trends','dict',strArg)
+    db.dbClose()
     data = ast.literal_eval(data[0][0]) #convert str to dict
     return data

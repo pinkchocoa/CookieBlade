@@ -35,6 +35,8 @@ class database(mkFolder):
         """
         self.__dataBaseName = dataBaseName
         self.__arg = self.__createDB() #Create Database on init.
+        self.connect = sqlite3.connect(self.__arg)
+        self.db = self.connect.cursor()
        
     #Get current data Format: Year/Month/Day
     def __getDate(self):
@@ -56,11 +58,9 @@ class database(mkFolder):
         arg = './data/' + self.__dataBaseName + '.db'
         #create database if not exist else connect to database.
         try:
-            db = sqlite3.connect(arg)
-            db.close()
+            sqlite3.connect(arg)
         except:
             print("__createDB: database creation failed.")
-            db.close()
 
         return arg #return database location
 
@@ -70,14 +70,6 @@ class database(mkFolder):
         @param *argument; tablename, primary key, variable column names and amount.
         E.g., createTable('tablename','key','column name')
         """
-
-        #connect to DB
-        try:
-            connect = sqlite3.connect(self.__arg)
-            db = connect.cursor()
-        except:
-            print("createTable: failed to connect to database.")
-
         #Custom Argument string phrase and execute
         try:
             tableArg = 'CREATE TABLE IF NOT EXISTS ' + "'" + argument[0] + "'" + '(' + argument[1] + ' text PRIMARY KEY, ' #argument[0] = tablename, argument[1] = primary key
@@ -87,28 +79,19 @@ class database(mkFolder):
             tableArg = tableArg + argument[last-1] + ' text)' #add last argument.
         except:
             print("createTable: tableArg string failed.")
-            db.close()          
-            connect.close()
 
         try:
-            db.execute(tableArg)
+            self.db.execute(tableArg)
         except:
             print("createTable: db.execute() failed.")
-            db.close()          
-            connect.close()
 
         try:
             #Create Unqiue index for replace function of SQLite3
             tableArg = 'CREATE UNIQUE INDEX ' + 'IF NOT EXISTS ' + 'idx_' +  argument[0] + '_' + argument[1]  + ' ON ' + argument[0] + ' (' + argument[1] + ')'
-            db.execute(tableArg)
-            connect.commit()    
-            db.close()          
-            connect.close()
+            self.db.execute(tableArg)
+            self.connect.commit()    
         except:
             print("createTable: Unqiue index creation failed.")
-            db.close()          
-            connect.close()
-
 
     #Save data to table in database. where *argument must match the one provided in createTable.
     def insertTable(self, data, *argument):
@@ -117,13 +100,6 @@ class database(mkFolder):
         @param *argument;  tablename, primary key, variable column names and amount.
             E.g., insertTable(data,'tablename','key','column name')
         """
-
-        try:
-            connect = sqlite3.connect(self.__arg)
-            db = connect.cursor()
-        except:
-            print("insertTable: failed to connect to database.")
-
         #Create tableArg string according to *argument
         try:
             last = len(argument)
@@ -136,19 +112,16 @@ class database(mkFolder):
             tableArg = tableArg + '?)'
         except:
             print("insertTable: tableArg string failed.")
-            db.close()          
-            connect.close()
 
         #Execute tableArg with data.
         try:
-            db.execute(tableArg,data)
-            connect.commit()
-            db.close()          
-            connect.close()
+            print(tableArg)
+            self.db.execute(tableArg,data)
+            self.connect.commit()
+
         except:
             print("insertTable: db.execute() failed.")
-            db.close()          
-            connect.close()
+
 
 
     #Retrieve data from database. With custom SELECT and WHERE arguments supported.
@@ -162,32 +135,20 @@ class database(mkFolder):
         @return data; 2D python list.
         """
         data = []
-        try:
-            connect = sqlite3.connect(self.__arg)
-            db = connect.cursor()
-        except:
-            print("getTableData: failed to connect to database")
-
         #String Argurment to retrieve data from database.
         try:
             tableArg = 'SELECT ' + argSELECT + ' FROM ' + "'" + tableName + "'" + ' ' + "'" + argWHERE + "'"
         except:
             print("getTableData: tableArg string failed.")
-            db.close()          
-            connect.close()
         
         try:
-            db.execute(tableArg)     
-            rows = db.fetchall()
+            self.db.execute(tableArg)     
+            rows = self.db.fetchall()
             for row in rows:
                 data.append(list(row))
         except:
             print("getTableData: db.execute() failed./Table not exist.")
-            db.close()          
-            connect.close()
-            
-        db.close()
-        connect.close()
+
         return data
 
     #Delete table in database.
@@ -196,30 +157,27 @@ class database(mkFolder):
         @param tableName;
         """
         try:
-            connect = sqlite3.connect(self.__arg)
-            db = connect.cursor()
             tableArg = 'DROP TABLE ' + tableName
-            db.execute(tableArg)
-            connect.commit()
-            db.close()
-            connect.close()
+            self.db.execute(tableArg)
+            self.connect.commit()
+
         except:
             print("deleteTable: Table Delete failed./Table does not Exist.")
-            db.close()          
-            connect.close()
+
 
     def customSqlStatement(self,SQL_Statement):
         """! Execute custom SQL_Statement
         @param SQL_Statement;
         """
         try:
-            connect = sqlite3.connect(self.__arg)
-            db = connect.cursor()
-            db.execute(SQL_Statement)
-            connect.commit()
-            db.close()
-            connect.close()
+            self.db.execute(SQL_Statement)
+            self.connect.commit()
         except:
             print("customSqlStatement: db.execute() failed.")
-            db.close()          
-            connect.close()
+
+
+    def dbClose(self):
+        """! Close the database.
+        """
+        self.db.close()
+        self.connect.close()
