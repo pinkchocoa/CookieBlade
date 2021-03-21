@@ -262,6 +262,7 @@ class window(object):
         youtubeGraph.setRevenueData(self.ytlink) #this crawl youtube to get revenue and save to db.
         revenueData = youtubeGraph.getRevenueData(self.ytlink) #this return revenue data from db
         revenueData.pop(0) #remove the date string in the list.
+        print(revenueData)
         #print(revenueData)
         #Testing
         #revenueData = [10,30,32,34,32,33,31,29,32,35,45,11]

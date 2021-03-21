@@ -141,7 +141,7 @@ class database(mkFolder):
 
         #Execute tableArg with data.
         try:
-            db.execute(tableArg,(data))
+            db.execute(tableArg,data)
             connect.commit()
             db.close()          
             connect.close()
