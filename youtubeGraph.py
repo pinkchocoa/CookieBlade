@@ -78,7 +78,7 @@ def setRevenueData(channelUrl):
     result = youtube.getRevenueData(channelUrl)
     result.pop(0) #get rid of amount of videos in said months.
     result = result[0]
-    print(result)
+    #print(result)
     #result = list(itertools.chain(*result)) #convert to 1d list
     for i in range(0,len(result)):
         data.append(result[i])

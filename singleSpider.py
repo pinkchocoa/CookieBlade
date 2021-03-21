@@ -35,11 +35,11 @@ class spiderWorker:
         HOMEPAGE = 'https://news.google.com/search?q='
         DOMAIN_NAME = get_domain_name(HOMEPAGE)
         SUB_DOMAIN = get_sub_domain_name(HOMEPAGE)
-        print(DOMAIN_NAME)
+        #print(DOMAIN_NAME)
         for word in topic.split():
             HOMEPAGE += word
             HOMEPAGE += "+"
-            print (HOMEPAGE)
+            #print (HOMEPAGE)
         self.spidey = Spider(PROJECT_NAME, HOMEPAGE, DOMAIN_NAME, SUB_DOMAIN, filterList) #create first spider
         self.create_workers()
         #print("end init")

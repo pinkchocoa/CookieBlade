@@ -141,6 +141,7 @@ class window(object):
         else:
             geolocator = Nominatim(user_agent="cookieBlade")
             data = geolocator.geocode(self.locationInput)
+            self.worldWide = False
             self.lat = data.raw.get("lat")
             self.lng = data.raw.get("lon")
             text = str(self.lat) + ", " + str(self.lng)
@@ -213,14 +214,14 @@ class window(object):
         else:
             tUser = TUser.byID(self.tlink)
         tweets = tUser.userTweets(amount)
-        print(tweets)
+        #print(tweets)
         for idx, x in enumerate(tweets):
             tid = x[0]
             date = x[1]
             fav = x[2]
             rt = x[3]
             if len(dateList) > 7:
-                print(idx, " tweets crawled for 7 days of data")
+                #print(idx, " tweets crawled for 7 days of data")
                 favList.append(totalFavCount)
                 rtList.append(totalRTCount)
                 break

@@ -41,10 +41,10 @@ class LinkValidation(UrlExtraction):
         if sitename in self.Sitelist: #check if site is supported
             try: #if URL can be opened than is valid
                 urllib.request.urlopen(UserUrl) 
-                print("URL is valid")
+                #print("URL is valid")
                 return True
             except: #if URL cannot be opened this bypass error generation and just tell us link is invalid
-                print("URL is invalid or internet is down")
+                #print("URL is invalid or internet is down")
                 return False
         else:
             return False
