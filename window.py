@@ -133,7 +133,7 @@ class window(object):
         self.lat = data.raw.get("lat")
         self.lng = data.raw.get("lon")
         text = str(self.lat) + ", " + str(self.lng)
-        self.locationInput = geolocator.reverse(text)
+        self.locationInput = geolocator.reverse(text, language='en')
         self.locationInput = str(self.locationInput)
         self.locationInput = self.locationInput.split(',')[-1]
         

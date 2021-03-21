@@ -145,7 +145,6 @@ class Twitter:
             text = text.encode('ascii', 'ignore').decode()
             if text != x["name"]:
                 continue
-            print(text)
             if x["tweet_volume"]:
                 topics[x["name"]] = x["tweet_volume"]
                 count+=1
