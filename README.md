@@ -1,5 +1,7 @@
-# CSC1009-Data-Crawl
-Run main.py to start the program.
+# Cookie-Blade
+This project was done for CSC1009 Object Oriented Programming module in SIT-UoG Computing Science.
+
+Run `main.py` to start the program.
 
 Code Documentation (Doxygen): https://pinkchocoa.github.io/CSC1009-Data-Crawl/index.html
 
